@@ -4,39 +4,75 @@
 export type ExtensionMenuKind =
   | 'commandPalette'
   | 'comments/comment/context'
+  | 'comments/comment/editorActions'
   | 'comments/comment/title'
+  | 'comments/commentThread/additionalActions'
+  | 'comments/commentThread/comment/context'
   | 'comments/commentThread/title'
+  | 'comments/commentThread/title/context'
   | 'commnets/commnetThread/context'
   | 'debug/callstack/context'
+  | 'debug/createConfiguration'
+  | 'debug/lineNumber/context'
   | 'debug/toolbar'
   | 'debug/variables/context'
+  | 'diffEditor/gutter/hunk'
+  | 'diffEditor/gutter/selection'
+  | 'editor/content'
   | 'editor/context'
-  | 'editor/linenumber/context'
+  | 'editor/context/copy'
+  | 'editor/context/share'
+  | 'editor/inlineCompletions/actions'
+  | 'editor/lineNumber/context'
   | 'editor/title'
   | 'editor/title/context'
+  | 'editor/title/context/share'
+  | 'editor/title/run'
   | 'explorer/context'
+  | 'explorer/context/share'
   | 'extension/context'
   | 'file/newFile'
+  | 'file/share'
   | 'interactive/cell/title'
   | 'interactive/toobar'
+  | 'issue/reporter'
+  | 'menuBar/edit/copy'
+  | 'menuBar/home'
+  | 'mergeEditor/result/title'
+  | 'multiDiffEditor/resource/title'
   | 'notebook/cell/execute'
   | 'notebook/cell/title'
+  | 'notebook/kernelSource'
   | 'notebook/toobar'
+  | 'notebook/variables/context'
+  | 'ports/item/context'
+  | 'ports/item/origin/inline'
+  | 'ports/item/port/inline'
   | 'scm/change/title'
+  | 'scm/history/title'
+  | 'scm/historyItem/context'
+  | 'scm/inputBox'
   | 'scm/resourceFolder/context'
   | 'scm/resourceGroup/context'
   | 'scm/resourceState/context'
   | 'scm/sourceControl'
+  | 'scm/sourceControl/title'
   | 'scm/title'
+  | 'statusBar/remoteIndicator'
   | 'terminal/context'
   | 'terminal/title/context'
   | 'testing/item/context'
   | 'testing/item/gutter'
+  | 'testing/item/result'
+  | 'testing/message/content'
+  | 'testing/message/context'
+  | 'testing/profiles/context'
   | 'timeline/item/context'
   | 'timeline/title'
   | 'touchBar'
   | 'view/item/context'
   | 'view/title'
+  | 'viewContainer/title'
   | 'webview/context'
 // TODO: contributed.submenu
 
@@ -64,22 +100,18 @@ export type ExtensionProblemMatcherFileLocation =
   | 'autoDetect'
   | 'relative'
   | 'search'
-  // eslint-disable-next-line no-template-curly-in-string
   | ['autoDetect', '${workspaceFolder}']
-  // eslint-disable-next-line no-template-curly-in-string
   | ['relative', '${workspaceFolder}']
   | [
       'search',
       {
-        // eslint-disable-next-line no-template-curly-in-string
+        exclude: string[]
         include: '${workspaceFolder}'
       },
     ]
   | [
       'search',
       {
-        exclude: string[]
-        // eslint-disable-next-line no-template-curly-in-string
         include: '${workspaceFolder}'
       },
     ]

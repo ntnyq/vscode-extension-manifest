@@ -70,6 +70,27 @@
     "typescript": "^5.7.2",
     "vitest": "^2.1.5"
   },
+  "contributes": {
+    "configuration": {
+      "title": "",
+      "order": 0,
+      "properties": {
+        "dev": {}
+      }
+    },
+    "menus": {
+      "scm/change/title": [],
+      "scm/history/title": [],
+      "scm/historyItem/context": [],
+      "scm/inputBox": [],
+      "scm/resourceFolder/context": [],
+      "scm/resourceGroup/context": [],
+      "scm/resourceState/context": [],
+      "scm/sourceControl": [],
+      "scm/sourceControl/title": [],
+      "scm/title": []
+    }
+  },
   "engines": {
     "node": ">=18.18.0"
   },

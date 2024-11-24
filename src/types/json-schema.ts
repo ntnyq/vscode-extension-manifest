@@ -39,6 +39,7 @@ export type TJsonSchemaBase = {
   editPresentation?: boolean
   enum?: TJsonSchemaValue[]
   enumItemLabels?: string[]
+  examples?: TJsonSchemaValue[]
   exclusiveMaximum?: boolean | number
   exclusiveMinimum?: boolean | number
   format?: TJsonSchemaFormat
@@ -61,10 +62,12 @@ export type TJsonSchemaBase = {
   properties?: {
     [key: string]: ExtensionJsonSchema
   }
+  readOnly?: boolean
   required?: string[]
   tags?: string[]
   title?: string
   uniqueItems?: boolean
+  writeOnly?: boolean
 }
 
 /**
@@ -78,6 +81,11 @@ export type TJsonSchemaUnSupported = {
 export type TJsonSchemaV6 = {
   const?: TJsonSchemaValue
   contains?: ExtensionJsonSchema
+  contentEncoding?: string
+  contentMediaType?: string
+  contentSchema?: ExtensionJsonSchema
+  maxContains?: number
+  minContains?: number
   propertyNames?: ExtensionJsonSchema
 }
 
@@ -111,7 +119,7 @@ export type TJsonSchemaVSCode = {
 }
 
 /**
- * @see {@link https://json-schema.org/overview/what-is-Tjsonschema}
+ * @see {@link https://json-schema.org/overview/what-is-jsonschema}
  */
 export type ExtensionJsonSchema = TJsonSchemaBase &
   TJsonSchemaV6 &

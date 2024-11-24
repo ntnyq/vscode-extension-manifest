@@ -134,6 +134,7 @@ export type ExtensionKeybinding = {
 }
 
 export type ExtensionConfiguration = {
+  order?: number
   properties?: {
     [key: string]: ExtensionJsonSchema
   }
