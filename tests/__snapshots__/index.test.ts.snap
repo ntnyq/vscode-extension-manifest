@@ -1,0 +1,167 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should readExtensionManifest work 1`] = `
+{
+  "author": {
+    "email": "ntnyq13@gmail.com",
+    "name": "ntnyq",
+  },
+  "bugs": {
+    "url": "https://github.com/ntnyq/vscode-extension-manifest/issues",
+  },
+  "description": "VSCode extension manifest type definitions, validators, and utilities",
+  "devDependencies": {
+    "@ntnyq/eslint-config": "^3.3.1",
+    "@ntnyq/prettier-config": "^1.22.0",
+    "@types/node": "^22.9.3",
+    "@vitest/coverage-v8": "^2.1.5",
+    "bumpp": "^9.8.1",
+    "eslint": "^9.15.0",
+    "husky": "^9.1.7",
+    "nano-staged": "^0.8.0",
+    "npm-run-all2": "^7.0.1",
+    "prettier": "^3.3.3",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.5",
+  },
+  "engines": {
+    "node": ">=18.18.0",
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts",
+      },
+      "require": {
+        "default": "./dist/index.cjs",
+        "types": "./dist/index.d.cts",
+      },
+    },
+    "./package.json": "./package.json",
+  },
+  "files": [
+    "dist",
+  ],
+  "homepage": "https://github.com/ntnyq/vscode-extension-manifest#readme",
+  "keywords": [
+    "extension-manifest",
+    "vscode-extension",
+    "validate",
+    "vscode",
+    "types",
+    "contributes point",
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "name": "vscode-extension-manifest",
+  "nano-staged": {
+    "*.{js,ts,mjs,cjs,json,md,yml,yaml}": "eslint --fix",
+  },
+  "packageManager": "pnpm@9.14.2",
+  "prettier": "@ntnyq/prettier-config",
+  "repository": "ntnyq/vscode-extension-manifest",
+  "scripts": {
+    "build": "tsup",
+    "coverage": "vitest --coverage",
+    "dev": "tsup --watch src",
+    "lint": "eslint .",
+    "prepare": "husky",
+    "prepublishOnly": "pnpm run build",
+    "release": "run-s release:check release:publish",
+    "release:check": "run-s lint typecheck test",
+    "release:publish": "bumpp && pnpm publish",
+    "test": "vitest --typecheck",
+    "typecheck": "tsc --noEmit",
+  },
+  "sideEffects": false,
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.0",
+}
+`;
+
+exports[`should readExtensionManifestSync work 1`] = `
+{
+  "author": {
+    "email": "ntnyq13@gmail.com",
+    "name": "ntnyq",
+  },
+  "bugs": {
+    "url": "https://github.com/ntnyq/vscode-extension-manifest/issues",
+  },
+  "description": "VSCode extension manifest type definitions, validators, and utilities",
+  "devDependencies": {
+    "@ntnyq/eslint-config": "^3.3.1",
+    "@ntnyq/prettier-config": "^1.22.0",
+    "@types/node": "^22.9.3",
+    "@vitest/coverage-v8": "^2.1.5",
+    "bumpp": "^9.8.1",
+    "eslint": "^9.15.0",
+    "husky": "^9.1.7",
+    "nano-staged": "^0.8.0",
+    "npm-run-all2": "^7.0.1",
+    "prettier": "^3.3.3",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.5",
+  },
+  "engines": {
+    "node": ">=18.18.0",
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts",
+      },
+      "require": {
+        "default": "./dist/index.cjs",
+        "types": "./dist/index.d.cts",
+      },
+    },
+    "./package.json": "./package.json",
+  },
+  "files": [
+    "dist",
+  ],
+  "homepage": "https://github.com/ntnyq/vscode-extension-manifest#readme",
+  "keywords": [
+    "extension-manifest",
+    "vscode-extension",
+    "validate",
+    "vscode",
+    "types",
+    "contributes point",
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "name": "vscode-extension-manifest",
+  "nano-staged": {
+    "*.{js,ts,mjs,cjs,json,md,yml,yaml}": "eslint --fix",
+  },
+  "packageManager": "pnpm@9.14.2",
+  "prettier": "@ntnyq/prettier-config",
+  "repository": "ntnyq/vscode-extension-manifest",
+  "scripts": {
+    "build": "tsup",
+    "coverage": "vitest --coverage",
+    "dev": "tsup --watch src",
+    "lint": "eslint .",
+    "prepare": "husky",
+    "prepublishOnly": "pnpm run build",
+    "release": "run-s release:check release:publish",
+    "release:check": "run-s lint typecheck test",
+    "release:publish": "bumpp && pnpm publish",
+    "test": "vitest --typecheck",
+    "typecheck": "tsc --noEmit",
+  },
+  "sideEffects": false,
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.0",
+}
+`;
