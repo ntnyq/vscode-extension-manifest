@@ -1,0 +1,163 @@
+{
+  "publisher": "ntnyq",
+  "name": "vscode-dev-helper",
+  "displayName": "VSCode Dev Helper",
+  "preview": true,
+  "version": "0.0.0",
+  "private": true,
+  "description": "Personal dev helper built on top of VSCode",
+  "keywords": [],
+  "license": "MIT",
+  "author": {
+    "name": "ntnyq",
+    "email": "ntnyq13@gmail.com"
+  },
+  "homepage": "https://github.com/ntnyq/vscode-dev-helper",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/ntnyq/vscode-dev-helper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ntnyq/vscode-dev-helper/issues/new"
+  },
+  "main": "./dist/index.js",
+  "icon": "./res/icon.png",
+  "files": [
+    "LICENSE",
+    "dist/*",
+    "res/*",
+    "schemas/*"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "NODE_ENV=development tsup",
+    "generate:meta": "vscode-ext-gen --output=src/meta.ts",
+    "lint": "eslint .",
+    "pack": "vsce package --no-dependencies",
+    "prepare": "husky",
+    "release": "run-s release:check release:build release:version release:publish",
+    "release:build": "run-s generate:meta build",
+    "release:check": "run-s lint typecheck",
+    "release:publish": "vsce publish --no-dependencies",
+    "release:version": "bumpp --all",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "jsonValidation": [
+      {
+        "fileMatch": "package.json",
+        "url": "./schemas/pnpm.schema.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "vscode-dev-helper.enable-codelens",
+        "category": "VSCode Dev Helper",
+        "title": "Enable CodeLens"
+      },
+      {
+        "command": "vscode-dev-helper.disable-codelens",
+        "category": "VSCode Dev Helper",
+        "title": "Disable CodeLens"
+      },
+      {
+        "command": "vscode-dev-helper.codelens-action",
+        "category": "VSCode Dev Helper",
+        "title": "Trigger CodeLens Action"
+      },
+      {
+        "command": "vscode-dev-helper.create-alert",
+        "category": "VSCode Dev Helper",
+        "title": "Create Alert"
+      },
+      {
+        "command": "vscode-dev-helper.generate-node-version",
+        "category": "VSCode Dev Helper",
+        "title": "Generate .node-version"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "vscode-dev-helper.generate-node-version",
+          "when": "explorerResourceIsFolder",
+          "group": "VSCodeDevHelper@1"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "editorLangId == markdown || editorLangId == mdx",
+          "command": "vscode-dev-helper.create-alert",
+          "group": "z_commands"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "VSCode Dev Helper",
+      "properties": {
+        "vscode-dev-helper.enableCodeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable CodeLens"
+        },
+        "vscode-dev-helper.alertPreset": {
+          "type": "string",
+          "enum": [
+            "github",
+            "obsidian",
+            "vitepress",
+            "custom"
+          ],
+          "default": "github",
+          "description": "Preset of Alert"
+        },
+        "vscode-dev-helper.alertTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true,
+          "default": [
+            "info",
+            "tip",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "description": "Types for Custom Alert"
+        },
+        "vscode-dev-helper.alertMarker": {
+          "type": "string",
+          "default": "!",
+          "description": "Marker for Custom Alert"
+        },
+        "vscode-dev-helper.alertSyntax": {
+          "type": "string",
+          "enum": [
+            "blockquote",
+            "container"
+          ],
+          "default": "container",
+          "description": "Markdown Syntax for Custom Alert"
+        },
+        "vscode-dev-helper.alertUppercaseType": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use Uppercase Type for Custom Alert"
+        },
+        "vscode-dev-helper.nodeVersion": {
+          "type": "string",
+          "default": "lts-latest",
+          "description": "Default version for .node-version"
+        }
+      }
+    }
+  },
+  "categories": [
+    "Other"
+  ]
+}

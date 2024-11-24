@@ -21,6 +21,9 @@ export interface ReadOptions {
   filename?: string
 }
 
+/**
+ * @internal
+ */
 const toPath = (urlOrPath: string | URL) =>
   urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath
 
@@ -37,7 +40,7 @@ const toPath = (urlOrPath: string | URL) =>
  *   readExtensionManifestSync
  * } from 'vscode-extension-manifest'
  *
- *console.log(validateExtensionManifest(readExtensionManifestSync())
+ * console.log(validateExtensionManifest(readExtensionManifestSync())
  *```
  */
 export function validateExtensionManifest(manifest: ExtensionManifest) {

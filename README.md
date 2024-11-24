@@ -55,14 +55,14 @@ for `readExtensionManifest` and `readExtensionManifestSync`
 
 ### filename
 
-- Type: `string | URL`
+- Type: `string`
 - Default: `package.json`
 
 The filename of the extension manifest.
 
 ### cwd
 
-- Type: `string`
+- Type: `string | URL`
 - Default: `process.cwd()`
 
 The current working directory of the extension manifest.

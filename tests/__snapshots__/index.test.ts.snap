@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`should readExtensionManifest work 1`] = `
+exports[`node package > should readExtensionManifest work 1`] = `
 {
   "author": {
     "email": "ntnyq13@gmail.com",
@@ -10,24 +10,6 @@ exports[`should readExtensionManifest work 1`] = `
     "url": "https://github.com/ntnyq/vscode-extension-manifest/issues",
   },
   "description": "VSCode extension manifest type definitions, validators, and utilities",
-  "devDependencies": {
-    "@ntnyq/eslint-config": "^3.3.1",
-    "@ntnyq/prettier-config": "^1.22.0",
-    "@types/node": "^22.9.3",
-    "@vitest/coverage-v8": "^2.1.5",
-    "bumpp": "^9.8.1",
-    "eslint": "^9.15.0",
-    "husky": "^9.1.7",
-    "nano-staged": "^0.8.0",
-    "npm-run-all2": "^7.0.1",
-    "prettier": "^3.3.3",
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.5",
-  },
-  "engines": {
-    "node": ">=18.18.0",
-  },
   "exports": {
     ".": {
       "import": {
@@ -57,11 +39,6 @@ exports[`should readExtensionManifest work 1`] = `
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "name": "vscode-extension-manifest",
-  "nano-staged": {
-    "*.{js,ts,mjs,cjs,json,md,yml,yaml}": "eslint --fix",
-  },
-  "packageManager": "pnpm@9.14.2",
-  "prettier": "@ntnyq/prettier-config",
   "repository": "ntnyq/vscode-extension-manifest",
   "scripts": {
     "build": "tsup",
@@ -83,7 +60,7 @@ exports[`should readExtensionManifest work 1`] = `
 }
 `;
 
-exports[`should readExtensionManifestSync work 1`] = `
+exports[`node package > should readExtensionManifestSync work 1`] = `
 {
   "author": {
     "email": "ntnyq13@gmail.com",
@@ -93,24 +70,6 @@ exports[`should readExtensionManifestSync work 1`] = `
     "url": "https://github.com/ntnyq/vscode-extension-manifest/issues",
   },
   "description": "VSCode extension manifest type definitions, validators, and utilities",
-  "devDependencies": {
-    "@ntnyq/eslint-config": "^3.3.1",
-    "@ntnyq/prettier-config": "^1.22.0",
-    "@types/node": "^22.9.3",
-    "@vitest/coverage-v8": "^2.1.5",
-    "bumpp": "^9.8.1",
-    "eslint": "^9.15.0",
-    "husky": "^9.1.7",
-    "nano-staged": "^0.8.0",
-    "npm-run-all2": "^7.0.1",
-    "prettier": "^3.3.3",
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.5",
-  },
-  "engines": {
-    "node": ">=18.18.0",
-  },
   "exports": {
     ".": {
       "import": {
@@ -140,11 +99,6 @@ exports[`should readExtensionManifestSync work 1`] = `
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "name": "vscode-extension-manifest",
-  "nano-staged": {
-    "*.{js,ts,mjs,cjs,json,md,yml,yaml}": "eslint --fix",
-  },
-  "packageManager": "pnpm@9.14.2",
-  "prettier": "@ntnyq/prettier-config",
   "repository": "ntnyq/vscode-extension-manifest",
   "scripts": {
     "build": "tsup",
@@ -162,6 +116,338 @@ exports[`should readExtensionManifestSync work 1`] = `
   "sideEffects": false,
   "type": "module",
   "types": "./dist/index.d.ts",
+  "version": "0.0.0",
+}
+`;
+
+exports[`vscode extension > should readExtensionManifest work 1`] = `
+{
+  "activationEvents": [
+    "onStartupFinished",
+  ],
+  "author": {
+    "email": "ntnyq13@gmail.com",
+    "name": "ntnyq",
+  },
+  "bugs": {
+    "url": "https://github.com/ntnyq/vscode-dev-helper/issues/new",
+  },
+  "categories": [
+    "Other",
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.enable-codelens",
+        "title": "Enable CodeLens",
+      },
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.disable-codelens",
+        "title": "Disable CodeLens",
+      },
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.codelens-action",
+        "title": "Trigger CodeLens Action",
+      },
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.create-alert",
+        "title": "Create Alert",
+      },
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.generate-node-version",
+        "title": "Generate .node-version",
+      },
+    ],
+    "configuration": {
+      "properties": {
+        "vscode-dev-helper.alertMarker": {
+          "default": "!",
+          "description": "Marker for Custom Alert",
+          "type": "string",
+        },
+        "vscode-dev-helper.alertPreset": {
+          "default": "github",
+          "description": "Preset of Alert",
+          "enum": [
+            "github",
+            "obsidian",
+            "vitepress",
+            "custom",
+          ],
+          "type": "string",
+        },
+        "vscode-dev-helper.alertSyntax": {
+          "default": "container",
+          "description": "Markdown Syntax for Custom Alert",
+          "enum": [
+            "blockquote",
+            "container",
+          ],
+          "type": "string",
+        },
+        "vscode-dev-helper.alertTypes": {
+          "default": [
+            "info",
+            "tip",
+            "success",
+            "warning",
+            "danger",
+          ],
+          "description": "Types for Custom Alert",
+          "items": {
+            "type": "string",
+          },
+          "type": "array",
+          "uniqueItems": true,
+        },
+        "vscode-dev-helper.alertUppercaseType": {
+          "default": false,
+          "description": "Use Uppercase Type for Custom Alert",
+          "type": "boolean",
+        },
+        "vscode-dev-helper.enableCodeLens": {
+          "default": true,
+          "description": "Enable CodeLens",
+          "type": "boolean",
+        },
+        "vscode-dev-helper.nodeVersion": {
+          "default": "lts-latest",
+          "description": "Default version for .node-version",
+          "type": "string",
+        },
+      },
+      "title": "VSCode Dev Helper",
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": "package.json",
+        "url": "./schemas/pnpm.schema.json",
+      },
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "vscode-dev-helper.create-alert",
+          "group": "z_commands",
+          "when": "editorLangId == markdown || editorLangId == mdx",
+        },
+      ],
+      "explorer/context": [
+        {
+          "command": "vscode-dev-helper.generate-node-version",
+          "group": "VSCodeDevHelper@1",
+          "when": "explorerResourceIsFolder",
+        },
+      ],
+    },
+  },
+  "description": "Personal dev helper built on top of VSCode",
+  "displayName": "VSCode Dev Helper",
+  "files": [
+    "LICENSE",
+    "dist/*",
+    "res/*",
+    "schemas/*",
+  ],
+  "homepage": "https://github.com/ntnyq/vscode-dev-helper",
+  "icon": "./res/icon.png",
+  "keywords": [],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "vscode-dev-helper",
+  "preview": true,
+  "private": true,
+  "publisher": "ntnyq",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/ntnyq/vscode-dev-helper.git",
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "NODE_ENV=development tsup",
+    "generate:meta": "vscode-ext-gen --output=src/meta.ts",
+    "lint": "eslint .",
+    "pack": "vsce package --no-dependencies",
+    "prepare": "husky",
+    "release": "run-s release:check release:build release:version release:publish",
+    "release:build": "run-s generate:meta build",
+    "release:check": "run-s lint typecheck",
+    "release:publish": "vsce publish --no-dependencies",
+    "release:version": "bumpp --all",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+  },
+  "version": "0.0.0",
+}
+`;
+
+exports[`vscode extension > should readExtensionManifestSync work 1`] = `
+{
+  "activationEvents": [
+    "onStartupFinished",
+  ],
+  "author": {
+    "email": "ntnyq13@gmail.com",
+    "name": "ntnyq",
+  },
+  "bugs": {
+    "url": "https://github.com/ntnyq/vscode-dev-helper/issues/new",
+  },
+  "categories": [
+    "Other",
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.enable-codelens",
+        "title": "Enable CodeLens",
+      },
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.disable-codelens",
+        "title": "Disable CodeLens",
+      },
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.codelens-action",
+        "title": "Trigger CodeLens Action",
+      },
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.create-alert",
+        "title": "Create Alert",
+      },
+      {
+        "category": "VSCode Dev Helper",
+        "command": "vscode-dev-helper.generate-node-version",
+        "title": "Generate .node-version",
+      },
+    ],
+    "configuration": {
+      "properties": {
+        "vscode-dev-helper.alertMarker": {
+          "default": "!",
+          "description": "Marker for Custom Alert",
+          "type": "string",
+        },
+        "vscode-dev-helper.alertPreset": {
+          "default": "github",
+          "description": "Preset of Alert",
+          "enum": [
+            "github",
+            "obsidian",
+            "vitepress",
+            "custom",
+          ],
+          "type": "string",
+        },
+        "vscode-dev-helper.alertSyntax": {
+          "default": "container",
+          "description": "Markdown Syntax for Custom Alert",
+          "enum": [
+            "blockquote",
+            "container",
+          ],
+          "type": "string",
+        },
+        "vscode-dev-helper.alertTypes": {
+          "default": [
+            "info",
+            "tip",
+            "success",
+            "warning",
+            "danger",
+          ],
+          "description": "Types for Custom Alert",
+          "items": {
+            "type": "string",
+          },
+          "type": "array",
+          "uniqueItems": true,
+        },
+        "vscode-dev-helper.alertUppercaseType": {
+          "default": false,
+          "description": "Use Uppercase Type for Custom Alert",
+          "type": "boolean",
+        },
+        "vscode-dev-helper.enableCodeLens": {
+          "default": true,
+          "description": "Enable CodeLens",
+          "type": "boolean",
+        },
+        "vscode-dev-helper.nodeVersion": {
+          "default": "lts-latest",
+          "description": "Default version for .node-version",
+          "type": "string",
+        },
+      },
+      "title": "VSCode Dev Helper",
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": "package.json",
+        "url": "./schemas/pnpm.schema.json",
+      },
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "vscode-dev-helper.create-alert",
+          "group": "z_commands",
+          "when": "editorLangId == markdown || editorLangId == mdx",
+        },
+      ],
+      "explorer/context": [
+        {
+          "command": "vscode-dev-helper.generate-node-version",
+          "group": "VSCodeDevHelper@1",
+          "when": "explorerResourceIsFolder",
+        },
+      ],
+    },
+  },
+  "description": "Personal dev helper built on top of VSCode",
+  "displayName": "VSCode Dev Helper",
+  "files": [
+    "LICENSE",
+    "dist/*",
+    "res/*",
+    "schemas/*",
+  ],
+  "homepage": "https://github.com/ntnyq/vscode-dev-helper",
+  "icon": "./res/icon.png",
+  "keywords": [],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "vscode-dev-helper",
+  "preview": true,
+  "private": true,
+  "publisher": "ntnyq",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/ntnyq/vscode-dev-helper.git",
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "NODE_ENV=development tsup",
+    "generate:meta": "vscode-ext-gen --output=src/meta.ts",
+    "lint": "eslint .",
+    "pack": "vsce package --no-dependencies",
+    "prepare": "husky",
+    "release": "run-s release:check release:build release:version release:publish",
+    "release:build": "run-s generate:meta build",
+    "release:check": "run-s lint typecheck",
+    "release:publish": "vsce publish --no-dependencies",
+    "release:version": "bumpp --all",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+  },
   "version": "0.0.0",
 }
 `;
