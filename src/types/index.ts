@@ -133,6 +133,15 @@ export type ExtensionKeybinding = {
   win?: string
 }
 
+export type ExtensionContinueEditSession = {
+  command: string
+  description?: string
+  group?: string
+  qualifiedName?: string
+  remoteGroup?: string
+  when?: string
+}
+
 export type ExtensionConfiguration = {
   order?: number
   properties?: {
@@ -201,6 +210,14 @@ export type ExtensionResourceLabelFormatter = {
   authority?: string
 }
 
+export type ExtensionRemoteHelp = {
+  documentation?: string
+  feedback?: string
+  getStarted?: string
+  issues?: string
+  reportIssue?: string
+}
+
 /**
  * TODO: All optional? Maybe JSONSchema is wrong
  */
@@ -244,6 +261,10 @@ export type ExtensionLanguageModelTool = {
   when?: string
 }
 
+export type ExtensionLanguageModel = {
+  vendor: string
+}
+
 /**
  * TODO: All optional? Maybe JSONSchema is wrong
  */
@@ -272,6 +293,11 @@ export type ExtensionDebugger = {
   }
   when?: string
   windows?: ExtensionDebuggerOS
+}
+
+export type ExtensionDebugVisualizer = {
+  id: string
+  when: string
 }
 
 /**
@@ -353,11 +379,21 @@ export type ExtensionMenu = {
   when?: string
 }
 
+export type ExtensionNotebook = {
+  displayName: string
+  selector: Array<{
+    excludeFileNamePattern?: string
+    filenamePattern?: string
+  }>
+  type: string
+  priority?: 'default' | 'option'
+}
+
 export type ExtensionWalkThroughStep = {
   id: string
   media: {
     altText: string
-    imag?: string
+    image?: string
     markdown?: string
     svg?: string
   }
@@ -408,6 +444,37 @@ export type ExtensionDocumentation = {
     title: string
     when: string
   }>
+}
+
+export type ExtensionChatParticipantDisambiguation = {
+  category: string
+  description: string
+  examples: ExtensionAnyValue[]
+}
+export type ExtensionChatParticipantCommand = {
+  name: string
+  description?: string
+  disambiguation?: ExtensionChatParticipantDisambiguation[]
+  isSticky?: boolean
+  sampleRequest?: string
+  when?: string
+}
+export type ExtensionChatParticipant = ExtensionChatParticipantCommand & {
+  id: string
+  commands?: ExtensionChatParticipantCommand[]
+  fullName?: string
+}
+
+export type ExtensionChatViewWelcome = {
+  content?: string
+  icon?: string
+  title?: string
+  when?: string
+}
+
+export type ExtensionHtmlLanguageParticipant = {
+  languageId: string
+  autoInsert?: boolean
 }
 
 /**
@@ -490,6 +557,16 @@ export type ExtensionManifest = {
     breakpoints?: ExtensionBreakpoint[]
 
     /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatParticipants}
+     */
+    chatParticipants?: ExtensionChatParticipant[]
+
+    /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatViewsWelcome}
+     */
+    chatViewsWelcome?: ExtensionChatViewWelcome[]
+
+    /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.codeActions}
      */
     codeActions?: ExtensionCodeAction[]
@@ -515,6 +592,11 @@ export type ExtensionManifest = {
     configurationDefaults?: ExtensionConfigurationDefaults
 
     /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.continueEditSession}
+     */
+    continueEditSession?: ExtensionContinueEditSession[]
+
+    /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.css.customData}
      */
     'css.customData'?: string[]
@@ -530,6 +612,11 @@ export type ExtensionManifest = {
     debuggers?: ExtensionDebugger[]
 
     /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.debugVisualizers}
+     */
+    debugVisualizers?: ExtensionDebugVisualizer[]
+
+    /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.documentation}
      */
     documentation?: ExtensionDocumentation
@@ -543,6 +630,11 @@ export type ExtensionManifest = {
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.html.customData}
      */
     'html.customData'?: string[]
+
+    /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.htmlLanguageParticipants}
+     */
+    htmlLanguageParticipants?: ExtensionHtmlLanguageParticipant[]
 
     /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.icons}
@@ -565,6 +657,11 @@ export type ExtensionManifest = {
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.keybindings}
      */
     keybindings?: ExtensionKeybinding[]
+
+    /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.languageModels}
+     */
+    languageModels?: ExtensionLanguageModel[]
 
     /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.languageModelTools}
@@ -604,6 +701,11 @@ export type ExtensionManifest = {
     }
 
     /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.notebooks}
+     */
+    notebooks?: ExtensionNotebook[]
+
+    /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.problemMatchers}
      */
     problemMatchers?: ExtensionProblemMatcher[]
@@ -617,6 +719,11 @@ export type ExtensionManifest = {
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.productIconThemes}
      */
     productIconThemes?: ExtensionProductIconTheme[]
+
+    /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.remoteHelp}
+     */
+    remoteHelp?: ExtensionRemoteHelp
 
     /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.resourceLabelFormatters}
