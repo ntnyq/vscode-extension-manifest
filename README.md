@@ -6,7 +6,7 @@
 [![CODECOV](https://codecov.io/github/ntnyq/vscode-extension-manifest/branch/main/graph/badge.svg)](https://codecov.io/github/ntnyq/vscode-extension-manifest)
 [![LICENSE](https://img.shields.io/github/license/ntnyq/vscode-extension-manifest.svg)](https://github.com/ntnyq/vscode-extension-manifest/blob/main/LICENSE)
 
-> VSCode extension manifest type definitions.
+> VSCode extension manifest type definitions, validators, and utilities.
 
 ## Install
 
@@ -25,23 +25,60 @@ pnpm add vscode-extension-manifest -D
 ## Usage
 
 ```ts
-import { readExtensionManifest } from 'vscode-extension-manifest'
+import {
+  readExtensionManifest,
+  readExtensionManifestSync,
+  validateExtensionManifest,
+} from 'vscode-extension-manifest'
 
 console.log(await readExtensionManifest())
 //=> VSCode extension manifest with types definition
+
+console.log(validateExtensionManifest(readExtensionManifestSync()))
+// => true if valid, false otherwise
 ```
 
 ## API
 
 ### readExtensionManifest
 
+- Type: `(options?: Options) => Promise<ExtensionManifest>`
+
 Returns a `Promise` for VSCode extension manifest with type definition.
+
+#### Options
+
+for `readExtensionManifest` and `readExtensionManifestSync`
+
+##### filename
+
+- Type: `string`
+- Default: `package.json`
+- Required: `false`
+
+The filename of the extension manifest.
+
+##### cwd
+
+- Type: `string | URL`
+- Default: `process.cwd()`
+- Required: `false`
+
+The current working directory of the extension manifest.
 
 ### readExtensionManifestSync
 
-Returns the VSCode extension manifest with type definition.
+- Type: `(options?: Options) => ExtensionManifest`
+
+Returns VSCode extension manifest with type definition.
+
+#### Options
+
+Same as **readExtensionManifest**
 
 ### validateExtensionManifest
+
+- Type: `(manifest: ExtensionManifest) => boolean`
 
 Returns `true` if the extension manifest is valid, `false` otherwise.
 
@@ -49,23 +86,14 @@ By checking the following properties:
 
 - `publisher`
 
-## Parameters
+#### Parameters
 
-for `readExtensionManifest` and `readExtensionManifestSync`
+##### manifest
 
-### filename
+- Type: `ExtensionManifest`
+- Required: `true`
 
-- Type: `string`
-- Default: `package.json`
-
-The filename of the extension manifest.
-
-### cwd
-
-- Type: `string | URL`
-- Default: `process.cwd()`
-
-The current working directory of the extension manifest.
+Read by `readExtensionManifest` or `readExtensionManifestSync`.
 
 ## Links
 

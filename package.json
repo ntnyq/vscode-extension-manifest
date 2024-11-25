@@ -5,12 +5,12 @@
   "packageManager": "pnpm@9.14.2",
   "description": "VSCode extension manifest type definitions, validators, and utilities",
   "keywords": [
+    "contributes point",
     "extension-manifest",
-    "vscode-extension",
+    "types",
     "validate",
     "vscode",
-    "types",
-    "contributes point"
+    "vscode-extension"
   ],
   "license": "MIT",
   "author": {
