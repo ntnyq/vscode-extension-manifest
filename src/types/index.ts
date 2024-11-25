@@ -393,7 +393,7 @@ export type ExtensionWalkThroughStep = {
   id: string
   media: {
     altText: string
-    image?: string
+    image: string
     markdown?: string
     svg?: string
   }
