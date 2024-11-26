@@ -19,6 +19,12 @@ export type ExtensionAuthentication = {
   label: string
 }
 
+export type ExtensionBadge = {
+  description: string
+  href: string
+  title: string
+}
+
 export type ExtensionCommand = {
   command: string
   title: string
@@ -496,6 +502,11 @@ export type ExtensionManifest = {
   /**
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
+  name: string
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
   publisher: string
 
   /**
@@ -507,6 +518,16 @@ export type ExtensionManifest = {
    * @see {@link https://code.visualstudio.com/api/references/activation-events}
    */
   activationEvents?: string[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/activation-events}
+   */
+  badges?: ExtensionBadge[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  browser?: string
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
@@ -698,6 +719,8 @@ export type ExtensionManifest = {
      */
     menus?: {
       [key in ExtensionMenuKind]: ExtensionMenu[]
+    } & {
+      [key: string]: ExtensionMenu[]
     }
 
     /**
@@ -796,13 +819,13 @@ export type ExtensionManifest = {
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.views}
      */
     views?: {
-      // Custom view
-      [key: string]: ExtensionAnyValue
       debug?: ExtensionViewCommon[]
       explorer?: ExtensionViewCommon[]
       remote?: ExtensionViewRemote[]
       scm?: ExtensionViewCommon[]
       test?: ExtensionViewCommon[]
+    } & {
+      [key: string]: ExtensionViewCommon
     }
 
     /**
@@ -823,6 +846,21 @@ export type ExtensionManifest = {
      */
     walkthroughs?: ExtensionWalkThrough[]
   }
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  dependencies?: Record<string, string>
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  description?: string
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  devDependencies?: Record<string, string>
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
@@ -859,6 +897,21 @@ export type ExtensionManifest = {
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  keywords?: string[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  license?: string
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  main?: string
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    * @default `github`
    */
   markdown?: 'github' | 'standard'
@@ -879,6 +932,18 @@ export type ExtensionManifest = {
    * @default `markeplate`
    */
   qna?: 'markeplate' | false | string
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  scripts?: Record<string, string>
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  sponsor?: {
+    url: string
+  }
 }
 
 export * from './union'

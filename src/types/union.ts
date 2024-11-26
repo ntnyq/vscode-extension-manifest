@@ -1,3 +1,5 @@
+import type { ExtendUnion } from './utils'
+
 /**
  * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.menus}
  */
@@ -74,7 +76,6 @@ export type ExtensionMenuKind =
   | 'view/title'
   | 'viewContainer/title'
   | 'webview/context'
-// TODO: contributed.submenu
 
 export type ExtensionCategory =
   | 'Data Science'
@@ -115,3 +116,35 @@ export type ExtensionProblemMatcherFileLocation =
         include: '${workspaceFolder}'
       },
     ]
+
+/**
+ * @see https://code.visualstudio.com/api/references/activation-events
+ */
+export type ExtensionActivationEvent =
+  | '*'
+  | 'onDebug'
+  | 'onDebugAdapterProtocolTracker'
+  | 'onDebugDynamicConfigurations'
+  | 'onDebugInitialConfigurations'
+  | 'onDebugResolve'
+  | 'onIssueReporterOpened'
+  | 'onOpenExternalUri'
+  | 'onStartupFinished'
+  | 'onUri'
+  | ExtendUnion<'onAuthenticationRequest'>
+  | ExtendUnion<'onChatParticipant'>
+  | ExtendUnion<'onCommand', true>
+  | ExtendUnion<'onCustomEditor'>
+  | ExtendUnion<'onEditSession'>
+  | ExtendUnion<'onFileSystem'>
+  | ExtendUnion<'onLanguage', true>
+  | ExtendUnion<'onLanguageModelTool'>
+  | ExtendUnion<'onNotebook'>
+  | ExtendUnion<'onRenderer'>
+  | ExtendUnion<'onSearch'>
+  | ExtendUnion<'onTaskType'>
+  | ExtendUnion<'onTerminalProfile'>
+  | ExtendUnion<'onView'>
+  | ExtendUnion<'onWalkthrough'>
+  | ExtendUnion<'onWebviewPanel'>
+  | ExtendUnion<'workspaceContains'>
