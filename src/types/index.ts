@@ -395,6 +395,22 @@ export type ExtensionNotebook = {
   priority?: 'default' | 'option'
 }
 
+export type ExtensionNotebookPreload = {
+  entrypoint: string
+  type: string
+  localResourceRoots?: string[]
+}
+
+export type ExtensionNotebookRenderer = {
+  displayName: string
+  entrypoint: string
+  id: string
+  mimeTypes: string[]
+  dependencies?: string[]
+  optionalDependencies?: string[]
+  requiresMessaging?: 'always' | 'never' | 'optional'
+}
+
 export type ExtensionWalkThroughStep = {
   id: string
   media: {
@@ -722,6 +738,16 @@ export type ExtensionManifest = {
     } & {
       [key: string]: ExtensionMenu[]
     }
+
+    /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.notebookPreload}
+     */
+    notebookPreload?: ExtensionNotebookPreload[]
+
+    /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.notebookRenderer}
+     */
+    notebookRenderer?: ExtensionNotebookRenderer[]
 
     /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.notebooks}

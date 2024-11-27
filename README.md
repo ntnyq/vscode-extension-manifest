@@ -10,6 +10,7 @@
 
 > [!NOTE]
 > This package only provide types for VSCode extension manifest related fields listed in [Extension Manifest](https://code.visualstudio.com/api/references/extension-manifest).
+>
 > If you need types support NodeJs package.json file, please check [type-fest - package-json.d.ts](https://github.com/sindresorhus/type-fest/blob/main/source/package-json.d.ts).
 
 ## Install
