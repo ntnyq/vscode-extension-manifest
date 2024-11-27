@@ -2,6 +2,14 @@
  * @file Json schema types
  */
 
+/**
+ * These properties are not supported by VSCode
+ */
+export type TJsonSchemaUnSupported = {
+  $ref?: string
+  definition?: string
+}
+
 export type TJsonSchemaType =
   | 'array'
   | 'boolean'
@@ -11,7 +19,7 @@ export type TJsonSchemaType =
   | 'object'
   | 'string'
 
-export type TJsonSchemaValue = any
+export type TJsonSchemaAnyValue = any
 
 export type TJsonSchemaScope =
   | 'application'
@@ -24,12 +32,11 @@ export type TJsonSchemaScope =
 export type TJsonSchemaFormat = 'date' | 'email' | 'ipv4' | 'time' | 'uri'
 
 export type TJsonSchemaBase = {
-  type: TJsonSchemaType | TJsonSchemaType[]
   additionalItems?: boolean | ExtensionJsonSchema
   additionalProperties?: boolean | ExtensionJsonSchema
   allOf?: ExtensionJsonSchema[]
   anyOf?: ExtensionJsonSchema[]
-  default?: TJsonSchemaValue
+  default?: TJsonSchemaAnyValue
   dependencies?:
     | {
         [key: string]: ExtensionJsonSchema
@@ -37,9 +44,9 @@ export type TJsonSchemaBase = {
     | { [key: string]: string[] }
   description?: string
   editPresentation?: boolean
-  enum?: TJsonSchemaValue[]
+  enum?: TJsonSchemaAnyValue[]
   enumItemLabels?: string[]
-  examples?: TJsonSchemaValue[]
+  examples?: TJsonSchemaAnyValue[]
   exclusiveMaximum?: boolean | number
   exclusiveMinimum?: boolean | number
   format?: TJsonSchemaFormat
@@ -66,20 +73,13 @@ export type TJsonSchemaBase = {
   required?: string[]
   tags?: string[]
   title?: string
+  type?: TJsonSchemaType | TJsonSchemaType[]
   uniqueItems?: boolean
   writeOnly?: boolean
 }
 
-/**
- * These properties are not supported by VSCode
- */
-export type TJsonSchemaUnSupported = {
-  $ref?: string
-  definition?: string
-}
-
 export type TJsonSchemaV6 = {
-  const?: TJsonSchemaValue
+  const?: TJsonSchemaAnyValue
   contains?: ExtensionJsonSchema
   contentEncoding?: string
   contentMediaType?: string
@@ -96,7 +96,7 @@ export type TJsonSchemaV7 = {
 }
 
 export type TJsonSchemaVSCodeSnippet = {
-  body?: TJsonSchemaValue
+  body?: TJsonSchemaAnyValue
   bodyText?: string
   description?: string
   label?: string
