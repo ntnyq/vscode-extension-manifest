@@ -1,5 +1,24 @@
 import type { ExtendUnion } from './utils'
 
+export type ExtensionCategory =
+  | 'Data Science'
+  | 'Debuggers'
+  | 'Education'
+  | 'Extension Packs'
+  | 'Formatters'
+  | 'Keymaps'
+  | 'Language Packs'
+  | 'Linters'
+  | 'Machine Learning'
+  | 'Notebooks'
+  | 'Other'
+  | 'Programming Languages'
+  | 'SCM Providers'
+  | 'Snippets'
+  | 'Testing'
+  | 'Themes'
+  | 'Visualization'
+
 /**
  * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.menus}
  */
@@ -76,25 +95,6 @@ export type ExtensionMenuKind =
   | 'view/title'
   | 'viewContainer/title'
   | 'webview/context'
-
-export type ExtensionCategory =
-  | 'Data Science'
-  | 'Debuggers'
-  | 'Education'
-  | 'Extension Packs'
-  | 'Formatters'
-  | 'Keymaps'
-  | 'Language Packs'
-  | 'Linters'
-  | 'Machine Learning'
-  | 'Notebooks'
-  | 'Other'
-  | 'Programming Languages'
-  | 'SCM Providers'
-  | 'Snippets'
-  | 'Testing'
-  | 'Themes'
-  | 'Visualization'
 
 export type ExtensionProblemMatcherFileLocation =
   | 'absolute'

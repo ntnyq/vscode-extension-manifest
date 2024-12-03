@@ -40,9 +40,9 @@ export type ExtensionSpecifiedLanguageKey = `[${string}]`
  * Built-in icon or icon path or icon object with dark and light properties
  */
 export type ExtensionThemeableIcon =
+  | string
+  | ExtensionProductIcon
   | {
       dark?: string
       light?: string
     }
-  | ExtensionProductIcon
-  | string

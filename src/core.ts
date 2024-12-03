@@ -50,7 +50,7 @@ export function validateExtensionManifest(manifest: ExtensionManifest) {
 /**
  * Reads the manifest of vscode extension.
  *
- * @param options The options.
+ * @param options - The options.
  * @returns A `Promise` resolves the manifest of vscode extension with types.
  *
  * @example
@@ -71,7 +71,7 @@ export async function readExtensionManifest(options: ReadOptions = {}) {
 /**
  * Reads the manifest of vscode extension sync.
  *
- * @param options The options.
+ * @param options - The options.
  * @returns The manifest of vscode extension with types.
  *
  * @example

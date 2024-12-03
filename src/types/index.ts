@@ -25,6 +25,59 @@ export type ExtensionBadge = {
   title: string
 }
 
+export type ExtensionBreakpoint = {
+  language: string
+  when?: string
+}
+
+export type ExtensionChatParticipant = ExtensionChatParticipantCommand & {
+  id: string
+  commands?: ExtensionChatParticipantCommand[]
+  fullName?: string
+}
+
+export type ExtensionChatParticipantCommand = {
+  name: string
+  description?: string
+  disambiguation?: ExtensionChatParticipantDisambiguation[]
+  isSticky?: boolean
+  sampleRequest?: string
+  when?: string
+}
+
+export type ExtensionChatParticipantDisambiguation = {
+  category: string
+  description: string
+  examples: ExtensionAnyValue[]
+}
+
+export type ExtensionChatViewWelcome = {
+  content?: string
+  icon?: string
+  title?: string
+  when?: string
+}
+
+export type ExtensionCodeAction = {
+  languages: string[]
+  actions: {
+    kind: string
+    title: string
+    description?: string
+  }
+}
+
+export type ExtensionColor = {
+  description: string
+  id: string
+  defaults: {
+    dark: ExtensionThemeableColor
+    light: ExtensionThemeableColor
+    highContrast?: ExtensionThemeableColor
+    highContrastLight?: ExtensionThemeableColor
+  }
+}
+
 export type ExtensionCommand = {
   command: string
   title: string
@@ -34,99 +87,116 @@ export type ExtensionCommand = {
   shortTitle?: string
 }
 
-export type ExtensionBreakpoint = {
-  language: string
+export type ExtensionConfiguration = {
+  order?: number
+  title?: string
+  properties?: {
+    [key: string]: ExtensionJsonSchema
+  }
+}
+
+export type ExtensionConfigurationDefaults = {
+  [key: ExtensionConfigurationKey]: ExtensionAnyValue
+  [key: ExtensionSpecifiedLanguageKey]: {
+    [key: ExtensionConfigurationKey]: ExtensionAnyValue
+  }
+}
+
+export type ExtensionContinueEditSession = {
+  command: string
+  description?: string
+  group?: string
+  qualifiedName?: string
+  remoteGroup?: string
   when?: string
 }
 
-/**
- * TODO: All optional? Maybe JSONSchema is wrong
- */
-export type ExtensionJsonValidation = {
-  fileMatch?: string | string[]
-  url?: string
+export type ExtensionCustomEditor = {
+  displayName: string
+  viewType: string
+  priority?: 'default' | 'option'
+  selector: Array<{
+    filenamePattern: string
+  }>
 }
 
-export type ExtensionIcon = {
-  default: {
-    fontCharacter: string
-    fontPath: string
-  }
-  description: string
-}
-
-export type ExtensionCodeAction = {
-  actions: {
-    kind: string
-    title: string
-    description?: string
-  }
-  languages: string[]
-}
-
-export type ExtensionProblemMatcher = {
-  applyTo?: 'allDocuments' | 'closeDocuments' | 'openDocuments'
-  background?: {
-    activeOnStart?: boolean
-    beginsPattern?: string
-    endsPattern?: string
-  }
-  base?: string
-  fileLocation?: ExtensionProblemMatcherFileLocation
+export type ExtensionDebugger = {
+  args?: ExtensionAnyValue[]
+  configurationSnippets?: ExtensionAnyValue[]
+  deprecated?: string
+  hiddenWhen?: string
+  initialConfigurations?: string | ExtensionAnyValue
   label?: string
-  name?: string
-  owner?: string
-  pattern?: ExtensionProblemPattern
-  severity?: 'error' | 'info' | 'warning'
-  source?: string
-}
-
-/**
- * TODO: All optional? Maybe JSONSchema is wrong
- */
-export type ExtensionSnippet = {
-  language: string
-  path: string
-}
-
-export type ExtensionSubmenu = {
-  id: string
-  label: string
-  icon?: ExtensionThemeableIcon
-}
-
-export type ExtensionTerminalProfile = {
-  id: string
-  title: string
-  icon?: ExtensionThemeableIcon
-}
-
-export type ExtensionTerminalQuickFix = {
-  commandExitResult: 'error' | 'success'
-  commandLineMatcher: string
-  id: string
-  outputMatcher: {
-    anchor: 'bottom' | 'top'
-    length: number
-    lineMatcher: string
-    offset: number
+  languages?: string[]
+  linux?: ExtensionDebuggerOS
+  osx?: ExtensionDebuggerOS
+  program?: string
+  runtime?: string
+  runtimeArgs?: ExtensionAnyValue[]
+  type?: string
+  when?: string
+  windows?: ExtensionDebuggerOS
+  configurationAttributes?: {
+    [key: string]: ExtensionJsonSchema
   }
-  kind?: 'default' | 'explain'
+  strings?: {
+    unverifiedBreakpoints?: string
+  }
+  variables?: {
+    [key: string]: string
+  }
+}
+
+export type ExtensionDebugVisualizer = {
+  id: string
+  when: string
+}
+
+export type ExtensionDocumentation = {
+  refactoring: Array<{
+    command: string
+    title: string
+    when: string
+  }>
 }
 
 export type ExtensionGrammer = {
   path: string
   scopeName: string
   balancedBracketScopes?: string[]
+  injectTo?: string[]
+  language?: string
+  unbalancedBracketScopes?: string[]
   embeddedLanguages?: {
     [key: string]: string
   }
-  injectTo?: string[]
-  language?: string
   tokenTypes?: {
     [key: string]: 'comment' | 'other' | 'string'
   }
-  unbalancedBracketScopes?: string[]
+}
+
+export type ExtensionHtmlLanguageParticipant = {
+  languageId: string
+  autoInsert?: boolean
+}
+
+export type ExtensionIcon = {
+  description: string
+  default: {
+    fontCharacter: string
+    fontPath: string
+  }
+}
+
+export type ExtensionIconTheme = {
+  id: string
+  path: string
+  label?: string
+}
+
+export type ExtensionJsonValidation = {
+  fileMatch?: string | string[]
+  url?: string
 }
 
 export type ExtensionKeybinding = {
@@ -139,26 +209,6 @@ export type ExtensionKeybinding = {
   win?: string
 }
 
-export type ExtensionContinueEditSession = {
-  command: string
-  description?: string
-  group?: string
-  qualifiedName?: string
-  remoteGroup?: string
-  when?: string
-}
-
-export type ExtensionConfiguration = {
-  order?: number
-  properties?: {
-    [key: string]: ExtensionJsonSchema
-  }
-  title?: string
-}
-
-/**
- * TODO: All optional? Maybe JSONSchema is wrong
- */
 export type ExtensionLanguage = {
   aliases?: string[]
   configuration?: string
@@ -171,89 +221,9 @@ export type ExtensionLanguage = {
   mimetypes?: string[]
 }
 
-export type ExtensionTaskDefinition = {
-  properties?: {
-    [key: string]: ExtensionJsonSchema
-  }
-  required?: string[]
-  type?: string
-  when?: string
+export type ExtensionLanguageModel = {
+  vendor: string
 }
-
-export type ExtensionTheme = {
-  path: string
-  uiTheme: 'hc-black' | 'hc-light' | 'vs-dark' | 'vs'
-  id?: string
-  label?: string
-}
-
-export type ExtensionColor = {
-  defaults: {
-    dark: ExtensionThemeableColor
-    light: ExtensionThemeableColor
-    highContrast?: ExtensionThemeableColor
-    highContrastLight?: ExtensionThemeableColor
-  }
-  description: string
-  id: string
-}
-
-export type ExtensionProductIconTheme = {
-  id: string
-  path: string
-  label?: string
-}
-
-export type ExtensionResourceLabelFormatter = {
-  formatting: {
-    label?: string
-    separator?: string
-    stripPathStartingSeparator?: boolean
-    tildify?: boolean
-    workspaceSuffix?: string
-  }
-  scheme: string
-  authority?: string
-}
-
-export type ExtensionRemoteHelp = {
-  documentation?: string
-  feedback?: string
-  getStarted?: string
-  issues?: string
-  reportIssue?: string
-}
-
-/**
- * TODO: All optional? Maybe JSONSchema is wrong
- */
-export type ExtensionTypescriptServerPlugin = {
-  enableForWorkspaceTypeScriptVersions?: boolean
-  name?: string
-}
-
-export type ExtensionViewCommon = {
-  id: string
-  name: string
-  accessibilityHelpContent?: string
-  contextualTitle?: string
-  icon?: string
-  initialSize?: number
-  type?: 'tree' | 'webview'
-  visibility?: 'collapsed' | 'hidden' | 'visible'
-  when?: string
-}
-export type ExtensionViewRemote = Pick<ExtensionViewCommon, 'id' | 'name' | 'when'> & {
-  group?: string
-  remoteName?: string
-}
-
-export type ExtensionIconTheme = {
-  id: string
-  path: string
-  label?: string
-}
-
 export type ExtensionLanguageModelTool = {
   name: string
   canBeReferencedInPrompt?: boolean
@@ -267,76 +237,66 @@ export type ExtensionLanguageModelTool = {
   when?: string
 }
 
-export type ExtensionLanguageModel = {
-  vendor: string
+export type ExtensionLocalization = {
+  languageId: string
+  translations: ExtensionLocalizationTranslation[]
+  languageName?: string
+  localizedLanguageName?: string
 }
 
-/**
- * TODO: All optional? Maybe JSONSchema is wrong
- */
-export type ExtensionDebugger = {
-  args?: ExtensionAnyValue[]
-  configurationAttributes?: {
-    [key: string]: ExtensionJsonSchema
-  }
-  configurationSnippets?: ExtensionAnyValue[]
-  deprecated?: string
-  hiddenWhen?: string
-  initialConfigurations?: ExtensionAnyValue | string
-  label?: string
-  languages?: string[]
-  linux?: ExtensionDebuggerOS
-  osx?: ExtensionDebuggerOS
-  program?: string
-  runtime?: string
-  runtimeArgs?: ExtensionAnyValue[]
-  strings?: {
-    unverifiedBreakpoints?: string
-  }
-  type?: string
-  variables?: {
-    [key: string]: string
-  }
-  when?: string
-  windows?: ExtensionDebuggerOS
-}
-
-export type ExtensionDebugVisualizer = {
+export type ExtensionLocalizationTranslation = {
   id: string
-  when: string
+  path: string
 }
 
-/**
- * TODO: All optional? Maybe JSONSchema is wrong
- */
-export type ExtensionSemanticTokenModifier = {
-  description?: string
-  id?: string
+export type ExtensionMenu = {
+  command: string
+  alt?: string
+  group?: string
+  submenu?: string
+  when?: string
 }
 
-/**
- * TODO: All optional? Maybe JSONSchema is wrong
- */
-export type ExtensionSemanticTokeScope = {
-  language?: string
-  scopes?: {
-    [key: string]: string[]
-  }
-}
-
-export type ExtensionCustomEditor = {
+export type ExtensionNotebook = {
   displayName: string
-  selector: Array<{
-    filenamePattern: string
-  }>
-  viewType: string
+  type: string
   priority?: 'default' | 'option'
+  selector: Array<{
+    excludeFileNamePattern?: string
+    filenamePattern?: string
+  }>
 }
 
-export type ExtensionConfigurationDefaults = {
-  [key: ExtensionConfigurationKey]: ExtensionAnyValue
-  [key: ExtensionSpecifiedLanguageKey]: {
-    [key: ExtensionConfigurationKey]: ExtensionAnyValue
+export type ExtensionNotebookPreload = {
+  entrypoint: string
+  type: string
+  localResourceRoots?: string[]
+}
+
+export type ExtensionNotebookRenderer = {
+  displayName: string
+  entrypoint: string
+  id: string
+  mimeTypes: string[]
+  dependencies?: string[]
+  optionalDependencies?: string[]
+  requiresMessaging?: 'always' | 'never' | 'optional'
+}
+
+export type ExtensionProblemMatcher = {
+  applyTo?: 'allDocuments' | 'closeDocuments' | 'openDocuments'
+  base?: string
+  fileLocation?: ExtensionProblemMatcherFileLocation
+  label?: string
+  name?: string
+  owner?: string
+  pattern?: ExtensionProblemPattern
+  severity?: 'error' | 'info' | 'warning'
+  source?: string
+  background?: {
+    activeOnStart?: boolean
+    beginsPattern?: string
+    endsPattern?: string
   }
 }
 
@@ -357,12 +317,134 @@ export type ExtensionProblemPattern = {
   severity?: number
 }
 
+export type ExtensionProductIconTheme = {
+  id: string
+  path: string
+  label?: string
+}
+
+export type ExtensionRemoteHelp = {
+  documentation?: string
+  feedback?: string
+  getStarted?: string
+  issues?: string
+  reportIssue?: string
+}
+
+export type ExtensionResourceLabelFormatter = {
+  scheme: string
+  authority?: string
+  formatting: {
+    label?: string
+    separator?: string
+    stripPathStartingSeparator?: boolean
+    tildify?: boolean
+    workspaceSuffix?: string
+  }
+}
+
+export type ExtensionSemanticTokenModifier = {
+  description?: string
+  id?: string
+}
+
 export type ExtensionSemanticTokenType = {
   description: string
   id: string
   superType: string
 }
 
+export type ExtensionSemanticTokeScope = {
+  language?: string
+  scopes?: {
+    [key: string]: string[]
+  }
+}
+
+export type ExtensionSnippet = {
+  language: string
+  path: string
+}
+
+export type ExtensionSpeechProvider = {
+  description?: string
+  name?: string
+}
+
+export type ExtensionStatusBarItem = {
+  alignment: string
+  id: string
+  name: string
+  text: string
+  command?: string
+  priority?: number
+  tooltip?: string
+  accessibilityInformation?: {
+    label?: string
+    role?: string
+  }
+}
+
+export type ExtensionSubmenu = {
+  id: string
+  label: string
+  icon?: ExtensionThemeableIcon
+}
+export type ExtensionTaskDefinition = {
+  required?: string[]
+  type?: string
+  when?: string
+  properties?: {
+    [key: string]: ExtensionJsonSchema
+  }
+}
+
+export type ExtensionTerminalProfile = {
+  id: string
+  title: string
+  icon?: ExtensionThemeableIcon
+}
+
+export type ExtensionTerminalQuickFix = {
+  commandExitResult: 'error' | 'success'
+  commandLineMatcher: string
+  id: string
+  kind?: 'default' | 'explain'
+  outputMatcher: {
+    anchor: 'bottom' | 'top'
+    length: number
+    lineMatcher: string
+    offset: number
+  }
+}
+
+export type ExtensionTheme = {
+  path: string
+  uiTheme: 'hc-black' | 'hc-light' | 'vs-dark' | 'vs'
+  id?: string
+  label?: string
+}
+
+export type ExtensionTypescriptServerPlugin = {
+  enableForWorkspaceTypeScriptVersions?: boolean
+  name?: string
+}
+
+export type ExtensionViewCommon = {
+  id: string
+  name: string
+  accessibilityHelpContent?: string
+  contextualTitle?: string
+  icon?: string
+  initialSize?: number
+  type?: 'tree' | 'webview'
+  visibility?: 'collapsed' | 'hidden' | 'visible'
+  when?: string
+}
+export type ExtensionViewRemote = Pick<ExtensionViewCommon, 'id' | 'name' | 'when'> & {
+  group?: string
+  remoteName?: string
+}
 export type ExtensionViewsContainer = {
   icon: string
   id: string
@@ -377,53 +459,6 @@ export type ExtensionViewWelcome = {
   when?: string
 }
 
-export type ExtensionMenu = {
-  command: string
-  alt?: string
-  group?: string
-  submenu?: string
-  when?: string
-}
-
-export type ExtensionNotebook = {
-  displayName: string
-  selector: Array<{
-    excludeFileNamePattern?: string
-    filenamePattern?: string
-  }>
-  type: string
-  priority?: 'default' | 'option'
-}
-
-export type ExtensionNotebookPreload = {
-  entrypoint: string
-  type: string
-  localResourceRoots?: string[]
-}
-
-export type ExtensionNotebookRenderer = {
-  displayName: string
-  entrypoint: string
-  id: string
-  mimeTypes: string[]
-  dependencies?: string[]
-  optionalDependencies?: string[]
-  requiresMessaging?: 'always' | 'never' | 'optional'
-}
-
-export type ExtensionWalkThroughStep = {
-  id: string
-  media: {
-    altText: string
-    image: string
-    markdown?: string
-    svg?: string
-  }
-  title: string
-  completionEvents?: string[]
-  description?: string
-  when?: string
-}
 export type ExtensionWalkThrough = {
   description: string
   id: string
@@ -434,79 +469,25 @@ export type ExtensionWalkThrough = {
   when?: string
 }
 
-export type ExtensionStatusBarItem = {
-  alignment: string
+export type ExtensionWalkThroughStep = {
   id: string
-  name: string
-  text: string
-  accessibilityInformation?: {
-    label?: string
-    role?: string
-  }
-  command?: string
-  priority?: number
-  tooltip?: string
-}
-
-export type ExtensionLocalizationTranslation = {
-  id: string
-  path: string
-}
-
-export type ExtensionLocalization = {
-  languageId: string
-  translations: ExtensionLocalizationTranslation[]
-  languageName?: string
-  localizedLanguageName?: string
-}
-
-export type ExtensionDocumentation = {
-  refactoring: Array<{
-    command: string
-    title: string
-    when: string
-  }>
-}
-
-export type ExtensionChatParticipantDisambiguation = {
-  category: string
-  description: string
-  examples: ExtensionAnyValue[]
-}
-export type ExtensionChatParticipantCommand = {
-  name: string
+  title: string
+  completionEvents?: string[]
   description?: string
-  disambiguation?: ExtensionChatParticipantDisambiguation[]
-  isSticky?: boolean
-  sampleRequest?: string
   when?: string
-}
-export type ExtensionChatParticipant = ExtensionChatParticipantCommand & {
-  id: string
-  commands?: ExtensionChatParticipantCommand[]
-  fullName?: string
-}
-
-export type ExtensionChatViewWelcome = {
-  content?: string
-  icon?: string
-  title?: string
-  when?: string
-}
-
-export type ExtensionHtmlLanguageParticipant = {
-  languageId: string
-  autoInsert?: boolean
+  media: {
+    altText: string
+    image: string
+    markdown?: string
+    svg?: string
+  }
 }
 
 /**
- * TODO: All optional? Maybe JSONSchema is wrong
+ * Extension Manifest
+ *
+ * @see {@link https://code.visualstudio.com/api/references/extension-manifest}
  */
-export type ExtensionSpeechProvider = {
-  description?: string
-  name?: string
-}
-
 export type ExtensionManifest = {
   /**
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
@@ -563,6 +544,7 @@ export type ExtensionManifest = {
           supported: true
         }
     virtualWorkspaces?:
+      | true
       | {
           description: string
           supported: 'limited'
@@ -571,7 +553,6 @@ export type ExtensionManifest = {
           description: string
           supported: false
         }
-      | true
   }
 
   /**
@@ -734,9 +715,9 @@ export type ExtensionManifest = {
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.menus}
      */
     menus?: {
-      [key in ExtensionMenuKind]: ExtensionMenu[]
-    } & {
       [key: string]: ExtensionMenu[]
+    } & {
+      [key in ExtensionMenuKind]: ExtensionMenu[]
     }
 
     /**
@@ -845,13 +826,13 @@ export type ExtensionManifest = {
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.views}
      */
     views?: {
+      [key: string]: ExtensionViewCommon
+    } & {
       debug?: ExtensionViewCommon[]
       explorer?: ExtensionViewCommon[]
       remote?: ExtensionViewRemote[]
       scm?: ExtensionViewCommon[]
       test?: ExtensionViewCommon[]
-    } & {
-      [key: string]: ExtensionViewCommon
     }
 
     /**
