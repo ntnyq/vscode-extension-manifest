@@ -9,6 +9,7 @@ import type {
 } from './common'
 import type { ExtensionJsonSchema } from './json-schema'
 import type {
+  ExtensionActivationEvent,
   ExtensionCategory,
   ExtensionMenuKind,
   ExtensionProblemMatcherFileLocation,
@@ -514,7 +515,7 @@ export type ExtensionManifest = {
   /**
    * @see {@link https://code.visualstudio.com/api/references/activation-events}
    */
-  activationEvents?: string[]
+  activationEvents?: ExtensionActivationEvent[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/activation-events}

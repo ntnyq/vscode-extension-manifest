@@ -1,5 +1,5 @@
 /**
- * incase commit vscode extension manifest properties accidentally
+ * @file check before commit
  */
 
 import process from 'node:process'

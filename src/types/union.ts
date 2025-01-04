@@ -123,10 +123,8 @@ export type ExtensionProblemMatcherFileLocation =
 export type ExtensionActivationEvent =
   | '*'
   | 'onDebug'
-  | 'onDebugAdapterProtocolTracker'
   | 'onDebugDynamicConfigurations'
   | 'onDebugInitialConfigurations'
-  | 'onDebugResolve'
   | 'onIssueReporterOpened'
   | 'onOpenExternalUri'
   | 'onStartupFinished'
@@ -135,6 +133,8 @@ export type ExtensionActivationEvent =
   | ExtendUnion<'onChatParticipant'>
   | ExtendUnion<'onCommand', true>
   | ExtendUnion<'onCustomEditor'>
+  | ExtendUnion<'onDebugAdapterProtocolTracker'>
+  | ExtendUnion<'onDebugResolve'>
   | ExtendUnion<'onEditSession'>
   | ExtendUnion<'onFileSystem'>
   | ExtendUnion<'onLanguage', true>
