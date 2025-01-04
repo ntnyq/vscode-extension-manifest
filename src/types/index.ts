@@ -491,6 +491,8 @@ export type ExtensionWalkThroughStep = {
  */
 export type ExtensionManifest = {
   /**
+   * An object containing at least the vscode key matching the versions of VS Code that the extension is compatible with. Cannot be *. For example: ^0.10.5 indicates compatibility with a minimum VS Code version of 0.10.5.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   engines: {
@@ -498,36 +500,50 @@ export type ExtensionManifest = {
   }
 
   /**
+   * The name of the extension - should be all lowercase with no spaces. The name must be unique to the Marketplace.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   name: string
 
   /**
+   * The [publisher identifier](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#publishing-extensions).
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   publisher: string
 
   /**
+   * [SemVer](https://semver.org/) compatible version.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   version: string
 
   /**
+   * An array of the [activation events](https://code.visualstudio.com/api/references/activation-events) for this extension.
+   *
    * @see {@link https://code.visualstudio.com/api/references/activation-events}
    */
   activationEvents?: ExtensionActivationEvent[]
 
   /**
+   * Array of approved [badges](https://code.visualstudio.com/api/references/extension-manifest#approved-badges) to display in the sidebar of the Marketplace's extension page. Each badge is an object containing 3 properties: url for the badge's image URL, href for the link users will follow when clicking the badge and description.
+   *
    * @see {@link https://code.visualstudio.com/api/references/activation-events}
    */
   badges?: ExtensionBadge[]
 
   /**
+   * The entry point to your [Web extension](https://code.visualstudio.com/api/extension-guides/web-extensions).
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   browser?: string
 
   /**
+   * An object describing the extension's capabilities in limited workspaces: [untrustedWorkspaces](https://code.visualstudio.com/api/extension-guides/workspace-trust#static-declarations), [virtualWorkspaces](https://code.visualstudio.com/api/extension-guides/virtual-workspaces#signal-whether-your-extension-can-handle-virtual-workspaces).
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   capabilities?: {
@@ -557,20 +573,28 @@ export type ExtensionManifest = {
   }
 
   /**
+   * The categories you want to use for the extensions. Allowed values: [Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, Extension Packs, Language Packs, Data Science, Machine Learning, Visualization, Notebooks, Education, Testing]
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   categories?: ExtensionCategory[]
 
   /**
+   * An object describing the extension's [contributions](https://code.visualstudio.com/api/references/contribution-points).
+   *
    * @see {@link https://code.visualstudio.com/api/references/contribution-points}
    */
   contributes?: {
     /**
+     * Contributes an authentication provider. This will set up an activation event for your provider and display it in your extension's features.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.authentication}
      */
     authentication?: ExtensionAuthentication[]
 
     /**
+     * Usually a debugger extension will also have a contributes.breakpoints entry where the extension lists the language file types for which setting breakpoints will be enabled.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.breakpoints}
      */
     breakpoints?: ExtensionBreakpoint[]
@@ -591,21 +615,33 @@ export type ExtensionManifest = {
     codeActions?: ExtensionCodeAction[]
 
     /**
+     * Contributes new themable colors. These colors can be used by the extension in editor decorators and in the status bar. Once defined, users can customize the color in the workspace.colorCustomization setting and user themes can set the color value.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.colors}
      */
     colors?: ExtensionColor[]
 
     /**
+     * Contribute the UI for a command consisting of a title and (optionally) an icon, category, and enabled state. Enablement is expressed with [when clauses](https://code.visualstudio.com/api/references/when-clause-contexts). By default, commands show in the Command Palette (⇧⌘P) but they can also show in other [menus](https://code.visualstudio.com/api/references/contribution-points#contributes.menus).
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.commands}
      */
     commands?: ExtensionCommand[]
 
     /**
+     * Contribute settings that will be exposed to the user. The user will be able to set these configuration options in the Settings editor or by editing a settings.json file directly.
+     *
+     * This section can either be a single object, representing a single category of settings, or an array of objects, representing multiple categories of settings. If there are multiple categories of settings, the Settings editor will show a submenu in the table of contents for that extension, and the title keys will be used for the submenu entry names.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.configuration}
      */
     configuration?: ExtensionConfiguration | ExtensionConfiguration[]
 
     /**
+     * Contribute default values for other registered configurations and override their defaults.
+     *
+     * The following example overrides the default behavior of files.autoSave setting to AutoSave files on focus change.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.configurationDefaults}
      */
     configurationDefaults?: ExtensionConfigurationDefaults
@@ -621,6 +657,8 @@ export type ExtensionManifest = {
     'css.customData'?: string[]
 
     /**
+     * The customEditors contribution point is how your extension tells VS Code about the custom editors that it provides. For example, VS Code needs to know what types of files your custom editor works with as well as how to identify your custom editor in any UI.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.customEditors}
      */
     customEditors?: ExtensionCustomEditor[]
@@ -641,6 +679,8 @@ export type ExtensionManifest = {
     documentation?: ExtensionDocumentation
 
     /**
+     * Contribute a TextMate grammar to a language. You must provide the language this grammar applies to, the TextMate scopeName for the grammar and the file path.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.grammars}
      */
     grammars?: ExtensionGrammer[]
@@ -656,6 +696,8 @@ export type ExtensionManifest = {
     htmlLanguageParticipants?: ExtensionHtmlLanguageParticipant[]
 
     /**
+     * Contribute a new icon by ID, along with a default icon. The icon ID can then be used by the extension (or any other extensions that depend on the extension) anywhere a ThemeIcon can be used new ThemeIcon("iconId"), in [Markdown strings](https://code.visualstudio.com/api/references/icons-in-labels#icon-in-labels) ($(iconId)), and as icons in certain contribution points.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.icons}
      */
     icons?: {
@@ -663,16 +705,25 @@ export type ExtensionManifest = {
     }
 
     /**
+     * Contribute a file icon theme to VS Code. File icons are shown next to file names, indicating the file type.
+     *
+     * You must specify an id (used in the settings), a label and the path to the file icon definition file.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.iconThemes}
      */
     iconThemes?: ExtensionIconTheme[]
 
     /**
+     * Contribute a validation schema for a specific type of json file. The url value can be either a local path to a schema file included in the extension or a remote server URL such as a [json schema store](https://www.schemastore.org/json).
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.jsonValidation}
      */
     jsonValidation?: ExtensionJsonValidation[]
 
     /**
+     * Contribute a key binding rule defining what command should be invoked when the user presses a key combination. See the [Key Bindings](https://code.visualstudio.com/docs/getstarted/keybindings) topic where key bindings are explained in detail.
+     *
+     * Contributing a key binding will cause the Default Keyboard Shortcuts to display your rule, and every UI representation of the command will now show the key binding you have added. And, of course, when the user presses the key combination the command will be invoked.
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.keybindings}
      */
     keybindings?: ExtensionKeybinding[]
@@ -688,6 +739,16 @@ export type ExtensionManifest = {
     languageModelTools?: ExtensionLanguageModelTool[]
 
     /**
+     * Contribute definition of a programming language. This will introduce a new language or enrich the knowledge VS Code has about a language.
+     *
+     * The main effects of contributes.languages are:
+     *
+     * - Define a languageId that can be reused in other parts of VS Code API, such as vscode.TextDocument.languageId and the onLanguage Activation Events.
+     *    - You can contribute a human-readable using the aliases field. The first item in the list will be used as the human-readable label.
+     * - Associate file name extensions (extensions), file names (filenames), file name [glob patterns](https://code.visualstudio.com/docs/editor/glob-patterns) (filenamePatterns), files that begin with a specific line (such as hashbang) (firstLine), and mimetypes to that languageId.
+     * - Contribute a set of Declarative Language Features for the contributed language. Learn more about the configurable editing features in the Language Configuration Guide.
+     * - Contribute an icon which can be used as in file icon themes if theme does not contain an icon for the language
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.languages}
      */
     languages?: ExtensionLanguage[]
@@ -713,6 +774,8 @@ export type ExtensionManifest = {
     'markdown.previewStyles'?: string[]
 
     /**
+     * Contribute a menu item for a command to the editor or Explorer. The menu item definition contains the command that should be invoked when selected and the condition under which the item should show. The latter is defined with the when clause, which uses the key bindings [when clause contexts](https://code.visualstudio.com/api/references/when-clause-contexts).
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.menus}
      */
     menus?: {
@@ -777,6 +840,8 @@ export type ExtensionManifest = {
     semanticTokenTypes?: ExtensionSemanticTokenType[]
 
     /**
+     * Contribute snippets for a specific language. The language attribute is the [language identifier](https://code.visualstudio.com/docs/languages/identifiers) and the path is the relative path to the snippet file, which defines snippets in the [VS Code snippet format](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_snippet-syntax).
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.snippets}
      */
     snippets?: ExtensionSnippet[]
@@ -792,6 +857,10 @@ export type ExtensionManifest = {
     statusBarItems?: ExtensionStatusBarItem[]
 
     /**
+     * Contribute a submenu as a placeholder onto which menu items can be contributed. A submenu requires a label to be shown in the parent menu.
+     *
+     * In addition to a title, commands can also define icons that VS Code will show in the editor title menu bar.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.submenus}
      */
     submenus?: ExtensionSubmenu[]
@@ -802,6 +871,8 @@ export type ExtensionManifest = {
     taskDefinitions?: ExtensionTaskDefinition[]
 
     /**
+     * Contribute a terminal profile to VS Code, allowing extensions to handle the creation of the profiles. When defined, the profile should appear when creating the terminal profile
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.terminal}
      */
     terminal?: {
@@ -814,6 +885,10 @@ export type ExtensionManifest = {
     terminalQuickFixes?: ExtensionTerminalQuickFix[]
 
     /**
+     * Contribute a color theme to VS Code, defining workbench colors and styles for syntax tokens in the editor.
+     *
+     * You must specify a label, whether the theme is a dark theme or a light theme (such that the rest of VS Code changes to match your theme) and the path to the file (JSON format).
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.themes}
      */
     themes?: ExtensionTheme[]
@@ -824,6 +899,14 @@ export type ExtensionManifest = {
     typescriptServerPlugins?: ExtensionTypescriptServerPlugin[]
 
     /**
+     * Contribute a view to VS Code. You must specify an identifier and name for the view. You can contribute to following view containers:
+     *
+     * - explorer: Explorer view container in the Activity Bar
+     * - scm: Source Control Management (SCM) view container in the Activity Bar
+     * - debug: Run and Debug view container in the Activity Bar
+     * - test: Test view container in the Activity Bar
+     * - Custom view containers contributed by Extensions.
+     *
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.views}
      */
     views?: {
@@ -856,41 +939,57 @@ export type ExtensionManifest = {
   }
 
   /**
+   * 	Any runtime Node.js dependencies your extensions needs. Exactly the same as [npm's dependencies](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies).
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   dependencies?: Record<string, string>
 
   /**
+   * A short description of what your extension is and does.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   description?: string
 
   /**
+   * Any development Node.js dependencies your extension needs. Exactly the same as [npm's devDependencies](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies).
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   devDependencies?: Record<string, string>
 
   /**
+   * The display name for the extension used in the Marketplace. The display name must be unique to the Marketplace.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   displayName?: string
 
   /**
+   * An array with the ids of extensions that this extension depends on. The id of an extension is always ${publisher}.${name}. For example: vscode.csharp.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   extensionDependencies?: ExtensionIdentifier[]
 
   /**
+   * An array that indicates where the extension should run in remote configurations. Values are ui (run locally), workspace (run on remote machine) or both, with the order setting the preference. For example: [ui, workspace] indicates the extension can run in either location but prefers to run on the local machine. See [here](https://code.visualstudio.com/api/advanced-topics/extension-host#preferred-extension-location) for more details.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   extensionKind?: ('ui' | 'workspace')[]
 
   /**
+   * An array with the ids of extensions that can be installed together. The id of an extension is always ${publisher}.${name}. For example: vscode.csharp.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   extensionPack?: ExtensionIdentifier[]
 
   /**
+   * Helps format the Marketplace header to match your icon. See details below.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   galleryBanner?: {
@@ -899,54 +998,74 @@ export type ExtensionManifest = {
   }
 
   /**
+   * The path to the icon of at least 128x128 pixels (256x256 for Retina screens).
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   icon?: string
 
   /**
+   * An array of keywords to make it easier to find the extension. These are included with other extension Tags on the Marketplace. This list is currently limited to 5 keywords.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   keywords?: string[]
 
   /**
+   * Refer to [npm's documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-json/#license). If you do have a LICENSE file in the root of your extension, the value for license should be "SEE LICENSE IN <filename>".
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   license?: string
 
   /**
+   * The entry point to your extension.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   main?: string
 
   /**
+   * Controls the Markdown rendering engine used in the Marketplace. Either github (default) or standard.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    * @default `github`
    */
   markdown?: 'github' | 'standard'
 
   /**
+   * Sets the extension to be flagged as a Preview in the Marketplace.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   preview?: boolean
 
   /**
+   * The pricing information for the extension. Allowed values: Free, Trial. Default: Free. See [here](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#extension-pricing-label) for more details.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    * @default `Free`
    */
   pricing?: 'Free' | 'Trial'
 
   /**
+   * Controls the Q & A link in the Marketplace. Set to marketplace to enable the default Marketplace Q & A site. Set to a string to provide the URL of a custom Q & A site. Set to false to disable Q & A altogether.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    * @default `markeplate`
    */
   qna?: 'markeplate' | false | string
 
   /**
+   * Exactly the same as [npm's scripts](https://docs.npmjs.com/cli/v11/using-npm/scripts) but with extra VS Code specific fields such as [vscode:prepublish](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prepublish-step) or [vscode:uninstall](https://code.visualstudio.com/api/references/extension-manifest#extension-uninstall-hook).
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   scripts?: Record<string, string>
 
   /**
+   * Specify the location from where users can sponsor your extension. This is an object with a single property url, which links to a page where users can sponsor your extension.
+   *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   sponsor?: {

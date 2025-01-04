@@ -177,6 +177,12 @@ By checking the following properties:
 
 Read by `readExtensionManifest` or `readExtensionManifestSync`.
 
+## Contributes
+
+Find any types definition that are missing or not match.
+
+Please create an [issue](https://github.com/ntnyq/vscode-extension-manifest/issues/new) or pull request.
+
 ## Links
 
 - [Extension Manifest](https://code.visualstudio.com/api/references/extension-manifest)
