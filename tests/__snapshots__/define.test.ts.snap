@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`defineExtensionManifest > should work 1`] = `
+{
+  "activationEvents": [
+    "*",
+  ],
+  "contributes": {},
+  "engines": {
+    "vscode": "^1.96.0",
+  },
+  "name": "vscode-extension-manifest",
+  "publisher": "ntnyq",
+  "version": "1.0.0",
+}
+`;

@@ -9,9 +9,9 @@
 > VSCode extension manifest type definitions, validators, and utilities.
 
 > [!NOTE]
-> This package only provide types for VSCode extension manifest related fields listed in [Extension Manifest](https://code.visualstudio.com/api/references/extension-manifest).
+> This package only provides types for VSCode extension manifest related fields listed in [Extension Manifest](https://code.visualstudio.com/api/references/extension-manifest).
 >
-> If you need types support NodeJs package.json file, please check [type-fest - package-json.d.ts](https://github.com/sindresorhus/type-fest/blob/main/source/package-json.d.ts).
+> If you need types support a normal NodeJs package.json file, please check [type-fest - package-json.d.ts](https://github.com/sindresorhus/type-fest/blob/main/source/package-json.d.ts).
 
 ## Install
 
@@ -34,6 +34,9 @@ import {
   readExtensionManifest,
   readExtensionManifestSync,
   validateExtensionManifest,
+  defineExtensionManifest,
+  writeExtensionManifest,
+  writeExtensionManifestSync,
 } from 'vscode-extension-manifest'
 
 console.log(await readExtensionManifest())
@@ -41,17 +44,30 @@ console.log(await readExtensionManifest())
 
 console.log(validateExtensionManifest(readExtensionManifestSync()))
 // => true if valid, false otherwise
+
+const extensionManifest = defineExtensionManifest({
+  name: 'vscode-extension-manifest',
+  version: '1.0.0',
+  publisher: 'ntnyq',
+  engines: {
+    vscode: '^1.96.0',
+  },
+})
+
+await writeExtensionManifest('package.json', extensionManifest)
+
+writeExtensionManifestSync('package.json', extensionManifest)
 ```
 
 ## API
 
 ### readExtensionManifest
 
-- Type: `(options?: Options) => Promise<ExtensionManifest>`
+- Type: `(options?: ReadOptions) => Promise<ExtensionManifest>`
 
 Returns a `Promise` for VSCode extension manifest with type definition.
 
-#### Options
+#### ReadOptions
 
 for `readExtensionManifest` and `readExtensionManifestSync`
 
@@ -69,6 +85,8 @@ The filename of the extension manifest.
 - Default: `process.cwd()`
 - Required: `false`
 
+The current working directory.
+
 ##### cache
 
 - Type: `boolean | Map<string, Record<string, any>>`
@@ -79,13 +97,66 @@ Specifies whether the read results should be cached. Can be a boolean or a map t
 
 ### readExtensionManifestSync
 
-- Type: `(options?: Options) => ExtensionManifest`
+- Type: `(options?: ReadOptions) => ExtensionManifest`
 
 Returns VSCode extension manifest with type definition.
 
-#### Options
+#### ReadOptions
 
 Same as **readExtensionManifest**
+
+### writeExtensionManifest
+
+- Type: `(path: string, manifest: ExtensionManifest, options?: WriteOptions) => Promise<void>`
+
+#### WriteOptions
+
+for `writeExtensionManifest` and `writeExtensionManifestSync`
+
+##### replacer
+
+- Type: `(number | string)[] | null`
+- Default: `null`
+- Required: `false`
+
+The replacer for JSON.stringify.
+
+##### space
+
+- Type: `number | string`
+- Default: `2`
+- Required: `false`
+
+The space for JSON.stringify.
+
+##### stringify
+
+- Type: `(value: any) => string`
+- Default: `JSON.stringify`
+- Required: `false`
+
+The stringify function.
+
+### writeExtensionManifestSync
+
+- Type: `(path: string, manifest: ExtensionManifest, options?: WriteOptions) => void`
+
+#### WriteOptions
+
+Same as **writeExtensionManifest**
+
+### defineExtensionManifest
+
+Define a vscode extension manifest.
+
+#### Parameters
+
+##### manifest
+
+- Type: `ExtensionManifest`
+- Required: `true`
+
+The extension manifest.
 
 ### validateExtensionManifest
 

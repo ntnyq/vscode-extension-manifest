@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs'
-import { readFile } from 'node:fs/promises'
+import { readFileSync, writeFileSync } from 'node:fs'
+import { readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import { fileURLToPath, URL } from 'node:url'
@@ -59,14 +59,24 @@ const toPath = (urlOrPath: string | URL) =>
  * console.log(validateExtensionManifest(readExtensionManifestSync())
  *```
  */
-export function validateExtensionManifest(manifest: ExtensionManifest) {
+export function validateExtensionManifest(manifest: ExtensionManifest): boolean {
   return typeof manifest.publisher === 'string' && manifest.publisher.length > 0
+}
+
+/**
+ * Define a vscode extension manifest.
+ *
+ * @param manifest - The extension manifest.
+ * @returns The manifest of vscode extension with types.
+ */
+export function defineExtensionManifest(manifest: ExtensionManifest): ExtensionManifest {
+  return manifest
 }
 
 /**
  * Reads the manifest of vscode extension.
  *
- * @param options - The options.
+ * @param options - The options {@link ReadOptions}.
  * @returns A `Promise` resolves the manifest of vscode extension with types.
  *
  * @example
@@ -77,7 +87,7 @@ export function validateExtensionManifest(manifest: ExtensionManifest) {
  * console.log(await readExtensionManifest())
  *```
  */
-export async function readExtensionManifest(options: ReadOptions = {}) {
+export async function readExtensionManifest(options: ReadOptions = {}): Promise<ExtensionManifest> {
   const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
 
   const cache = options.cache && typeof options.cache !== 'boolean' ? options.cache : FILE_CACHE
@@ -99,7 +109,7 @@ export async function readExtensionManifest(options: ReadOptions = {}) {
 /**
  * Reads the manifest of vscode extension sync.
  *
- * @param options - The options.
+ * @param options - The options {@link ReadOptions}.
  * @returns The manifest of vscode extension with types.
  *
  * @example
@@ -110,7 +120,7 @@ export async function readExtensionManifest(options: ReadOptions = {}) {
  * console.log(readExtensionManifestSync())
  *```
  */
-export function readExtensionManifestSync(options: ReadOptions = {}) {
+export function readExtensionManifestSync(options: ReadOptions = {}): ExtensionManifest {
   const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
 
   const cache = options.cache && typeof options.cache !== 'boolean' ? options.cache : FILE_CACHE
@@ -127,4 +137,105 @@ export function readExtensionManifestSync(options: ReadOptions = {}) {
   cache.set(resolvedPath, parsed)
 
   return parsed
+}
+
+/**
+ * Options for {@link writeExtensionManifest} and {@link writeExtensionManifestSync}
+ */
+export interface WriteOptions {
+  /**
+   * The replacer for JSON.stringify.
+   *
+   * @default null
+   */
+  replacer?: (number | string)[] | null
+
+  /**
+   * The space for JSON.stringify.
+   *
+   * @default 2
+   */
+  space?: number | string
+
+  /**
+   * The stringify function.
+   * @param value - The value to stringify.
+   * @returns The stringified value.
+   *
+   * @default JSON.stringify
+   */
+  stringify?: (value: any) => string
+}
+
+/**
+ * @internal
+ */
+const toResolvedStringify = (options: WriteOptions = {}) => {
+  const { replacer = null, space = 2 } = options
+  return (value: any) =>
+    typeof options.stringify === 'function'
+      ? options.stringify(value)
+      : JSON.stringify(value, replacer, space)
+}
+
+/**
+ * Writes the manifest of vscode extension to given path.
+ * @param path - The path to write.
+ * @param manifest - The manifest of vscode extension.
+ * @param options - The options {@link WriteOptions}.
+ *
+ * @example
+ *
+ * ```ts
+ * import { writeExtensionManifest } from 'vscode-extension-manifest'
+ *
+ * await writeExtensionManifest('package.json', {
+ *   name: 'vscode-extension-manifest',
+ *   version: '1.0.0',
+ *   publisher: 'ntnyq',
+ *   engines: {
+ *     vscode: '^1.96.0',
+ *   },
+ * })
+ * ```
+ */
+export async function writeExtensionManifest(
+  path: string,
+  manifest: ExtensionManifest,
+  options: WriteOptions = {},
+): Promise<void> {
+  const stringify = toResolvedStringify(options)
+
+  await writeFile(path, stringify(manifest))
+}
+
+/**
+ * Writes the manifest of vscode extension to given path sync.
+ * @param path - The path to write.
+ * @param manifest - The manifest of vscode extension.
+ * @param options - The options {@link WriteOptions}.
+ *
+ * @example
+ *
+ * ```ts
+ * import { writeExtensionManifestSync } from 'vscode-extension-manifest'
+ *
+ * writeExtensionManifestSync('package.json', {
+ *   name: 'vscode-extension-manifest',
+ *   version: '1.0.0',
+ *   publisher: 'ntnyq',
+ *   engines: {
+ *     vscode: '^1.96.0',
+ *   },
+ * })
+ * ```
+ */
+export function writeExtensionManifestSync(
+  path: string,
+  manifest: ExtensionManifest,
+  options: WriteOptions = {},
+): void {
+  const stringify = toResolvedStringify(options)
+
+  writeFileSync(path, stringify(manifest))
 }
