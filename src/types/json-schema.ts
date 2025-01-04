@@ -119,6 +119,8 @@ export type TJsonSchemaVSCodeSnippet = {
 }
 
 /**
+ * json-schema types for VSCode extension
+ *
  * @see {@link https://json-schema.org/overview/what-is-jsonschema}
  */
 export type ExtensionJsonSchema = TJsonSchemaBase &

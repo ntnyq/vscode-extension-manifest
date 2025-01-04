@@ -69,7 +69,13 @@ The filename of the extension manifest.
 - Default: `process.cwd()`
 - Required: `false`
 
-The current working directory of the extension manifest.
+##### cache
+
+- Type: `boolean | Map<string, Record<string, any>>`
+- Default: `undefined`
+- Required: `false`
+
+Specifies whether the read results should be cached. Can be a boolean or a map to hold the cached data.
 
 ### readExtensionManifestSync
 

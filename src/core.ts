@@ -7,18 +7,34 @@ import type { ExtensionManifest } from './types'
 
 const FILENAME_PACKAGE_JSON = 'package.json'
 
-export interface ReadOptions {
+/**
+ * Built-in cache
+ */
+const FILE_CACHE = new Map<string, ExtensionManifest>()
+
+/**
+ * Options for {@link readExtensionManifest} and {@link readExtensionManifestSync}
+ */
+export type ReadOptions = {
   /**
    * The current working directory.
+   *
    * @default process.cwd()
    */
   cwd?: string | URL
 
   /**
    * The name of the manifest file.
+   *
    * @default "package.json"
    */
   filename?: string
+
+  /**
+   * Specifies whether the read results should be cached.
+   * Can be a boolean or a map to hold the cached data.
+   */
+  cache?: boolean | Map<string, Record<string, any>>
 }
 
 /**
@@ -63,9 +79,21 @@ export function validateExtensionManifest(manifest: ExtensionManifest) {
  */
 export async function readExtensionManifest(options: ReadOptions = {}) {
   const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
-  const manifestPath = resolve(toPath(cwd), filename)
-  const manifest = await readFile(manifestPath, 'utf-8')
-  return JSON.parse(manifest) as ExtensionManifest
+
+  const cache = options.cache && typeof options.cache !== 'boolean' ? options.cache : FILE_CACHE
+  const resolvedPath = resolve(toPath(cwd), filename)
+
+  if (options.cache && cache.has(resolvedPath)) {
+    /* v8 ignore next */
+    return cache.get(resolvedPath)! as ExtensionManifest
+  }
+
+  const manifest = await readFile(resolvedPath, 'utf-8')
+  const parsed = JSON.parse(manifest) as ExtensionManifest
+
+  cache.set(resolvedPath, parsed)
+
+  return parsed
 }
 
 /**
@@ -84,7 +112,19 @@ export async function readExtensionManifest(options: ReadOptions = {}) {
  */
 export function readExtensionManifestSync(options: ReadOptions = {}) {
   const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
-  const manifestPath = resolve(toPath(cwd), filename)
-  const manifest = readFileSync(manifestPath, 'utf-8')
-  return JSON.parse(manifest) as ExtensionManifest
+
+  const cache = options.cache && typeof options.cache !== 'boolean' ? options.cache : FILE_CACHE
+  const resolvedPath = resolve(toPath(cwd), filename)
+
+  if (options.cache && cache.has(resolvedPath)) {
+    /* v8 ignore next */
+    return cache.get(resolvedPath)! as ExtensionManifest
+  }
+
+  const manifest = readFileSync(resolvedPath, 'utf-8')
+  const parsed = JSON.parse(manifest) as ExtensionManifest
+
+  cache.set(resolvedPath, parsed)
+
+  return parsed
 }
