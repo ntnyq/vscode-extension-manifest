@@ -9,7 +9,7 @@ describe('typecheck', () => {
     assertType<(options?: ReadOptions) => Promise<ExtensionManifest>>(readExtensionManifest)
   })
 
-  it('should return type match', async () => {
+  it('should return type match', () => {
     expectTypeOf(validateExtensionManifest).returns.toMatchTypeOf<boolean>()
     expectTypeOf(readExtensionManifestSync).returns.toMatchTypeOf<ExtensionManifest>()
     expectTypeOf(readExtensionManifest).returns.toMatchTypeOf<Promise<ExtensionManifest>>()

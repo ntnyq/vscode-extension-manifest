@@ -3,6 +3,7 @@
 import { defineESLintConfig } from '@ntnyq/eslint-config'
 
 export default defineESLintConfig({
+  extensions: [],
   javascript: {
     overrides: {
       // VSCode use raw string '${workspaceFolder}'
@@ -10,10 +11,9 @@ export default defineESLintConfig({
     },
   },
   typescript: {
-    // FIXME: support ts in markdown
-    // tsconfigPath: './tsconfig.json',
-    // overrides: {
-    //   '@typescript-eslint/no-duplicate-type-constituents': 'error',
-    // },
+    tsconfigPath: './tsconfig.json',
+    overrides: {
+      // '@typescript-eslint/no-duplicate-type-constituents': 'error',
+    },
   },
 })

@@ -14,6 +14,7 @@ import type {
   ExtensionMenuKind,
   ExtensionProblemMatcherFileLocation,
 } from './union'
+import type { LiteralUnion } from './utils'
 
 export type ExtensionAuthentication = {
   id: string
@@ -126,7 +127,7 @@ export type ExtensionDebugger = {
   configurationSnippets?: ExtensionAnyValue[]
   deprecated?: string
   hiddenWhen?: string
-  initialConfigurations?: string | ExtensionAnyValue
+  initialConfigurations?: string | ExtensionAnyValue[]
   label?: string
   languages?: string[]
   linux?: ExtensionDebuggerOS
@@ -1054,7 +1055,7 @@ export type ExtensionManifest = {
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    * @default `markeplate`
    */
-  qna?: 'markeplate' | false | string
+  qna?: false | LiteralUnion<'markeplate'>
 
   /**
    * Exactly the same as [npm's scripts](https://docs.npmjs.com/cli/v11/using-npm/scripts) but with extra VS Code specific fields such as [vscode:prepublish](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prepublish-step) or [vscode:uninstall](https://code.visualstudio.com/api/references/extension-manifest#extension-uninstall-hook).
