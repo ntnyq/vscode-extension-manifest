@@ -31,6 +31,10 @@ const cacheExtensionManifest = new Map<string, ExtensionManifest>([
 ])
 
 describe('vscode extension', () => {
+  const CACHED_DEV_HELPER_MANIFEST = cacheDevHelper.get(
+    `${FIXTURE_VSCODE_DEV_HELPER}/package.json`,
+  )!
+
   it('should readExtensionManifest work', async () => {
     expect(await readExtensionManifest({ cwd: FIXTURE_VSCODE_DEV_HELPER })).toMatchSnapshot()
   })
@@ -40,23 +44,21 @@ describe('vscode extension', () => {
   })
 
   it('should writeExtensionManifestSync work', () => {
-    writeExtensionManifestSync(
-      resolve('tests/fixtures/temp/sync/package.json'),
-      cacheDevHelper.get(`${FIXTURE_VSCODE_DEV_HELPER}/package.json`)!,
-    )
-    expect(
-      readExtensionManifestSync({ cwd: resolve('tests/fixtures/temp/sync') }),
-    ).toMatchSnapshot()
+    const CURRENT_CWD = resolve('tests/fixtures/temp/async')
+
+    writeExtensionManifestSync(CACHED_DEV_HELPER_MANIFEST, {
+      cwd: CURRENT_CWD,
+    })
+    expect(readExtensionManifestSync({ cwd: CURRENT_CWD })).toMatchSnapshot()
   })
 
   it('should writeExtensionManifest work', async () => {
-    await writeExtensionManifest(
-      resolve('tests/fixtures/temp/async/package.json'),
-      cacheDevHelper.get(`${FIXTURE_VSCODE_DEV_HELPER}/package.json`)!,
-    )
-    expect(
-      await readExtensionManifest({ cwd: resolve('tests/fixtures/temp/async') }),
-    ).toMatchSnapshot()
+    const CURRENT_CWD = resolve('tests/fixtures/temp/async')
+
+    await writeExtensionManifest(CACHED_DEV_HELPER_MANIFEST, {
+      cwd: CURRENT_CWD,
+    })
+    expect(await readExtensionManifest({ cwd: CURRENT_CWD })).toMatchSnapshot()
   })
 
   it('options - cache - true', () => {

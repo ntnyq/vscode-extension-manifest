@@ -54,9 +54,13 @@ const extensionManifest = defineExtensionManifest({
   },
 })
 
-await writeExtensionManifest('package.json', extensionManifest)
+await writeExtensionManifest(extensionManifest, {
+  cwd: 'packages/extension',
+})
 
-writeExtensionManifestSync('package.json', extensionManifest)
+writeExtensionManifestSync(extensionManifest, {
+  cwd: 'vscode',
+})
 ```
 
 ## API
@@ -107,11 +111,27 @@ Same as **readExtensionManifest**
 
 ### writeExtensionManifest
 
-- Type: `(path: string, manifest: ExtensionManifest, options?: WriteOptions) => Promise<void>`
+- Type: `(manifest: ExtensionManifest, options?: WriteOptions) => Promise<void>`
 
 #### WriteOptions
 
 for `writeExtensionManifest` and `writeExtensionManifestSync`
+
+##### filename
+
+- Type: `string`
+- Default: `package.json`
+- Required: `false`
+
+The filename of the extension manifest.
+
+##### cwd
+
+- Type: `string | URL`
+- Default: `process.cwd()`
+- Required: `false`
+
+The current working directory.
 
 ##### replacer
 
@@ -139,7 +159,7 @@ The stringify function.
 
 ### writeExtensionManifestSync
 
-- Type: `(path: string, manifest: ExtensionManifest, options?: WriteOptions) => void`
+- Type: `(manifest: ExtensionManifest, options?: WriteOptions) => void`
 
 #### WriteOptions
 

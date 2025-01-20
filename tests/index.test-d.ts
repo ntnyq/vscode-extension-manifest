@@ -17,12 +17,12 @@ describe('typecheck', () => {
     assertType<(options?: ReadOptions) => ExtensionManifest>(readExtensionManifestSync)
     assertType<(options?: ReadOptions) => Promise<ExtensionManifest>>(readExtensionManifest)
 
-    assertType<(path: string, manifest: ExtensionManifest, options?: WriteOptions) => void>(
+    assertType<(manifest: ExtensionManifest, options?: WriteOptions) => void>(
       writeExtensionManifestSync,
     )
-    assertType<
-      (path: string, manifest: ExtensionManifest, options?: WriteOptions) => Promise<void>
-    >(writeExtensionManifest)
+    assertType<(manifest: ExtensionManifest, options?: WriteOptions) => Promise<void>>(
+      writeExtensionManifest,
+    )
   })
 
   it('should return type match', () => {
@@ -44,10 +44,10 @@ describe('typecheck', () => {
     expectTypeOf(readExtensionManifestSync).parameters.toEqualTypeOf<[ReadOptions?]>()
 
     expectTypeOf(writeExtensionManifest).parameters.toEqualTypeOf<
-      [string, ExtensionManifest, WriteOptions?]
+      [ExtensionManifest, WriteOptions?]
     >()
     expectTypeOf(writeExtensionManifestSync).parameters.toEqualTypeOf<
-      [string, ExtensionManifest, WriteOptions?]
+      [ExtensionManifest, WriteOptions?]
     >()
   })
 })
