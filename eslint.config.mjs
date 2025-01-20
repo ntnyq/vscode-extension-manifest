@@ -3,7 +3,6 @@
 import { defineESLintConfig } from '@ntnyq/eslint-config'
 
 export default defineESLintConfig({
-  extensions: [],
   javascript: {
     overrides: {
       // VSCode use raw string '${workspaceFolder}'

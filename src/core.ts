@@ -3,6 +3,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import { fileURLToPath, URL } from 'node:url'
+import { fsEnsureDir, fsEnsureDirSync } from './utils'
 import type { ExtensionManifest } from './types'
 
 const FILENAME_PACKAGE_JSON = 'package.json'
@@ -206,6 +207,8 @@ export async function writeExtensionManifest(
 ): Promise<void> {
   const stringify = toResolvedStringify(options)
 
+  await fsEnsureDir(path)
+
   await writeFile(path, stringify(manifest))
 }
 
@@ -236,6 +239,8 @@ export function writeExtensionManifestSync(
   options: WriteOptions = {},
 ): void {
   const stringify = toResolvedStringify(options)
+
+  fsEnsureDirSync(path)
 
   writeFileSync(path, stringify(manifest))
 }

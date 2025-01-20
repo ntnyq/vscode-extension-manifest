@@ -9,4 +9,6 @@ dist
 coverage
 lib-cov
 
+tests/fixtures/write
+
 *.tsbuildinfo

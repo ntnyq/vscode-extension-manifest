@@ -4,6 +4,7 @@ export default defineConfig({
   test: {
     globals: true,
     reporters: ['dot'],
+    watch: false,
     coverage: {
       include: ['**/src/**/*.ts'],
       reporter: ['lcov', 'text'],

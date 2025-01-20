@@ -31,10 +31,10 @@ pnpm add vscode-extension-manifest -D
 
 ```ts
 import {
+  defineExtensionManifest,
   readExtensionManifest,
   readExtensionManifestSync,
   validateExtensionManifest,
-  defineExtensionManifest,
   writeExtensionManifest,
   writeExtensionManifestSync,
 } from 'vscode-extension-manifest'

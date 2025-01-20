@@ -1,5 +1,11 @@
 import { resolve } from '../scripts/utils'
-import { readExtensionManifest, readExtensionManifestSync, validateExtensionManifest } from '../src'
+import {
+  readExtensionManifest,
+  readExtensionManifestSync,
+  validateExtensionManifest,
+  writeExtensionManifest,
+  writeExtensionManifestSync,
+} from '../src'
 import type { ExtensionManifest } from '../src'
 
 const FIXTURE_VSCODE_DEV_HELPER = resolve('tests/fixtures/vscode-dev-helper')
@@ -31,6 +37,26 @@ describe('vscode extension', () => {
 
   it('should readExtensionManifestSync work', () => {
     expect(readExtensionManifestSync({ cwd: FIXTURE_VSCODE_DEV_HELPER })).toMatchSnapshot()
+  })
+
+  it('should writeExtensionManifestSync work', () => {
+    writeExtensionManifestSync(
+      resolve('tests/fixtures/temp/sync/package.json'),
+      cacheDevHelper.get(`${FIXTURE_VSCODE_DEV_HELPER}/package.json`)!,
+    )
+    expect(
+      readExtensionManifestSync({ cwd: resolve('tests/fixtures/temp/sync') }),
+    ).toMatchSnapshot()
+  })
+
+  it('should writeExtensionManifest work', async () => {
+    await writeExtensionManifest(
+      resolve('tests/fixtures/temp/async/package.json'),
+      cacheDevHelper.get(`${FIXTURE_VSCODE_DEV_HELPER}/package.json`)!,
+    )
+    expect(
+      await readExtensionManifest({ cwd: resolve('tests/fixtures/temp/async') }),
+    ).toMatchSnapshot()
   })
 
   it('options - cache - true', () => {
