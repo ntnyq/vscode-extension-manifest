@@ -1,23 +1,12 @@
 /**
- * VSCode built-in product icons
- * @see {@link https://code.visualstudio.com/api/references/icons-in-labels#icon-listing}
- */
-export type ExtensionProductIcon = `$(${string})`
-
-/**
- * Unique identifier for an extension
- */
-export type ExtensionIdentifier = `${string}.${string}`
-
-/**
  * Any value
  */
 export type ExtensionAnyValue = any
 
 /**
- * HexColor or themeable color identifier
+ * Extension configuration key
  */
-export type ExtensionThemeableColor = `#${string}` | `${string}.${string}`
+export type ExtensionConfigurationKey = `${string}.${string}`
 
 /**
  * Extension debugger OS options
@@ -27,14 +16,25 @@ export type ExtensionDebuggerOS = {
 }
 
 /**
- * Extension configuration key
+ * Unique identifier for an extension
  */
-export type ExtensionConfigurationKey = `${string}.${string}`
+export type ExtensionIdentifier = `${string}.${string}`
+
+/**
+ * VSCode built-in product icons
+ * @see {@link https://code.visualstudio.com/api/references/icons-in-labels#icon-listing}
+ */
+export type ExtensionProductIcon = `$(${string})`
 
 /**
  * Extension specified language key
  */
 export type ExtensionSpecifiedLanguageKey = `[${string}]`
+
+/**
+ * HexColor or themeable color identifier
+ */
+export type ExtensionThemeableColor = `#${string}` | `${string}.${string}`
 
 /**
  * Built-in icon or icon path or icon object with dark and light properties

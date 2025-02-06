@@ -489,17 +489,9 @@ export type ExtensionWalkThroughStep = {
  * Extension Manifest
  *
  * @see {@link https://code.visualstudio.com/api/references/extension-manifest}
+ * @pg
  */
 export type ExtensionManifest = {
-  /**
-   * An object containing at least the vscode key matching the versions of VS Code that the extension is compatible with. Cannot be *. For example: ^0.10.5 indicates compatibility with a minimum VS Code version of 0.10.5.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  engines: {
-    vscode: string
-  }
-
   /**
    * The name of the extension - should be all lowercase with no spaces. The name must be unique to the Marketplace.
    *
@@ -543,6 +535,137 @@ export type ExtensionManifest = {
   browser?: string
 
   /**
+   * The categories you want to use for the extensions. Allowed values: [Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, Extension Packs, Language Packs, Data Science, Machine Learning, Visualization, Notebooks, Education, Testing]
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  categories?: ExtensionCategory[]
+
+  /**
+   * 	Any runtime Node.js dependencies your extensions needs. Exactly the same as [npm's dependencies](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies).
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  dependencies?: Record<string, string>
+
+  /**
+   * A short description of what your extension is and does.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  description?: string
+
+  /**
+   * Any development Node.js dependencies your extension needs. Exactly the same as [npm's devDependencies](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies).
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  devDependencies?: Record<string, string>
+
+  /**
+   * The display name for the extension used in the Marketplace. The display name must be unique to the Marketplace.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  displayName?: string
+
+  /**
+   * An array with the ids of extensions that this extension depends on. The id of an extension is always ${publisher}.${name}. For example: vscode.csharp.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  extensionDependencies?: ExtensionIdentifier[]
+
+  /**
+   * An array that indicates where the extension should run in remote configurations. Values are ui (run locally), workspace (run on remote machine) or both, with the order setting the preference. For example: [ui, workspace] indicates the extension can run in either location but prefers to run on the local machine. See [here](https://code.visualstudio.com/api/advanced-topics/extension-host#preferred-extension-location) for more details.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  extensionKind?: ('ui' | 'workspace')[]
+
+  /**
+   * An array with the ids of extensions that can be installed together. The id of an extension is always ${publisher}.${name}. For example: vscode.csharp.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  extensionPack?: ExtensionIdentifier[]
+
+  /**
+   * The path to the icon of at least 128x128 pixels (256x256 for Retina screens).
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  icon?: string
+
+  /**
+   * An array of keywords to make it easier to find the extension. These are included with other extension Tags on the Marketplace. This list is currently limited to 5 keywords.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  keywords?: string[]
+
+  /**
+   * Refer to [npm's documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-json/#license). If you do have a LICENSE file in the root of your extension, the value for license should be "SEE LICENSE IN <filename>".
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  license?: string
+
+  /**
+   * The entry point to your extension.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  main?: string
+
+  /**
+   * Controls the Markdown rendering engine used in the Marketplace. Either github (default) or standard.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   * @default `github`
+   */
+  markdown?: 'github' | 'standard'
+
+  /**
+   * Sets the extension to be flagged as a Preview in the Marketplace.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  preview?: boolean
+
+  /**
+   * The pricing information for the extension. Allowed values: Free, Trial. Default: Free. See [here](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#extension-pricing-label) for more details.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   * @default `Free`
+   */
+  pricing?: 'Free' | 'Trial'
+
+  /**
+   * Controls the Q & A link in the Marketplace. Set to marketplace to enable the default Marketplace Q & A site. Set to a string to provide the URL of a custom Q & A site. Set to false to disable Q & A altogether.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   * @default `markeplate`
+   */
+  qna?: false | LiteralUnion<'markeplate'>
+
+  /**
+   * Exactly the same as [npm's scripts](https://docs.npmjs.com/cli/v11/using-npm/scripts) but with extra VS Code specific fields such as [vscode:prepublish](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prepublish-step) or [vscode:uninstall](https://code.visualstudio.com/api/references/extension-manifest#extension-uninstall-hook).
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  scripts?: Record<string, string>
+
+  /**
+   * An object containing at least the vscode key matching the versions of VS Code that the extension is compatible with. Cannot be *. For example: ^0.10.5 indicates compatibility with a minimum VS Code version of 0.10.5.
+   *
+   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   */
+  engines: {
+    vscode: string
+  }
+
+  /**
    * An object describing the extension's capabilities in limited workspaces: [untrustedWorkspaces](https://code.visualstudio.com/api/extension-guides/workspace-trust#static-declarations), [virtualWorkspaces](https://code.visualstudio.com/api/extension-guides/virtual-workspaces#signal-whether-your-extension-can-handle-virtual-workspaces).
    *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
@@ -572,13 +695,6 @@ export type ExtensionManifest = {
           supported: false
         }
   }
-
-  /**
-   * The categories you want to use for the extensions. Allowed values: [Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, Extension Packs, Language Packs, Data Science, Machine Learning, Visualization, Notebooks, Education, Testing]
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  categories?: ExtensionCategory[]
 
   /**
    * An object describing the extension's [contributions](https://code.visualstudio.com/api/references/contribution-points).
@@ -697,15 +813,6 @@ export type ExtensionManifest = {
     htmlLanguageParticipants?: ExtensionHtmlLanguageParticipant[]
 
     /**
-     * Contribute a new icon by ID, along with a default icon. The icon ID can then be used by the extension (or any other extensions that depend on the extension) anywhere a ThemeIcon can be used new ThemeIcon("iconId"), in [Markdown strings](https://code.visualstudio.com/api/references/icons-in-labels#icon-in-labels) ($(iconId)), and as icons in certain contribution points.
-     *
-     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.icons}
-     */
-    icons?: {
-      [key: string]: ExtensionIcon
-    }
-
-    /**
      * Contribute a file icon theme to VS Code. File icons are shown next to file names, indicating the file type.
      *
      * You must specify an id (used in the settings), a label and the path to the file icon definition file.
@@ -773,17 +880,6 @@ export type ExtensionManifest = {
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.markdown.previewStyles}
      */
     'markdown.previewStyles'?: string[]
-
-    /**
-     * Contribute a menu item for a command to the editor or Explorer. The menu item definition contains the command that should be invoked when selected and the condition under which the item should show. The latter is defined with the when clause, which uses the key bindings [when clause contexts](https://code.visualstudio.com/api/references/when-clause-contexts).
-     *
-     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.menus}
-     */
-    menus?: {
-      [key: string]: ExtensionMenu[]
-    } & {
-      [key in ExtensionMenuKind]: ExtensionMenu[]
-    }
 
     /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.notebookPreload}
@@ -872,15 +968,6 @@ export type ExtensionManifest = {
     taskDefinitions?: ExtensionTaskDefinition[]
 
     /**
-     * Contribute a terminal profile to VS Code, allowing extensions to handle the creation of the profiles. When defined, the profile should appear when creating the terminal profile
-     *
-     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.terminal}
-     */
-    terminal?: {
-      profiles?: ExtensionTerminalProfile[]
-    }
-
-    /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.terminalQuickFixes}
      */
     terminalQuickFixes?: ExtensionTerminalQuickFix[]
@@ -898,6 +985,45 @@ export type ExtensionManifest = {
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.typescriptServerPlugins}
      */
     typescriptServerPlugins?: ExtensionTypescriptServerPlugin[]
+
+    /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.viewsWelcome}
+     */
+    viewsWelcome?: ExtensionViewWelcome[]
+
+    /**
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.walkthroughs}
+     */
+    walkthroughs?: ExtensionWalkThrough[]
+
+    /**
+     * Contribute a new icon by ID, along with a default icon. The icon ID can then be used by the extension (or any other extensions that depend on the extension) anywhere a ThemeIcon can be used new ThemeIcon("iconId"), in [Markdown strings](https://code.visualstudio.com/api/references/icons-in-labels#icon-in-labels) ($(iconId)), and as icons in certain contribution points.
+     *
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.icons}
+     */
+    icons?: {
+      [key: string]: ExtensionIcon
+    }
+
+    /**
+     * Contribute a menu item for a command to the editor or Explorer. The menu item definition contains the command that should be invoked when selected and the condition under which the item should show. The latter is defined with the when clause, which uses the key bindings [when clause contexts](https://code.visualstudio.com/api/references/when-clause-contexts).
+     *
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.menus}
+     */
+    menus?: {
+      [key: string]: ExtensionMenu[]
+    } & {
+      [key in ExtensionMenuKind]: ExtensionMenu[]
+    }
+
+    /**
+     * Contribute a terminal profile to VS Code, allowing extensions to handle the creation of the profiles. When defined, the profile should appear when creating the terminal profile
+     *
+     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.terminal}
+     */
+    terminal?: {
+      profiles?: ExtensionTerminalProfile[]
+    }
 
     /**
      * Contribute a view to VS Code. You must specify an identifier and name for the view. You can contribute to following view containers:
@@ -927,66 +1053,7 @@ export type ExtensionManifest = {
       activitybar?: ExtensionViewsContainer[]
       panel?: ExtensionViewsContainer[]
     }
-
-    /**
-     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.viewsWelcome}
-     */
-    viewsWelcome?: ExtensionViewWelcome[]
-
-    /**
-     * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.walkthroughs}
-     */
-    walkthroughs?: ExtensionWalkThrough[]
   }
-
-  /**
-   * 	Any runtime Node.js dependencies your extensions needs. Exactly the same as [npm's dependencies](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies).
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  dependencies?: Record<string, string>
-
-  /**
-   * A short description of what your extension is and does.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  description?: string
-
-  /**
-   * Any development Node.js dependencies your extension needs. Exactly the same as [npm's devDependencies](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies).
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  devDependencies?: Record<string, string>
-
-  /**
-   * The display name for the extension used in the Marketplace. The display name must be unique to the Marketplace.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  displayName?: string
-
-  /**
-   * An array with the ids of extensions that this extension depends on. The id of an extension is always ${publisher}.${name}. For example: vscode.csharp.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  extensionDependencies?: ExtensionIdentifier[]
-
-  /**
-   * An array that indicates where the extension should run in remote configurations. Values are ui (run locally), workspace (run on remote machine) or both, with the order setting the preference. For example: [ui, workspace] indicates the extension can run in either location but prefers to run on the local machine. See [here](https://code.visualstudio.com/api/advanced-topics/extension-host#preferred-extension-location) for more details.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  extensionKind?: ('ui' | 'workspace')[]
-
-  /**
-   * An array with the ids of extensions that can be installed together. The id of an extension is always ${publisher}.${name}. For example: vscode.csharp.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  extensionPack?: ExtensionIdentifier[]
 
   /**
    * Helps format the Marketplace header to match your icon. See details below.
@@ -997,72 +1064,6 @@ export type ExtensionManifest = {
     color?: string
     theme?: string
   }
-
-  /**
-   * The path to the icon of at least 128x128 pixels (256x256 for Retina screens).
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  icon?: string
-
-  /**
-   * An array of keywords to make it easier to find the extension. These are included with other extension Tags on the Marketplace. This list is currently limited to 5 keywords.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  keywords?: string[]
-
-  /**
-   * Refer to [npm's documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-json/#license). If you do have a LICENSE file in the root of your extension, the value for license should be "SEE LICENSE IN <filename>".
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  license?: string
-
-  /**
-   * The entry point to your extension.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  main?: string
-
-  /**
-   * Controls the Markdown rendering engine used in the Marketplace. Either github (default) or standard.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   * @default `github`
-   */
-  markdown?: 'github' | 'standard'
-
-  /**
-   * Sets the extension to be flagged as a Preview in the Marketplace.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  preview?: boolean
-
-  /**
-   * The pricing information for the extension. Allowed values: Free, Trial. Default: Free. See [here](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#extension-pricing-label) for more details.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   * @default `Free`
-   */
-  pricing?: 'Free' | 'Trial'
-
-  /**
-   * Controls the Q & A link in the Marketplace. Set to marketplace to enable the default Marketplace Q & A site. Set to a string to provide the URL of a custom Q & A site. Set to false to disable Q & A altogether.
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   * @default `markeplate`
-   */
-  qna?: false | LiteralUnion<'markeplate'>
-
-  /**
-   * Exactly the same as [npm's scripts](https://docs.npmjs.com/cli/v11/using-npm/scripts) but with extra VS Code specific fields such as [vscode:prepublish](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prepublish-step) or [vscode:uninstall](https://code.visualstudio.com/api/references/extension-manifest#extension-uninstall-hook).
-   *
-   * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   */
-  scripts?: Record<string, string>
 
   /**
    * Specify the location from where users can sponsor your extension. This is an object with a single property url, which links to a page where users can sponsor your extension.

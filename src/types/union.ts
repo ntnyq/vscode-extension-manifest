@@ -1,5 +1,40 @@
 import type { ExtendUnion } from './utils'
 
+/**
+ * @see https://code.visualstudio.com/api/references/activation-events
+ */
+export type ExtensionActivationEvent =
+  | '*'
+  | 'onDebug'
+  | 'onDebugDynamicConfigurations'
+  | 'onDebugInitialConfigurations'
+  | 'onIssueReporterOpened'
+  | 'onOpenExternalUri'
+  | 'onStartupFinished'
+  | 'onUri'
+  | ExtendUnion<'onAuthenticationRequest'>
+  | ExtendUnion<'onChatParticipant'>
+  | ExtendUnion<'onCommand', true>
+  | ExtendUnion<'onCustomEditor'>
+  | ExtendUnion<'onDebugAdapterProtocolTracker'>
+  | ExtendUnion<'onDebugResolve'>
+  | ExtendUnion<'onEditSession'>
+  | ExtendUnion<'onFileSystem'>
+  | ExtendUnion<'onLanguage', true>
+  | ExtendUnion<'onLanguageModelTool'>
+  | ExtendUnion<'onNotebook'>
+  | ExtendUnion<'onRenderer'>
+  | ExtendUnion<'onSearch'>
+  | ExtendUnion<'onTaskType'>
+  | ExtendUnion<'onTerminalProfile'>
+  | ExtendUnion<'onView'>
+  | ExtendUnion<'onWalkthrough'>
+  | ExtendUnion<'onWebviewPanel'>
+  | ExtendUnion<'workspaceContains'>
+
+/**
+ * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+ */
 export type ExtensionCategory =
   | 'Data Science'
   | 'Debuggers'
@@ -116,35 +151,3 @@ export type ExtensionProblemMatcherFileLocation =
         include: '${workspaceFolder}'
       },
     ]
-
-/**
- * @see https://code.visualstudio.com/api/references/activation-events
- */
-export type ExtensionActivationEvent =
-  | '*'
-  | 'onDebug'
-  | 'onDebugDynamicConfigurations'
-  | 'onDebugInitialConfigurations'
-  | 'onIssueReporterOpened'
-  | 'onOpenExternalUri'
-  | 'onStartupFinished'
-  | 'onUri'
-  | ExtendUnion<'onAuthenticationRequest'>
-  | ExtendUnion<'onChatParticipant'>
-  | ExtendUnion<'onCommand', true>
-  | ExtendUnion<'onCustomEditor'>
-  | ExtendUnion<'onDebugAdapterProtocolTracker'>
-  | ExtendUnion<'onDebugResolve'>
-  | ExtendUnion<'onEditSession'>
-  | ExtendUnion<'onFileSystem'>
-  | ExtendUnion<'onLanguage', true>
-  | ExtendUnion<'onLanguageModelTool'>
-  | ExtendUnion<'onNotebook'>
-  | ExtendUnion<'onRenderer'>
-  | ExtendUnion<'onSearch'>
-  | ExtendUnion<'onTaskType'>
-  | ExtendUnion<'onTerminalProfile'>
-  | ExtendUnion<'onView'>
-  | ExtendUnion<'onWalkthrough'>
-  | ExtendUnion<'onWebviewPanel'>
-  | ExtendUnion<'workspaceContains'>

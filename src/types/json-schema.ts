@@ -30,6 +30,7 @@ export type TJsonSchemaUnSupported = {
 
 /**
  * Official schema properties
+ * @pg
  */
 export type TJsonSchemaBase = {
   additionalItems?: boolean | ExtensionJsonSchema
@@ -95,6 +96,7 @@ export type TJsonSchemaV7 = {
 
 /**
  * VSCode extends schema properties
+ * @pg
  */
 export type TJsonSchemaVSCode = {
   allowComments?: boolean
@@ -122,6 +124,7 @@ export type TJsonSchemaVSCodeSnippet = {
  * json-schema types for VSCode extension
  *
  * @see {@link https://json-schema.org/overview/what-is-jsonschema}
+ * @pg
  */
 export type ExtensionJsonSchema = TJsonSchemaBase &
   TJsonSchemaV6 &

@@ -12,7 +12,6 @@
   "eslint.validate": [
     "vue",
     "yaml",
-    "html",
     "toml",
     "json",
     "jsonc",

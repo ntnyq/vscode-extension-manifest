@@ -11,8 +11,5 @@ export default defineESLintConfig({
   },
   typescript: {
     tsconfigPath: './tsconfig.json',
-    overrides: {
-      // '@typescript-eslint/no-duplicate-type-constituents': 'error',
-    },
   },
 })

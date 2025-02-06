@@ -53,15 +53,15 @@
     "release": "run-s release:check release:publish",
     "release:check": "run-s lint typecheck test",
     "release:publish": "bumpp && pnpm publish",
-    "test": "vitest --typecheck",
+    "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^3.12.3",
+    "@ntnyq/eslint-config": "^4.0.0-beta.1",
     "@ntnyq/prettier-config": "^1.22.1",
-    "@types/node": "^22.12.0",
-    "@vitest/coverage-v8": "^3.0.4",
-    "bumpp": "^10.0.1",
+    "@types/node": "^22.13.1",
+    "@vitest/coverage-v8": "^3.0.5",
+    "bumpp": "^10.0.2",
     "eslint": "^9.19.0",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
@@ -70,10 +70,15 @@
     "tsup": "^8.3.6",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.4"
+    "vitest": "^3.0.5"
   },
   "engines": {
     "node": ">=18.18.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "nano-staged": {
     "*.{js,ts,mjs,cjs,json,md,yml,yaml}": [
