@@ -11,37 +11,59 @@ import type { ExtensionManifest, ReadOptions, WriteOptions } from '../src'
 
 describe('typecheck', () => {
   it('should types match', () => {
-    assertType<(manifest: ExtensionManifest) => boolean>(validateExtensionManifest)
-    assertType<(manifest: ExtensionManifest) => ExtensionManifest>(defineExtensionManifest)
+    assertType<(manifest: ExtensionManifest) => boolean>(
+      validateExtensionManifest,
+    )
+    assertType<(manifest: ExtensionManifest) => ExtensionManifest>(
+      defineExtensionManifest,
+    )
 
-    assertType<(options?: ReadOptions) => ExtensionManifest>(readExtensionManifestSync)
-    assertType<(options?: ReadOptions) => Promise<ExtensionManifest>>(readExtensionManifest)
+    assertType<(options?: ReadOptions) => ExtensionManifest>(
+      readExtensionManifestSync,
+    )
+    assertType<(options?: ReadOptions) => Promise<ExtensionManifest>>(
+      readExtensionManifest,
+    )
 
     assertType<(manifest: ExtensionManifest, options?: WriteOptions) => void>(
       writeExtensionManifestSync,
     )
-    assertType<(manifest: ExtensionManifest, options?: WriteOptions) => Promise<void>>(
-      writeExtensionManifest,
-    )
+    assertType<
+      (manifest: ExtensionManifest, options?: WriteOptions) => Promise<void>
+    >(writeExtensionManifest)
   })
 
   it('should return type match', () => {
     expectTypeOf(validateExtensionManifest).returns.toMatchTypeOf<boolean>()
-    expectTypeOf(defineExtensionManifest).returns.toMatchTypeOf<ExtensionManifest>()
+    expectTypeOf(
+      defineExtensionManifest,
+    ).returns.toMatchTypeOf<ExtensionManifest>()
 
-    expectTypeOf(readExtensionManifestSync).returns.toMatchTypeOf<ExtensionManifest>()
-    expectTypeOf(readExtensionManifest).returns.toMatchTypeOf<Promise<ExtensionManifest>>()
+    expectTypeOf(
+      readExtensionManifestSync,
+    ).returns.toMatchTypeOf<ExtensionManifest>()
+    expectTypeOf(readExtensionManifest).returns.toMatchTypeOf<
+      Promise<ExtensionManifest>
+    >()
 
     expectTypeOf(writeExtensionManifestSync).returns.toMatchTypeOf<void>()
     expectTypeOf(writeExtensionManifest).returns.toMatchTypeOf<Promise<void>>()
   })
 
   it('should params type match', () => {
-    expectTypeOf(validateExtensionManifest).parameters.toEqualTypeOf<[ExtensionManifest]>()
-    expectTypeOf(defineExtensionManifest).parameters.toEqualTypeOf<[ExtensionManifest]>()
+    expectTypeOf(validateExtensionManifest).parameters.toEqualTypeOf<
+      [ExtensionManifest]
+    >()
+    expectTypeOf(defineExtensionManifest).parameters.toEqualTypeOf<
+      [ExtensionManifest]
+    >()
 
-    expectTypeOf(readExtensionManifest).parameters.toEqualTypeOf<[ReadOptions?]>()
-    expectTypeOf(readExtensionManifestSync).parameters.toEqualTypeOf<[ReadOptions?]>()
+    expectTypeOf(readExtensionManifest).parameters.toEqualTypeOf<
+      [ReadOptions?]
+    >()
+    expectTypeOf(readExtensionManifestSync).parameters.toEqualTypeOf<
+      [ReadOptions?]
+    >()
 
     expectTypeOf(writeExtensionManifest).parameters.toEqualTypeOf<
       [ExtensionManifest, WriteOptions?]

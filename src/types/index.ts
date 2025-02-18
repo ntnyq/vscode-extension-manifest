@@ -443,7 +443,10 @@ export type ExtensionViewCommon = {
   visibility?: 'collapsed' | 'hidden' | 'visible'
   when?: string
 }
-export type ExtensionViewRemote = Pick<ExtensionViewCommon, 'id' | 'name' | 'when'> & {
+export type ExtensionViewRemote = Pick<
+  ExtensionViewCommon,
+  'id' | 'name' | 'when'
+> & {
   group?: string
   remoteName?: string
 }

@@ -65,7 +65,9 @@ const toPath = (urlOrPath: string | URL) =>
  * console.log(validateExtensionManifest(readExtensionManifestSync())
  *```
  */
-export function validateExtensionManifest(manifest: ExtensionManifest): boolean {
+export function validateExtensionManifest(
+  manifest: ExtensionManifest,
+): boolean {
   return typeof manifest.publisher === 'string' && manifest.publisher.length > 0
 }
 
@@ -75,7 +77,9 @@ export function validateExtensionManifest(manifest: ExtensionManifest): boolean 
  * @param manifest - The extension manifest.
  * @returns The manifest of vscode extension with types.
  */
-export function defineExtensionManifest(manifest: ExtensionManifest): ExtensionManifest {
+export function defineExtensionManifest(
+  manifest: ExtensionManifest,
+): ExtensionManifest {
   return manifest
 }
 
@@ -93,10 +97,15 @@ export function defineExtensionManifest(manifest: ExtensionManifest): ExtensionM
  * console.log(await readExtensionManifest())
  *```
  */
-export async function readExtensionManifest(options: ReadOptions = {}): Promise<ExtensionManifest> {
+export async function readExtensionManifest(
+  options: ReadOptions = {},
+): Promise<ExtensionManifest> {
   const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
 
-  const cache = options.cache && typeof options.cache !== 'boolean' ? options.cache : FILE_CACHE
+  const cache =
+    options.cache && typeof options.cache !== 'boolean'
+      ? options.cache
+      : FILE_CACHE
   const resolvedPath = resolve(toPath(cwd), filename)
 
   if (options.cache && cache.has(resolvedPath)) {
@@ -126,10 +135,15 @@ export async function readExtensionManifest(options: ReadOptions = {}): Promise<
  * console.log(readExtensionManifestSync())
  *```
  */
-export function readExtensionManifestSync(options: ReadOptions = {}): ExtensionManifest {
+export function readExtensionManifestSync(
+  options: ReadOptions = {},
+): ExtensionManifest {
   const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
 
-  const cache = options.cache && typeof options.cache !== 'boolean' ? options.cache : FILE_CACHE
+  const cache =
+    options.cache && typeof options.cache !== 'boolean'
+      ? options.cache
+      : FILE_CACHE
   const resolvedPath = resolve(toPath(cwd), filename)
 
   if (options.cache && cache.has(resolvedPath)) {

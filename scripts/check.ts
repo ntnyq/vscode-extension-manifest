@@ -10,13 +10,13 @@ export async function checkPackageJson() {
   try {
     const manifest = await readExtensionManifest()
     if (
-      manifest.contributes ||
-      manifest.publisher ||
-      manifest.activationEvents ||
-      manifest.capabilities ||
-      manifest.categories ||
-      manifest.extensionPack ||
-      manifest.extensionPack
+      manifest.contributes
+      || manifest.publisher
+      || manifest.activationEvents
+      || manifest.capabilities
+      || manifest.categories
+      || manifest.extensionPack
+      || manifest.extensionPack
     ) {
       console.log('\n❗️ Unexpected properties in package.json')
       return process.exit(1)

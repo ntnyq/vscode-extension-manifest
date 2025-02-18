@@ -9,7 +9,9 @@ import {
 import type { ExtensionManifest } from '../src'
 
 const FIXTURE_VSCODE_DEV_HELPER = resolve('tests/fixtures/vscode-dev-helper')
-const FIXTURE_VSCODE_EXTENSION_MANIFEST = resolve('tests/fixtures/vscode-extension-manifest')
+const FIXTURE_VSCODE_EXTENSION_MANIFEST = resolve(
+  'tests/fixtures/vscode-extension-manifest',
+)
 
 const cacheDevHelper = new Map<string, ExtensionManifest>([
   [
@@ -36,11 +38,15 @@ describe('vscode extension', () => {
   )!
 
   it('should readExtensionManifest work', async () => {
-    expect(await readExtensionManifest({ cwd: FIXTURE_VSCODE_DEV_HELPER })).toMatchSnapshot()
+    expect(
+      await readExtensionManifest({ cwd: FIXTURE_VSCODE_DEV_HELPER }),
+    ).toMatchSnapshot()
   })
 
   it('should readExtensionManifestSync work', () => {
-    expect(readExtensionManifestSync({ cwd: FIXTURE_VSCODE_DEV_HELPER })).toMatchSnapshot()
+    expect(
+      readExtensionManifestSync({ cwd: FIXTURE_VSCODE_DEV_HELPER }),
+    ).toMatchSnapshot()
   })
 
   it('should writeExtensionManifestSync work', () => {
@@ -63,13 +69,19 @@ describe('vscode extension', () => {
 
   it('options - cache - true', () => {
     expect(
-      readExtensionManifestSync({ cwd: FIXTURE_VSCODE_DEV_HELPER, cache: true }),
+      readExtensionManifestSync({
+        cwd: FIXTURE_VSCODE_DEV_HELPER,
+        cache: true,
+      }),
     ).toMatchSnapshot()
   })
 
   it('options - cache - false', () => {
     expect(
-      readExtensionManifestSync({ cwd: FIXTURE_VSCODE_DEV_HELPER, cache: false }),
+      readExtensionManifestSync({
+        cwd: FIXTURE_VSCODE_DEV_HELPER,
+        cache: false,
+      }),
     ).toMatchSnapshot()
   })
 
@@ -83,7 +95,9 @@ describe('vscode extension', () => {
   })
 
   it('should validateExtensionManifest return false', () => {
-    const manifest = readExtensionManifestSync({ cwd: FIXTURE_VSCODE_DEV_HELPER })
+    const manifest = readExtensionManifestSync({
+      cwd: FIXTURE_VSCODE_DEV_HELPER,
+    })
     expect(validateExtensionManifest(manifest)).toBeTruthy()
   })
 })
@@ -96,18 +110,26 @@ describe('node package', () => {
   })
 
   it('should readExtensionManifestSync work', () => {
-    expect(readExtensionManifestSync({ cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST })).toMatchSnapshot()
+    expect(
+      readExtensionManifestSync({ cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST }),
+    ).toMatchSnapshot()
   })
 
   it('options - cache - true', () => {
     expect(
-      readExtensionManifestSync({ cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST, cache: true }),
+      readExtensionManifestSync({
+        cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST,
+        cache: true,
+      }),
     ).toMatchSnapshot()
   })
 
   it('options - cache - false', () => {
     expect(
-      readExtensionManifestSync({ cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST, cache: false }),
+      readExtensionManifestSync({
+        cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST,
+        cache: false,
+      }),
     ).toMatchSnapshot()
   })
 
@@ -121,7 +143,9 @@ describe('node package', () => {
   })
 
   it('should validateExtensionManifest return false', () => {
-    const manifest = readExtensionManifestSync({ cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST })
+    const manifest = readExtensionManifestSync({
+      cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST,
+    })
     expect(validateExtensionManifest(manifest)).toBeFalsy()
   })
 })

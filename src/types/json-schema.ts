@@ -126,7 +126,7 @@ export type TJsonSchemaVSCodeSnippet = {
  * @see {@link https://json-schema.org/overview/what-is-jsonschema}
  * @pg
  */
-export type ExtensionJsonSchema = TJsonSchemaBase &
-  TJsonSchemaV6 &
-  TJsonSchemaV7 &
-  TJsonSchemaVSCode
+export type ExtensionJsonSchema = TJsonSchemaBase
+  & TJsonSchemaV6
+  & TJsonSchemaV7
+  & TJsonSchemaVSCode
