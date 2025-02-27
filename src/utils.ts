@@ -3,12 +3,9 @@ import { access, mkdir } from 'node:fs/promises'
 import { dirname } from 'node:path'
 
 export async function fsExists(path: string) {
-  try {
-    await access(path)
-    return true
-  } catch {
-    return false
-  }
+  return access(path)
+    .then(() => true)
+    .catch(() => false)
 }
 
 export function fsEnsureDirSync(path: string) {

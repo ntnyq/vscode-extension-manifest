@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { defineExtensionManifest } from '../src'
 
 describe('defineExtensionManifest', () => {

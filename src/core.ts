@@ -51,8 +51,8 @@ const toPath = (urlOrPath: string | URL) =>
 
 /**
  * Validates if given manifest is an VSCode extension.
- * @param manifest
- * @returns `true` if given manifest is an VSCode extension.
+ * @param manifest - The extension manifest.
+ * @returns `true` if given manifest is a VSCode extension.
  *
  * @example
  *

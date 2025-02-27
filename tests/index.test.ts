@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { resolve } from '../scripts/utils'
 import {
   readExtensionManifest,
