@@ -456,7 +456,7 @@ export type ExtensionViewsContainer = {
   title: string
 }
 
-export type ExtensionViewWelcome = {
+export type ExtensionViewsWelcome = {
   contents: string
   view: string
   enablement?: string
@@ -648,9 +648,9 @@ export type ExtensionManifest = {
    * Controls the Q & A link in the Marketplace. Set to marketplace to enable the default Marketplace Q & A site. Set to a string to provide the URL of a custom Q & A site. Set to false to disable Q & A altogether.
    *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
-   * @default `markeplate`
+   * @default `marketplace`
    */
-  qna?: false | LiteralUnion<'markeplate'>
+  qna?: false | LiteralUnion<'marketplace'>
 
   /**
    * Exactly the same as [npm's scripts](https://docs.npmjs.com/cli/v11/using-npm/scripts) but with extra VS Code specific fields such as [vscode:prepublish](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prepublish-step) or [vscode:uninstall](https://code.visualstudio.com/api/references/extension-manifest#extension-uninstall-hook).
@@ -992,7 +992,7 @@ export type ExtensionManifest = {
     /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.viewsWelcome}
      */
-    viewsWelcome?: ExtensionViewWelcome[]
+    viewsWelcome?: ExtensionViewsWelcome[]
 
     /**
      * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.walkthroughs}
@@ -1065,7 +1065,7 @@ export type ExtensionManifest = {
    */
   galleryBanner?: {
     color?: string
-    theme?: string
+    theme?: 'dark' | 'light'
   }
 
   /**
