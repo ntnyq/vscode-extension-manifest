@@ -9,16 +9,6 @@ export default defineESLintConfig({
       'no-template-curly-in-string': 'off',
     },
   },
-  test: {
-    overridesVitestRules: {
-      'vitest/expect-expect': [
-        'error',
-        {
-          assertFunctionNames: ['expect', 'assertType', 'expectTypeOf'],
-        },
-      ],
-    },
-  },
   typescript: {
     tsconfigPath: './tsconfig.json',
   },

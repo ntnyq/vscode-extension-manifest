@@ -26,6 +26,7 @@
     "bumpp",
     "changelogithub",
     "CODECOV",
+    "esbuild",
     "lcov",
     "pnpm",
     "quansync",
