@@ -24,7 +24,7 @@ export type ExtensionAuthentication = {
 export type ExtensionBadge = {
   description: string
   href: string
-  title: string
+  url: string
 }
 
 export type ExtensionBreakpoint = {
