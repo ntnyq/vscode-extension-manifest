@@ -29,7 +29,6 @@
     "esbuild",
     "lcov",
     "pnpm",
-    "quansync",
     "unplugin",
     "vite",
     "vitest"

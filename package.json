@@ -50,9 +50,6 @@
     "test": "vitest --typecheck",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "quansync": "^0.2.10"
-  },
   "devDependencies": {
     "@ntnyq/eslint-config": "^4.0.4",
     "@ntnyq/prettier-config": "^2.0.0",
@@ -67,7 +64,6 @@
     "tsx": "^4.19.3",
     "typescript": "^5.8.3",
     "unbuild": "^3.5.0",
-    "unplugin-quansync": "^0.3.6",
     "vitest": "^3.1.1"
   },
   "engines": {
