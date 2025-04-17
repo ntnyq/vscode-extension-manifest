@@ -33,9 +33,15 @@ export type ExtensionActivationEvent =
   | ExtendUnion<'workspaceContains'>
 
 /**
+ * `EXTENSION_CATEGORIES`
+ *
  * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+ * @see {@link https://github.com/microsoft/vscode/blob/main/src/vs/platform/extensions/common/extensions.ts}
  */
 export type ExtensionCategory =
+  | 'AI'
+  | 'Azure'
+  | 'Chat'
   | 'Data Science'
   | 'Debuggers'
   | 'Education'
