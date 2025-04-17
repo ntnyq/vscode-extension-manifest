@@ -238,7 +238,7 @@ export type ExtensionSemanticTokenType = {
   superType: string
 }
 
-export type ExtensionSemanticTokeScope = {
+export type ExtensionSemanticTokenScope = {
   language?: string
   scopes?: {
     [key: string]: string[]
@@ -713,7 +713,7 @@ export interface ExtensionContributes {
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.semanticTokenScopes}
    */
-  semanticTokenScopes?: ExtensionSemanticTokeScope[]
+  semanticTokenScopes?: ExtensionSemanticTokenScope[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.semanticTokenTypes}
