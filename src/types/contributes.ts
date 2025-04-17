@@ -12,6 +12,14 @@ import type {
   ExtensionProblemMatcherFileLocation,
 } from './union'
 
+export type ExtensionStartEntry = {
+  category: 'file' | 'folder' | 'notebook'
+  command: string
+  description: string
+  title: string
+  when?: string
+}
+
 export type ExtensionStatusBarItem = {
   alignment: string
   id: string
@@ -431,6 +439,11 @@ export type ExtensionNotebookRenderer = {
   requiresMessaging?: 'always' | 'never' | 'optional'
 }
 
+export type ExtensionModelContextServerCollection = {
+  id: string
+  label: string
+}
+
 export type ExtensionProblemPattern = {
   code?: number
   column?: number
@@ -666,6 +679,11 @@ export interface ExtensionContributes {
   'markdown.previewStyles'?: string[]
 
   /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.modelContextServerCollections}
+   */
+  modelContextServerCollections?: ExtensionModelContextServerCollection[]
+
+  /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.notebookPreload}
    */
   notebookPreload?: ExtensionNotebookPreload[]
@@ -731,6 +749,11 @@ export interface ExtensionContributes {
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.speechProviders}
    */
   speechProviders?: ExtensionSpeechProvider[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.startEntries}
+   */
+  startEntries?: ExtensionStartEntry[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.statusBarItems}
