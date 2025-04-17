@@ -27,6 +27,10 @@ yarn add vscode-extension-manifest -D
 pnpm add vscode-extension-manifest -D
 ```
 
+```shell
+bun add vscode-extension-manifest -D
+```
+
 ## Usage
 
 ```ts
@@ -207,6 +211,7 @@ Please create an [issue](https://github.com/ntnyq/vscode-extension-manifest/issu
 
 - [Extension Manifest](https://code.visualstudio.com/api/references/extension-manifest)
 - [Contribution Points](https://code.visualstudio.com/api/references/contribution-points)
+- [Extension Manifest types](https://github.com/microsoft/vscode/blob/main/src/vs/platform/extensions/common/extensions.ts)
 
 ## License
 
