@@ -2,7 +2,7 @@
   "name": "vscode-extension-manifest",
   "type": "module",
   "version": "0.3.0",
-  "packageManager": "pnpm@10.11.0",
+  "packageManager": "pnpm@10.11.1",
   "description": "VSCode extension manifest type definitions, validators, and utilities",
   "keywords": [
     "contributes point",
@@ -26,20 +26,20 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "types": "./dist/index.d.mts",
-      "default": "./dist/index.mjs"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
-  "main": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "unbuild",
+    "build": "tsdown",
     "coverage": "vitest --coverage",
-    "dev": "unbuild --watch",
+    "dev": "tsdown --watch",
     "lint": "eslint",
     "prepare": "husky",
     "prepublishOnly": "pnpm run build",
@@ -51,23 +51,20 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^4.3.0",
+    "@ntnyq/eslint-config": "^5.0.0-beta.5",
     "@ntnyq/prettier-config": "^2.2.0",
-    "@types/node": "^22.15.21",
-    "@vitest/coverage-v8": "^3.1.4",
+    "@types/node": "^22.15.30",
+    "@vitest/coverage-v8": "^3.2.2",
     "bumpp": "^10.1.1",
-    "eslint": "^9.27.0",
+    "eslint": "^9.28.0",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.5.3",
+    "tsdown": "^0.12.7",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
-    "unbuild": "^3.5.0",
-    "vitest": "^3.1.4"
-  },
-  "engines": {
-    "node": ">=18.18.0"
+    "vitest": "^3.2.2"
   },
   "nano-staged": {
     "*.{js,ts,mjs,cjs,md,yml,yaml,toml,json}": "eslint --fix"

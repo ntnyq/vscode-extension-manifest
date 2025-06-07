@@ -10,12 +10,16 @@ export async function fsExists(path: string) {
 
 export function fsEnsureDirSync(path: string) {
   const targetDir = dirname(path)
-  if (existsSync(targetDir)) return
+  if (existsSync(targetDir)) {
+    return
+  }
   mkdirSync(targetDir, { recursive: true })
 }
 
 export async function fsEnsureDir(path: string) {
   const targetDir = dirname(path)
-  if (await fsExists(targetDir)) return
+  if (await fsExists(targetDir)) {
+    return
+  }
   await mkdir(targetDir, { recursive: true })
 }

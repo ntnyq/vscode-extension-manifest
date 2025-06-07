@@ -29,7 +29,9 @@
     "esbuild",
     "lcov",
     "pnpm",
+    "tsdown",
     "unplugin",
+    "unrs",
     "vite",
     "vitest"
   ],
