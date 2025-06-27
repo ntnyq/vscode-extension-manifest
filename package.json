@@ -1,7 +1,7 @@
 {
   "name": "vscode-extension-manifest",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "packageManager": "pnpm@10.12.4",
   "description": "VSCode extension manifest type definitions, validators, and utilities",
   "keywords": [
