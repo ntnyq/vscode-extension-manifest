@@ -56,10 +56,6 @@ export type ExtensionLanguage = {
   mimetypes?: string[]
 }
 
-export type ExtensionLanguageModel = {
-  vendor: string
-}
-
 export type ExtensionConfiguration = {
   order?: number
   title?: string
@@ -93,6 +89,10 @@ export type ExtensionCustomEditor = {
   }>
 }
 
+export type ExtensionLanguageModel = {
+  vendor: string
+}
+
 export type ExtensionLanguageModelTool = {
   name: string
   canBeReferencedInPrompt?: boolean
@@ -104,6 +104,14 @@ export type ExtensionLanguageModelTool = {
   toolReferenceName?: string
   userDescription?: string
   when?: string
+}
+
+export type ExtensionLanguageModelToolSet = {
+  description: string
+  name: string
+  tools: string[]
+  icon?: string
+  referenceName?: string
 }
 
 export type ExtensionLocalization = {
@@ -642,6 +650,11 @@ export interface ExtensionContributes {
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.languageModelTools}
    */
   languageModelTools?: ExtensionLanguageModelTool[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.languageModelToolSets}
+   */
+  languageModelToolSets?: ExtensionLanguageModelToolSet[]
 
   /**
    * Contribute definition of a programming language. This will introduce a new language or enrich the knowledge VS Code has about a language.
