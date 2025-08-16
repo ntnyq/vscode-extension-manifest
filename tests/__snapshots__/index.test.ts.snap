@@ -42,7 +42,6 @@ exports[`node package > options - cache - false 1`] = `
   "repository": "ntnyq/vscode-extension-manifest",
   "scripts": {
     "build": "tsup",
-    "coverage": "vitest --coverage",
     "dev": "tsup --watch src",
     "lint": "eslint .",
     "prepare": "husky",
@@ -102,7 +101,6 @@ exports[`node package > options - cache - map 1`] = `
   "repository": "ntnyq/vscode-extension-manifest",
   "scripts": {
     "build": "tsup",
-    "coverage": "vitest --coverage",
     "dev": "tsup --watch src",
     "lint": "eslint .",
     "prepare": "husky",
@@ -162,7 +160,6 @@ exports[`node package > options - cache - true 1`] = `
   "repository": "ntnyq/vscode-extension-manifest",
   "scripts": {
     "build": "tsup",
-    "coverage": "vitest --coverage",
     "dev": "tsup --watch src",
     "lint": "eslint .",
     "prepare": "husky",
@@ -222,7 +219,6 @@ exports[`node package > should readExtensionManifest work 1`] = `
   "repository": "ntnyq/vscode-extension-manifest",
   "scripts": {
     "build": "tsup",
-    "coverage": "vitest --coverage",
     "dev": "tsup --watch src",
     "lint": "eslint .",
     "prepare": "husky",
@@ -282,7 +278,6 @@ exports[`node package > should readExtensionManifestSync work 1`] = `
   "repository": "ntnyq/vscode-extension-manifest",
   "scripts": {
     "build": "tsup",
-    "coverage": "vitest --coverage",
     "dev": "tsup --watch src",
     "lint": "eslint .",
     "prepare": "husky",

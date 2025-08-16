@@ -43,7 +43,6 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
-    "coverage": "vitest --coverage",
     "dev": "tsup --watch src",
     "lint": "eslint .",
     "prepare": "husky",

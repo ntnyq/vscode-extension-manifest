@@ -3,7 +3,6 @@
 [![CI](https://github.com/ntnyq/vscode-extension-manifest/workflows/CI/badge.svg)](https://github.com/ntnyq/vscode-extension-manifest/actions)
 [![NPM VERSION](https://img.shields.io/npm/v/vscode-extension-manifest.svg)](https://www.npmjs.com/package/vscode-extension-manifest)
 [![NPM DOWNLOADS](https://img.shields.io/npm/dy/vscode-extension-manifest.svg)](https://www.npmjs.com/package/vscode-extension-manifest)
-[![CODECOV](https://codecov.io/github/ntnyq/vscode-extension-manifest/branch/main/graph/badge.svg)](https://codecov.io/github/ntnyq/vscode-extension-manifest)
 [![LICENSE](https://img.shields.io/github/license/ntnyq/vscode-extension-manifest.svg)](https://github.com/ntnyq/vscode-extension-manifest/blob/main/LICENSE)
 
 > VSCode extension manifest type definitions, validators, and utilities.
