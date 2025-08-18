@@ -2,7 +2,7 @@
  * @file Json schema types
  */
 
-export type TJsonSchemaAnyValue = any
+export type TJsonSchemaAnyValue = unknown
 export type TJsonSchemaFormat = 'date' | 'email' | 'ipv4' | 'time' | 'uri'
 export type TJsonSchemaScope =
   | 'application'

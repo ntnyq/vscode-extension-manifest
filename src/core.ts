@@ -44,9 +44,16 @@ export type ReadOptions = SharedOptions & {
 }
 
 /**
+ * Converts a URL or path string to a filesystem path.
+ *
+ * @param urlOrPath - The input URL or path string.
+ * @returns The filesystem path string.
  * @internal
+ * @example
+ * toPath(new URL('file:///foo/bar')) // => '/foo/bar'
+ * toPath('/foo/bar') // => '/foo/bar'
  */
-const toPath = (urlOrPath: string | URL) =>
+const toPath = (urlOrPath: string | URL): string =>
   urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath
 
 /**
@@ -188,9 +195,18 @@ export type WriteOptions = SharedOptions & {
 }
 
 /**
+ * Returns a JSON serialization function based on WriteOptions.
+ *
+ * @param options - Write options including replacer, space, and stringify.
+ * @returns A function to serialize objects to JSON string.
  * @internal
+ * @example
+ * const stringify = toResolvedStringify({ space: 4 })
+ * stringify({ foo: 'bar' }) // => '{\n    "foo": "bar"\n}'
  */
-const toResolvedStringify = (options: WriteOptions = {}) => {
+const toResolvedStringify = (
+  options: WriteOptions = {},
+): ((value: any) => string) => {
   const { replacer = null, space = 2 } = options
   return (value: any) =>
     typeof options.stringify === 'function'
