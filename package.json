@@ -2,7 +2,7 @@
   "name": "vscode-extension-manifest",
   "type": "module",
   "version": "0.4.0",
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.15.1",
   "description": "VSCode extension manifest type definitions, validators, and utilities",
   "keywords": [
     "contributes point",
@@ -49,11 +49,11 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^5.4.1",
+    "@ntnyq/eslint-config": "^5.4.2",
     "@ntnyq/prettier-config": "^3.0.1",
-    "@types/node": "^24.3.0",
+    "@types/node": "^24.3.1",
     "bumpp": "^10.2.3",
-    "eslint": "^9.34.0",
+    "eslint": "^9.35.0",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
     "npm-run-all2": "^8.0.4",
