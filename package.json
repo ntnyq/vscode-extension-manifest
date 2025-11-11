@@ -2,7 +2,7 @@
   "name": "vscode-extension-manifest",
   "type": "module",
   "version": "0.4.0",
-  "packageManager": "pnpm@10.20.0",
+  "packageManager": "pnpm@10.21.0",
   "description": "VSCode extension manifest type definitions, validators, and utilities",
   "keywords": [
     "contributes point",
@@ -26,12 +26,12 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
     }
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "files": [
     "dist"
   ],
@@ -53,15 +53,15 @@
     "@ntnyq/prettier-config": "^3.0.1",
     "@types/node": "^24.10.0",
     "bumpp": "^10.3.1",
-    "eslint": "^9.39.0",
+    "eslint": "^9.39.1",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.6.2",
-    "tsdown": "^0.15.12",
+    "tsdown": "^0.16.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.6"
+    "vitest": "^4.0.8"
   },
   "nano-staged": {
     "*.{js,ts,mjs,cjs,md,yml,yaml,toml,json}": "eslint --fix"
