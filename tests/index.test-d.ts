@@ -34,20 +34,18 @@ describe('typecheck', () => {
   })
 
   it('should return type match', () => {
-    expectTypeOf(validateExtensionManifest).returns.toMatchTypeOf<boolean>()
-    expectTypeOf(
-      defineExtensionManifest,
-    ).returns.toMatchTypeOf<ExtensionManifest>()
+    expectTypeOf(validateExtensionManifest).returns.toExtend<boolean>()
+    expectTypeOf(defineExtensionManifest).returns.toExtend<ExtensionManifest>()
 
     expectTypeOf(
       readExtensionManifestSync,
-    ).returns.toMatchTypeOf<ExtensionManifest>()
-    expectTypeOf(readExtensionManifest).returns.toMatchTypeOf<
+    ).returns.toExtend<ExtensionManifest>()
+    expectTypeOf(readExtensionManifest).returns.toExtend<
       Promise<ExtensionManifest>
     >()
 
-    expectTypeOf(writeExtensionManifestSync).returns.toMatchTypeOf<void>()
-    expectTypeOf(writeExtensionManifest).returns.toMatchTypeOf<Promise<void>>()
+    expectTypeOf(writeExtensionManifestSync).returns.toExtend<void>()
+    expectTypeOf(writeExtensionManifest).returns.toExtend<Promise<void>>()
   })
 
   it('should params type match', () => {
