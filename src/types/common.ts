@@ -40,8 +40,10 @@ export type ExtensionThemeableColor = `#${string}` | `${string}.${string}`
  * Built-in icon or icon path or icon object with dark and light properties
  */
 export type ExtensionThemeableIcon =
-  // | string
-  | ExtensionProductIcon
+  // relative path icon and extension product icon
+  // TODO: use Template Literal type to describe a relative path icon
+  | string
+  // | ExtensionProductIcon
   | {
       dark?: string
       light?: string

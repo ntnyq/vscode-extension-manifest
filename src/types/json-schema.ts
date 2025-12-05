@@ -106,9 +106,11 @@ export type TJsonSchemaVSCode = {
   doNotSuggest?: boolean
   enumDescriptions?: string[]
   errorMessage?: string
+  ignoreSync?: boolean
   markdownDeprecationMessage?: string
   markdownDescription?: string
   markdownEnumDescriptions?: string[]
+  order?: number
   patternErrorMessage?: string
   scope?: TJsonSchemaScope
   suggestSortText?: string

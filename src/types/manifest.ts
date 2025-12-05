@@ -193,6 +193,7 @@ export type ExtensionManifest = {
    */
   engines: {
     vscode: string
+    [key: string]: string
   }
 
   /**
@@ -203,13 +204,13 @@ export type ExtensionManifest = {
   capabilities?: {
     untrustedWorkspaces:
       | {
-          description: string
           supported: 'limited'
+          description?: string
           restrictedConfigurations?: string[]
         }
       | {
-          description: string
           supported: false
+          description?: string
         }
       | {
           supported: true
@@ -217,12 +218,15 @@ export type ExtensionManifest = {
     virtualWorkspaces?:
       | true
       | {
-          description: string
           supported: 'limited'
+          description?: string
         }
       | {
-          description: string
           supported: false
+          description?: string
+        }
+      | {
+          supported: true
         }
   }
 

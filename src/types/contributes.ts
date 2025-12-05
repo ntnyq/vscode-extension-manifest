@@ -51,12 +51,16 @@ export type ExtensionLanguage = {
   filenamePatterns?: string[]
   filenames?: string[]
   firstLine?: string
-  icon?: Exclude<ExtensionThemeableIcon, string>
   id?: string
   mimetypes?: string[]
+  icon?: {
+    dark: string
+    light: string
+  }
 }
 
 export type ExtensionConfiguration = {
+  id?: string
   order?: number
   title?: string
   properties?: {
