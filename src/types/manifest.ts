@@ -121,6 +121,20 @@ export type ExtensionManifest = {
   extensionPack?: ExtensionIdentifier[]
 
   /**
+   * A list of files to include in the published package.
+   *
+   * @see {@link https://docs.npmjs.com/cli/v7/configuring-npm/package-json#files}
+   */
+  files?: string[]
+
+  /**
+   * The homepage URL for the extension.
+   *
+   * @see {@link https://docs.npmjs.com/cli/v7/configuring-npm/package-json#homepage}
+   */
+  homepage?: string
+
+  /**
    * The path to the icon of at least 128x128 pixels (256x256 for Retina screens).
    *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
@@ -133,6 +147,13 @@ export type ExtensionManifest = {
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
    */
   keywords?: string[]
+
+  /**
+   * Localization support for the extension.
+   *
+   * @see {@link https://github.com/microsoft/vscode-l10n}
+   */
+  l10n?: string
 
   /**
    * Refer to [npm's documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-json/#license). If you do have a LICENSE file in the root of your extension, the value for license should be "SEE LICENSE IN <filename>".
@@ -172,6 +193,13 @@ export type ExtensionManifest = {
   pricing?: 'Free' | 'Trial'
 
   /**
+   * If true, npm will refuse to publish it.
+   *
+   * @see {@link https://docs.npmjs.com/cli/v7/configuring-npm/package-json#private}
+   */
+  private?: boolean
+
+  /**
    * Controls the Q & A link in the Marketplace. Set to marketplace to enable the default Marketplace Q & A site. Set to a string to provide the URL of a custom Q & A site. Set to false to disable Q & A altogether.
    *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
@@ -187,6 +215,14 @@ export type ExtensionManifest = {
   scripts?: Record<string, string>
 
   /**
+   * The "main" field for CommonJS entry point.
+   * This is typically the same or similar to "main" but listed for clarity.
+   *
+   * @see {@link https://docs.npmjs.com/cli/v7/configuring-npm/package-json#main}
+   */
+  type?: 'commonjs' | 'module'
+
+  /**
    * An object containing at least the vscode key matching the versions of VS Code that the extension is compatible with. Cannot be *. For example: ^0.10.5 indicates compatibility with a minimum VS Code version of 0.10.5.
    *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
@@ -195,6 +231,31 @@ export type ExtensionManifest = {
     vscode: string
     [key: string]: string
   }
+
+  /**
+   * The author of the extension. Either a string "Name <email> (url)" or an object with fields.
+   *
+   * @see {@link https://docs.npmjs.com/cli/v7/configuring-npm/package-json#people-fields-author-contributors}
+   */
+  author?:
+    | string
+    | {
+        name: string
+        email?: string
+        url?: string
+      }
+
+  /**
+   * The URL to the extension's issue tracker and/or email address to report issues.
+   *
+   * @see {@link https://docs.npmjs.com/cli/v7/configuring-npm/package-json#bugs}
+   */
+  bugs?:
+    | string
+    | {
+        email?: string
+        url?: string
+      }
 
   /**
    * An object describing the extension's capabilities in limited workspaces: [untrustedWorkspaces](https://code.visualstudio.com/api/extension-guides/workspace-trust#static-declarations), [virtualWorkspaces](https://code.visualstudio.com/api/extension-guides/virtual-workspaces#signal-whether-your-extension-can-handle-virtual-workspaces).
@@ -231,6 +292,20 @@ export type ExtensionManifest = {
   }
 
   /**
+   * Contributors to the extension.
+   *
+   * @see {@link https://docs.npmjs.com/cli/v7/configuring-npm/package-json#people-fields-author-contributors}
+   */
+  contributors?: Array<
+    | string
+    | {
+        name: string
+        email?: string
+        url?: string
+      }
+  >
+
+  /**
    * Helps format the Marketplace header to match your icon. See details below.
    *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
@@ -239,6 +314,19 @@ export type ExtensionManifest = {
     color?: string
     theme?: 'dark' | 'light'
   }
+
+  /**
+   * Specify the repository where the extension source code resides.
+   *
+   * @see {@link https://docs.npmjs.com/cli/v7/configuring-npm/package-json#repository}
+   */
+  repository?:
+    | string
+    | {
+        type: string
+        url: string
+        directory?: string
+      }
 
   /**
    * Specify the location from where users can sponsor your extension. This is an object with a single property url, which links to a page where users can sponsor your extension.
