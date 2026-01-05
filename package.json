@@ -2,7 +2,7 @@
   "name": "vscode-extension-manifest",
   "type": "module",
   "version": "0.5.0",
-  "packageManager": "pnpm@10.26.1",
+  "packageManager": "pnpm@10.26.2",
   "description": "VSCode extension manifest type definitions, validators, and utilities",
   "keywords": [
     "contributes point",
@@ -58,7 +58,7 @@
     "nano-staged": "^0.9.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.7.4",
-    "tsdown": "^0.18.2",
+    "tsdown": "^0.18.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"
