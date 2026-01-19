@@ -3,8 +3,10 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import { fileURLToPath, URL } from 'node:url'
-import { fsEnsureDir, fsEnsureDirSync } from './utils'
+
 import type { ExtensionManifest } from './types'
+
+import { fsEnsureDir, fsEnsureDirSync } from './utils'
 
 const FILENAME_PACKAGE_JSON = 'package.json'
 

@@ -1,4 +1,7 @@
 import { describe, expect, it } from 'vitest'
+
+import type { ExtensionManifest } from '../src'
+
 import { resolve } from '../scripts/utils'
 import {
   readExtensionManifest,
@@ -7,7 +10,6 @@ import {
   writeExtensionManifest,
   writeExtensionManifestSync,
 } from '../src'
-import type { ExtensionManifest } from '../src'
 
 const FIXTURE_VSCODE_DEV_HELPER = resolve('tests/fixtures/vscode-dev-helper')
 const FIXTURE_VSCODE_EXTENSION_MANIFEST = resolve(

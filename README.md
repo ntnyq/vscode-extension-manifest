@@ -5,12 +5,18 @@
 [![NPM DOWNLOADS](https://img.shields.io/npm/dy/vscode-extension-manifest.svg)](https://www.npmjs.com/package/vscode-extension-manifest)
 [![LICENSE](https://img.shields.io/github/license/ntnyq/vscode-extension-manifest.svg)](https://github.com/ntnyq/vscode-extension-manifest/blob/main/LICENSE)
 
-> VSCode extension manifest type definitions, validators, and utilities.
+Type definitions, validation, and IO utilities for VS Code extension manifests (package.json).
 
 > [!NOTE]
-> This package only provides types for VSCode extension manifest related fields listed in [Extension Manifest](https://code.visualstudio.com/api/references/extension-manifest).
->
-> If you need type support for a normal NodeJs package.json file, please check [type-fest - package-json.d.ts](https://github.com/sindresorhus/type-fest/blob/main/source/package-json.d.ts).
+> This package only covers fields listed in the VS Code Extension Manifest docs.
+> For a generic Node.js package.json type, use type-fest's package-json.d.ts.
+
+## Features
+
+- Strongly typed `ExtensionManifest` plus contributes types
+- Async and sync APIs for reading and writing manifests
+- Optional cache and custom stringify support
+- Minimal validation: only checks `publisher` to stay flexible
 
 ## Install
 
@@ -30,7 +36,7 @@ pnpm add vscode-extension-manifest -D
 bun add vscode-extension-manifest -D
 ```
 
-## Usage
+## Quick Start
 
 ```ts
 import {
@@ -43,10 +49,10 @@ import {
 } from 'vscode-extension-manifest'
 
 console.log(await readExtensionManifest())
-//=> VSCode extension manifest with types definition
+// => VS Code extension manifest with types
 
 console.log(validateExtensionManifest(readExtensionManifestSync()))
-// => true if valid, false otherwise
+// => true / false
 
 const extensionManifest = defineExtensionManifest({
   name: 'vscode-extension-manifest',
@@ -66,51 +72,24 @@ writeExtensionManifestSync(extensionManifest, {
 })
 ```
 
-## API
+## API Overview
 
 ### readExtensionManifest
 
 - Type: `(options?: ReadOptions) => Promise<ExtensionManifest>`
-
-Returns a `Promise` for VSCode extension manifest with type definition.
+- Description: read and parse the extension manifest.
 
 #### ReadOptions
 
-for `readExtensionManifest` and `readExtensionManifestSync`
+Used by `readExtensionManifest` and `readExtensionManifestSync`.
 
-##### filename
-
-- Type: `string`
-- Default: `package.json`
-- Required: `false`
-
-The filename of the extension manifest.
-
-##### cwd
-
-- Type: `string | URL`
-- Default: `process.cwd()`
-- Required: `false`
-
-The current working directory.
-
-##### cache
-
-- Type: `boolean | Map<string, Record<string, any>>`
-- Default: `undefined`
-- Required: `false`
-
-Specifies whether the read results should be cached. Can be a boolean or a map to hold the cached data.
+- `filename?: string` default `package.json`
+- `cwd?: string | URL` default `process.cwd()`
+- `cache?: boolean | Map<string, Record<string, any>>`
 
 ### readExtensionManifestSync
 
 - Type: `(options?: ReadOptions) => ExtensionManifest`
-
-Returns VSCode extension manifest with type definition.
-
-#### ReadOptions
-
-Same as **readExtensionManifest**
 
 ### writeExtensionManifest
 
@@ -118,99 +97,44 @@ Same as **readExtensionManifest**
 
 #### WriteOptions
 
-for `writeExtensionManifest` and `writeExtensionManifestSync`
+Used by `writeExtensionManifest` and `writeExtensionManifestSync`.
 
-##### filename
-
-- Type: `string`
-- Default: `package.json`
-- Required: `false`
-
-The filename of the extension manifest.
-
-##### cwd
-
-- Type: `string | URL`
-- Default: `process.cwd()`
-- Required: `false`
-
-The current working directory.
-
-##### replacer
-
-- Type: `(number | string)[] | null`
-- Default: `null`
-- Required: `false`
-
-The replacer for JSON.stringify.
-
-##### space
-
-- Type: `number | string`
-- Default: `2`
-- Required: `false`
-
-The space for JSON.stringify.
-
-##### stringify
-
-- Type: `(value: any) => string`
-- Default: `JSON.stringify`
-- Required: `false`
-
-The stringify function.
+- `filename?: string` default `package.json`
+- `cwd?: string | URL` default `process.cwd()`
+- `replacer?: (number | string)[] | null` default `null`
+- `space?: number | string` default `2`
+- `stringify?: (value: any) => string` default `JSON.stringify`
 
 ### writeExtensionManifestSync
 
 - Type: `(manifest: ExtensionManifest, options?: WriteOptions) => void`
 
-#### WriteOptions
-
-Same as **writeExtensionManifest**
-
 ### defineExtensionManifest
 
-Define a vscode extension manifest.
-
-#### Parameters
-
-##### manifest
-
-- Type: `ExtensionManifest`
-- Required: `true`
-
-The extension manifest.
+- Type: `(manifest: ExtensionManifest) => ExtensionManifest`
+- Description: for type inference only; no runtime behavior.
 
 ### validateExtensionManifest
 
 - Type: `(manifest: ExtensionManifest) => boolean`
+- Description: currently only checks that `publisher` is a non-empty string.
 
-Returns `true` if the extension manifest is valid, `false` otherwise.
+## Usage Notes
 
-By checking the following properties:
+- Customize JSON output with `stringify` or `space`.
+- Use `cache: true` or provide a custom `Map` for frequent reads.
+- `cwd` supports `URL`, useful in ESM/URL-based environments.
 
-- `publisher`
+## Contributing
 
-#### Parameters
-
-##### manifest
-
-- Type: `ExtensionManifest`
-- Required: `true`
-
-Read by `readExtensionManifest` or `readExtensionManifestSync`.
-
-## Contributes
-
-Find any types definition that are missing or not match.
-
-Please create an [issue](https://github.com/ntnyq/vscode-extension-manifest/issues/new) or pull request.
+- Add new manifest fields under `src/types` and update tests.
+- Missing or mismatched types are welcome as issues or PRs.
 
 ## Links
 
-- [Extension Manifest](https://code.visualstudio.com/api/references/extension-manifest)
-- [Contribution Points](https://code.visualstudio.com/api/references/contribution-points)
-- [Extension Manifest types](https://github.com/microsoft/vscode/blob/main/src/vs/platform/extensions/common/extensions.ts)
+- Extension Manifest: https://code.visualstudio.com/api/references/extension-manifest
+- Contribution Points: https://code.visualstudio.com/api/references/contribution-points
+- VS Code source types: https://github.com/microsoft/vscode/blob/main/src/vs/platform/extensions/common/extensions.ts
 
 ## License
 

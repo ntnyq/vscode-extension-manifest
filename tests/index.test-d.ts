@@ -1,4 +1,7 @@
 import { assertType, describe, expectTypeOf, it } from 'vitest'
+
+import type { ExtensionManifest, ReadOptions, WriteOptions } from '../src'
+
 import {
   defineExtensionManifest,
   readExtensionManifest,
@@ -7,7 +10,6 @@ import {
   writeExtensionManifest,
   writeExtensionManifestSync,
 } from '../src'
-import type { ExtensionManifest, ReadOptions, WriteOptions } from '../src'
 
 describe('typecheck', () => {
   it('should types match', () => {
