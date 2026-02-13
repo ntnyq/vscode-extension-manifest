@@ -153,6 +153,21 @@ export type ExtensionHtmlLanguageParticipant = {
   autoInsert?: boolean
 }
 
+export type ExtensionChatAgent = {
+  path: string
+}
+
+export type ExtensionChatContext = {
+  displayName: string
+  id: string
+  icon: string
+  [key: string]: any
+}
+
+export type ExtensionChatInstruction = {
+  path: string
+}
+
 export type ExtensionChatViewWelcome = {
   content?: string
   icon?: string
@@ -160,10 +175,19 @@ export type ExtensionChatViewWelcome = {
   when?: string
 }
 
+export type ExtensionChatOutputRenderer = {
+  mimeTypes: string[]
+  viewType: string
+}
+
 export type ExtensionChatParticipant = ExtensionChatParticipantCommand & {
   id: string
   commands?: ExtensionChatParticipantCommand[]
   fullName?: string
+}
+
+export type ExtensionChatSkill = {
+  path: string
 }
 
 export type ExtensionChatParticipantCommand = {
@@ -179,6 +203,43 @@ export type ExtensionChatParticipantDisambiguation = {
   category: string
   description: string
   examples: ExtensionAnyValue[]
+}
+
+export type ExtensionChatPromptFile = {
+  path: string
+}
+
+export type ExtensionChatSession = {
+  type: string
+  name: string
+  displayName: string
+  description: string
+  icon?: string
+  when?: string
+  order?: number
+  alternativeIds?: string[]
+  canDelegate?: boolean
+  customAgentTarget?: string
+  inputPlaceholder?: string
+  welcomeMessage?: string
+  welcomeTips?: string
+  welcomeTitle?: string
+  capabilities?: {
+    supportsFileAttachments?: boolean
+    supportsImageAttachments?: boolean
+    supportsInstructionAttachments?: boolean
+    supportsMCPAttachments?: boolean
+    supportsProblemAttachments?: boolean
+    supportsSearchResultAttachments?: boolean
+    supportsSourceControlAttachments?: boolean
+    supportsSymbolAttachments?: boolean
+    supportsToolAttachments?: boolean
+  }
+  commands?: Array<{
+    name: string
+    description: string
+    when?: string
+  }>
 }
 
 export type ExtensionCodeAction = {
@@ -358,6 +419,15 @@ export type ExtensionMenu = {
   when?: string
 }
 
+export type ExtensionRemoteCodingAgent = {
+  command: string
+  displayName: string
+  id?: string
+  description?: string
+  when?: string
+  followUpRegex?: string
+}
+
 export type ExtensionSubmenu = {
   id: string
   label: string
@@ -439,6 +509,19 @@ export type ExtensionNotebookPreload = {
   entrypoint: string
   type: string
   localResourceRoots?: string[]
+}
+
+export type ExtensionLanguageModelChatProvider = {
+  vendor: string
+  displayName: string
+  configuration?: ExtensionJsonSchema
+  when?: string
+}
+
+export type ExtensionMcpServerDefinitionProvider = {
+  id: string
+  label: string
+  when?: string
 }
 
 export type ExtensionNotebookRenderer = {
@@ -526,9 +609,44 @@ export interface ExtensionContributes {
   breakpoints?: ExtensionBreakpoint[]
 
   /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatAgents}
+   */
+  chatAgents?: ExtensionChatAgent[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatContexts}
+   */
+  chatContext?: ExtensionChatContext[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatInstructions}
+   */
+  chatInstructions?: ExtensionChatInstruction[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatOutputRenderers}
+   */
+  chatOutputRenderers?: ExtensionChatOutputRenderer[]
+
+  /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatParticipants}
    */
   chatParticipants?: ExtensionChatParticipant[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatPromptFiles}
+   */
+  chatPromptFiles?: ExtensionChatPromptFile[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatSessions
+   */
+  chatSessions?: ExtensionChatSession[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatSkills}
+   */
+  chatSkills?: ExtensionChatSkill[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatViewsWelcome}
@@ -676,6 +794,13 @@ export interface ExtensionContributes {
   languages?: ExtensionLanguage[]
 
   /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.languageModelChatProviders}
+   */
+  languageModelChatProviders?:
+    | ExtensionLanguageModelChatProvider
+    | ExtensionLanguageModelChatProvider[]
+
+  /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.localizations}
    */
   localizations?: ExtensionLocalization[]
@@ -694,6 +819,11 @@ export interface ExtensionContributes {
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.markdown.previewStyles}
    */
   'markdown.previewStyles'?: string[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.mcpServerDefinitionProviders}
+   */
+  mcpServerDefinitionProviders?: ExtensionMcpServerDefinitionProvider[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.modelContextServerCollections}
@@ -729,6 +859,11 @@ export interface ExtensionContributes {
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.productIconThemes}
    */
   productIconThemes?: ExtensionProductIconTheme[]
+
+  /**
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.remoteCodingAgents}
+   */
+  remoteCodingAgents?: ExtensionRemoteCodingAgent[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.remoteHelp}

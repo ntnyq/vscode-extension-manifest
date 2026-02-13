@@ -44,7 +44,7 @@
     "prepare": "husky",
     "prepublishOnly": "pnpm run build",
     "release": "run-s release:check release:version",
-    "release:check": "run-s lint typecheck test",
+    "release:check": "run-s format:check lint typecheck test",
     "release:version": "bumpp",
     "test": "vitest",
     "typecheck": "tsgo --noEmit"
