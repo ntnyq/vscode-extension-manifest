@@ -30,7 +30,6 @@ export type TJsonSchemaUnSupported = {
 
 /**
  * Official schema properties
- * @pg
  */
 export type TJsonSchemaBase = {
   additionalItems?: boolean | ExtensionJsonSchema
@@ -66,17 +65,9 @@ export type TJsonSchemaBase = {
   type?: TJsonSchemaType | TJsonSchemaType[]
   uniqueItems?: boolean
   writeOnly?: boolean
-  dependencies?:
-    | {
-        [key: string]: ExtensionJsonSchema
-      }
-    | { [key: string]: string[] }
-  patternProperties?: {
-    [key: string]: ExtensionJsonSchema
-  }
-  properties?: {
-    [key: string]: ExtensionJsonSchema
-  }
+  dependencies?: Record<string, ExtensionJsonSchema> | Record<string, string[]>
+  patternProperties?: Record<string, ExtensionJsonSchema>
+  properties?: Record<string, ExtensionJsonSchema>
 }
 export type TJsonSchemaV6 = {
   const?: TJsonSchemaAnyValue
@@ -96,7 +87,6 @@ export type TJsonSchemaV7 = {
 
 /**
  * VSCode extends schema properties
- * @pg
  */
 export type TJsonSchemaVSCode = {
   allowComments?: boolean
@@ -126,7 +116,6 @@ export type TJsonSchemaVSCodeSnippet = {
  * json-schema types for VSCode extension
  *
  * @see {@link https://json-schema.org/overview/what-is-jsonschema}
- * @pg
  */
 export type ExtensionJsonSchema = TJsonSchemaBase &
   TJsonSchemaV6 &

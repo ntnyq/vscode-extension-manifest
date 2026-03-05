@@ -296,14 +296,14 @@ export type ExtensionManifest = {
    *
    * @see {@link https://docs.npmjs.com/cli/v7/configuring-npm/package-json#people-fields-author-contributors}
    */
-  contributors?: Array<
+  contributors?: (
     | string
     | {
         name: string
         email?: string
         url?: string
       }
-  >
+  )[]
 
   /**
    * Helps format the Marketplace header to match your icon. See details below.

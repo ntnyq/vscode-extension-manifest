@@ -13,4 +13,5 @@ export type LiteralUnion<T extends U, U = string> =
   | T
   | (U & { zz_IGNORE_ME?: never })
 
+// oxlint-disable-next-line typescript/ban-types
 export type NonEmptyString = string & {}

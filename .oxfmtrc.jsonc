@@ -5,17 +5,19 @@
   "bracketSpacing": true,
   "embeddedLanguageFormatting": "auto",
   "endOfLine": "lf",
-  "experimentalSortPackageJson": {
+  "sortPackageJson": {
     "sortScripts": true,
   },
-  "experimentalSortImports": {},
+  "sortImports": {
+    "newlinesBetween": false,
+  },
   "htmlWhitespaceSensitivity": "css",
   "ignorePatterns": [
     "**/node_modules/**",
-    "**/dist/**",
     "pnpm-lock.yaml",
     "**/*.min.*",
-    "**/tests/fixtures/**",
+    "**/dist/**",
+    "**/fixtures/**",
   ],
   "insertFinalNewline": true,
   "jsxSingleQuote": true,

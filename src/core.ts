@@ -3,9 +3,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import { fileURLToPath, URL } from 'node:url'
-
 import type { ExtensionManifest } from './types'
-
 import { fsEnsureDir, fsEnsureDirSync } from './utils'
 
 const FILENAME_PACKAGE_JSON = 'package.json'
@@ -122,7 +120,7 @@ export async function readExtensionManifest(
     return cache.get(resolvedPath)! as ExtensionManifest
   }
 
-  const manifest = await readFile(resolvedPath, 'utf-8')
+  const manifest = await readFile(resolvedPath, 'utf8')
   const parsed = JSON.parse(manifest) as ExtensionManifest
 
   cache.set(resolvedPath, parsed)
@@ -160,7 +158,7 @@ export function readExtensionManifestSync(
     return cache.get(resolvedPath)! as ExtensionManifest
   }
 
-  const manifest = readFileSync(resolvedPath, 'utf-8')
+  const manifest = readFileSync(resolvedPath, 'utf8')
   const parsed = JSON.parse(manifest) as ExtensionManifest
 
   cache.set(resolvedPath, parsed)

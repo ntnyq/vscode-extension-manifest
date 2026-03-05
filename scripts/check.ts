@@ -3,7 +3,6 @@
  */
 
 import process from 'node:process'
-
 import { readExtensionManifest } from '../src'
 
 export async function checkPackageJson() {

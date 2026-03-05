@@ -1,8 +1,7 @@
 import { describe, expect, it } from 'vitest'
-
 import { defineExtensionManifest } from '../src'
 
-describe('defineExtensionManifest', () => {
+describe(defineExtensionManifest, () => {
   it('should work', () => {
     const manifest = defineExtensionManifest({
       name: 'vscode-extension-manifest',

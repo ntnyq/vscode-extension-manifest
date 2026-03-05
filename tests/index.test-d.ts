@@ -1,7 +1,5 @@
 import { assertType, describe, expectTypeOf, it } from 'vitest'
-
 import type { ExtensionManifest, ReadOptions, WriteOptions } from '../src'
-
 import {
   defineExtensionManifest,
   readExtensionManifest,

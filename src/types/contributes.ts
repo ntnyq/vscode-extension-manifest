@@ -63,16 +63,15 @@ export type ExtensionConfiguration = {
   id?: string
   order?: number
   title?: string
-  properties?: {
-    [key: string]: ExtensionJsonSchema
-  }
+  properties?: Record<string, ExtensionJsonSchema>
 }
 
 export type ExtensionConfigurationDefaults = {
   [key: ExtensionConfigurationKey]: ExtensionAnyValue
-  [key: ExtensionSpecifiedLanguageKey]: {
-    [key: ExtensionConfigurationKey]: ExtensionAnyValue
-  }
+  [key: ExtensionSpecifiedLanguageKey]: Record<
+    ExtensionConfigurationKey,
+    ExtensionAnyValue
+  >
 }
 
 export type ExtensionContinueEditSession = {
@@ -88,9 +87,9 @@ export type ExtensionCustomEditor = {
   displayName: string
   viewType: string
   priority?: 'default' | 'option'
-  selector: Array<{
+  selector: {
     filenamePattern: string
-  }>
+  }[]
 }
 
 export type ExtensionLanguageModel = {
@@ -126,11 +125,11 @@ export type ExtensionLocalization = {
 }
 
 export type ExtensionDocumentation = {
-  refactoring: Array<{
+  refactoring: {
     command: string
     title: string
     when: string
-  }>
+  }[]
 }
 
 export type ExtensionGrammer = {
@@ -140,12 +139,8 @@ export type ExtensionGrammer = {
   injectTo?: string[]
   language?: string
   unbalancedBracketScopes?: string[]
-  embeddedLanguages?: {
-    [key: string]: string
-  }
-  tokenTypes?: {
-    [key: string]: 'comment' | 'other' | 'string'
-  }
+  embeddedLanguages?: Record<string, string>
+  tokenTypes?: Record<string, 'comment' | 'other' | 'string'>
 }
 
 export type ExtensionHtmlLanguageParticipant = {
@@ -235,11 +230,11 @@ export type ExtensionChatSession = {
     supportsSymbolAttachments?: boolean
     supportsToolAttachments?: boolean
   }
-  commands?: Array<{
+  commands?: {
     name: string
     description: string
     when?: string
-  }>
+  }[]
 }
 
 export type ExtensionCodeAction = {
@@ -278,15 +273,11 @@ export type ExtensionDebugger = {
   type?: string
   when?: string
   windows?: ExtensionDebuggerOS
-  configurationAttributes?: {
-    [key: string]: ExtensionJsonSchema
-  }
+  configurationAttributes?: Record<string, ExtensionJsonSchema>
   strings?: {
     unverifiedBreakpoints?: string
   }
-  variables?: {
-    [key: string]: string
-  }
+  variables?: Record<string, string>
 }
 
 export type ExtensionJsonValidation = {
@@ -321,9 +312,7 @@ export type ExtensionSemanticTokenType = {
 
 export type ExtensionSemanticTokenScope = {
   language?: string
-  scopes?: {
-    [key: string]: string[]
-  }
+  scopes?: Record<string, string[]>
 }
 
 export type ExtensionSnippet = {
@@ -438,9 +427,7 @@ export type ExtensionTaskDefinition = {
   required?: string[]
   type?: string
   when?: string
-  properties?: {
-    [key: string]: ExtensionJsonSchema
-  }
+  properties?: Record<string, ExtensionJsonSchema>
 }
 
 export type ExtensionTheme = {
@@ -582,10 +569,10 @@ export type ExtensionNotebook = {
   displayName: string
   type: string
   priority?: 'default' | 'option'
-  selector: Array<{
+  selector: {
     excludeFileNamePattern?: string
     filenamePattern?: string
-  }>
+  }[]
 }
 
 /**
@@ -593,7 +580,7 @@ export type ExtensionNotebook = {
  *
  * @see {@link https://code.visualstudio.com/api/references/contribution-points}
  */
-export interface ExtensionContributes {
+export type ExtensionContributes = {
   /**
    * Contributes an authentication provider. This will set up an activation event for your provider and display it in your extension's features.
    *
@@ -960,20 +947,15 @@ export interface ExtensionContributes {
    *
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.icons}
    */
-  icons?: {
-    [key: string]: ExtensionIcon
-  }
+  icons?: Record<string, ExtensionIcon>
 
   /**
    * Contribute a menu item for a command to the editor or Explorer. The menu item definition contains the command that should be invoked when selected and the condition under which the item should show. The latter is defined with the when clause, which uses the key bindings [when clause contexts](https://code.visualstudio.com/api/references/when-clause-contexts).
    *
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.menus}
    */
-  menus?: {
-    [key: string]: ExtensionMenu[]
-  } & {
-    [key in ExtensionMenuKind]: ExtensionMenu[]
-  }
+  menus?: Record<string, ExtensionMenu[]> &
+    Record<ExtensionMenuKind, ExtensionMenu[]>
 
   /**
    * Contribute a terminal profile to VS Code, allowing extensions to handle the creation of the profiles. When defined, the profile should appear when creating the terminal profile
@@ -995,9 +977,7 @@ export interface ExtensionContributes {
    *
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.views}
    */
-  views?: {
-    [key: string]: ExtensionViewCommon
-  } & {
+  views?: Record<string, ExtensionViewCommon> & {
     debug?: ExtensionViewCommon[]
     explorer?: ExtensionViewCommon[]
     remote?: ExtensionViewRemote[]

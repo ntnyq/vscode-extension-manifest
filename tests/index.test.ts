@@ -1,8 +1,6 @@
 import { describe, expect, it } from 'vitest'
-
-import type { ExtensionManifest } from '../src'
-
 import { resolve } from '../scripts/utils'
+import type { ExtensionManifest } from '../src'
 import {
   readExtensionManifest,
   readExtensionManifestSync,
