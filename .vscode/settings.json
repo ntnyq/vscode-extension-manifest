@@ -5,11 +5,9 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll.oxc": "explicit",
-    "source.organizeImports": "never",
-    "source.sortImports": "never"
+    "source.fixAll.oxc": "explicit"
   },
-  "typescript.experimental.useTsgo": true,
+  "js/ts.experimental.useTsgo": true,
   "cSpell.words": [
     "bumpp",
     "changelogithub",

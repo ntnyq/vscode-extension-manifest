@@ -8,7 +8,7 @@
     "promise",
     "oxc",
     "typescript",
-    "unicorn"
+    "unicorn",
   ],
   "categories": {
     "correctness": "error",
@@ -16,13 +16,9 @@
     "pedantic": "warn",
     "perf": "warn",
     "style": "warn",
-    "restriction": "warn"
+    "restriction": "warn",
   },
-  "ignorePatterns": [
-    "**/dist/**",
-    "**/node_modules/**",
-    "**/tests/fixtures/**"
-  ],
+  "ignorePatterns": ["**/dist/**", "**/node_modules/**", "**/fixtures/**"],
   "rules": {
     "require-await": "off",
     "no-ternary": "off",
@@ -68,14 +64,14 @@
           "S",
           // Unused vars
           "_",
-          "$"
-        ]
-      }
+          "$",
+        ],
+      },
     ],
     "func-style": ["warn", "declaration", { "allowArrowFunctions": true }],
     "no-duplicate-imports": [
       "warn",
-      { "allowSeparateTypeImports": true, "includeExports": true }
+      { "allowSeparateTypeImports": true, "includeExports": true },
     ],
     "no-magic-numbers": [
       "warn",
@@ -83,9 +79,9 @@
         "ignore": [0, 1, -1, 2, 10, 100, 1000],
         "ignoreArrayIndexes": true,
         "enforceConst": true,
-        "detectObjects": false
-      }
-    ]
+        "detectObjects": false,
+      },
+    ],
   },
   "overrides": [
     {
@@ -94,14 +90,16 @@
         "no-console": "off",
         "import/no-nodejs-modules": "off",
         "import/prefer-default-export": "off",
-        "import/no-named-export": "off"
-      }
+        "import/no-named-export": "off",
+      },
     },
     {
       "files": ["**/*.config.ts"],
       "rules": {
-        "import/no-default-export": "off"
-      }
+        "sort-keys": "warn",
+        "import/no-nodejs-modules": "off",
+        "import/no-default-export": "off",
+      },
     },
     {
       "files": ["*.d.ts"],
@@ -109,8 +107,8 @@
         // to extend existing modules, import/export must not appear in declaration files at top level
         "import/unambiguous": "off",
         // we need `export {}` to convert a file to a module
-        "unicorn/require-module-specifiers": "off"
-      }
+        "unicorn/require-module-specifiers": "off",
+      },
     },
     {
       "files": ["*.{spec,test}.{js,ts,tsx}", "*.{spec,test}-d.{ts,tsx}"],
@@ -130,8 +128,10 @@
         "typescript/no-invalid-void-type": "off",
         "typescript/prefer-ts-expect-error": "off",
         "typescript/require-array-sort-compare": "off",
-        "vitest/no-importing-vitest-globals": "off"
-      }
-    }
-  ]
+        "vitest/no-importing-vitest-globals": "off",
+        "vitest/prefer-strict-boolean-matchers": "off",
+        "vitest/require-test-timeout": "off",
+      },
+    },
+  ],
 }
