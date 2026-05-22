@@ -39,9 +39,9 @@ describe('vscode extension', () => {
   )!
 
   it('should readExtensionManifest work', async () => {
-    expect(
-      await readExtensionManifest({ cwd: FIXTURE_VSCODE_DEV_HELPER }),
-    ).toMatchSnapshot()
+    await expect(
+      readExtensionManifest({ cwd: FIXTURE_VSCODE_DEV_HELPER }),
+    ).resolves.toMatchSnapshot()
   })
 
   it('should readExtensionManifestSync work', () => {
@@ -65,7 +65,9 @@ describe('vscode extension', () => {
     await writeExtensionManifest(CACHED_DEV_HELPER_MANIFEST, {
       cwd: CURRENT_CWD,
     })
-    expect(await readExtensionManifest({ cwd: CURRENT_CWD })).toMatchSnapshot()
+    await expect(
+      readExtensionManifest({ cwd: CURRENT_CWD }),
+    ).resolves.toMatchSnapshot()
   })
 
   it('options - cache - true', () => {
@@ -105,9 +107,9 @@ describe('vscode extension', () => {
 
 describe('node package', () => {
   it('should readExtensionManifest work', async () => {
-    expect(
-      await readExtensionManifest({ cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST }),
-    ).toMatchSnapshot()
+    await expect(
+      readExtensionManifest({ cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST }),
+    ).resolves.toMatchSnapshot()
   })
 
   it('should readExtensionManifestSync work', () => {

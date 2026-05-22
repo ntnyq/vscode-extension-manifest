@@ -1,4 +1,7 @@
 overrides:
   esbuild: ^0.28.0
-onlyBuiltDependencies:
-  - esbuild
+
+allowBuilds:
+  esbuild: true
+
+minimumReleaseAge: 0
