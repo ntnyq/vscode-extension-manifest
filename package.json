@@ -47,25 +47,24 @@
     "release:check": "run-s format:check lint typecheck test",
     "release:version": "bumpp",
     "test": "vitest",
-    "typecheck": "tsgo --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/node": "^25.9.4",
-    "@typescript/native-preview": "^7.0.0-dev.20260629.1",
+    "@types/node": "^26.1.1",
     "bumpp": "^11.1.0",
     "husky": "^9.1.7",
     "nano-staged": "^1.0.2",
     "npm-run-all2": "^9.0.2",
-    "oxfmt": "^0.56.0",
-    "oxlint": "^1.71.0",
-    "tsdown": "^0.22.3",
-    "tsx": "^4.22.4",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.9"
+    "oxfmt": "^0.59.0",
+    "oxlint": "^1.74.0",
+    "tsdown": "^0.22.9",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   },
   "nano-staged": {
     "*.{js,ts,mjs,tsx}": "oxlint --fix",
     "*": "oxfmt --no-error-on-unmatched-pattern"
   },
-  "packageManager": "pnpm@11.9.0"
+  "packageManager": "pnpm@11.13.1"
 }
