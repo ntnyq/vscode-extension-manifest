@@ -6,12 +6,11 @@ import { fileURLToPath, URL } from 'node:url'
 import type { ExtensionManifest } from './types'
 import { fsEnsureDir, fsEnsureDirSync } from './utils'
 
-const FILENAME_PACKAGE_JSON = 'package.json'
-
-/**
- * Built-in cache
- */
-const FILE_CACHE = new Map<string, ExtensionManifest>()
+const FILENAME_PACKAGE_JSON = 'package.json',
+  /**
+   * Built-in cache
+   */
+  FILE_CACHE = new Map<string, ExtensionManifest>()
 
 /**
  * Shared options for {@link readExtensionManifest}, {@link readExtensionManifestSync}, {@link writeExtensionManifest} and {@link writeExtensionManifestSync}
@@ -107,21 +106,20 @@ export function defineExtensionManifest(
 export async function readExtensionManifest(
   options: ReadOptions = {},
 ): Promise<ExtensionManifest> {
-  const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
-
-  const cache =
-    options.cache && typeof options.cache !== 'boolean'
-      ? options.cache
-      : FILE_CACHE
-  const resolvedPath = resolve(toPath(cwd), filename)
+  const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options,
+    cache =
+      options.cache && typeof options.cache !== 'boolean'
+        ? options.cache
+        : FILE_CACHE,
+    resolvedPath = resolve(toPath(cwd), filename)
 
   if (options.cache && cache.has(resolvedPath)) {
     /* v8 ignore next */
     return cache.get(resolvedPath)! as ExtensionManifest
   }
 
-  const manifest = await readFile(resolvedPath, 'utf8')
-  const parsed = JSON.parse(manifest) as ExtensionManifest
+  const manifest = await readFile(resolvedPath, 'utf8'),
+    parsed = JSON.parse(manifest) as ExtensionManifest
 
   cache.set(resolvedPath, parsed)
 
@@ -145,21 +143,20 @@ export async function readExtensionManifest(
 export function readExtensionManifestSync(
   options: ReadOptions = {},
 ): ExtensionManifest {
-  const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
-
-  const cache =
-    options.cache && typeof options.cache !== 'boolean'
-      ? options.cache
-      : FILE_CACHE
-  const resolvedPath = resolve(toPath(cwd), filename)
+  const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options,
+    cache =
+      options.cache && typeof options.cache !== 'boolean'
+        ? options.cache
+        : FILE_CACHE,
+    resolvedPath = resolve(toPath(cwd), filename)
 
   if (options.cache && cache.has(resolvedPath)) {
     /* v8 ignore next */
     return cache.get(resolvedPath)! as ExtensionManifest
   }
 
-  const manifest = readFileSync(resolvedPath, 'utf8')
-  const parsed = JSON.parse(manifest) as ExtensionManifest
+  const manifest = readFileSync(resolvedPath, 'utf8'),
+    parsed = JSON.parse(manifest) as ExtensionManifest
 
   cache.set(resolvedPath, parsed)
 
@@ -238,9 +235,9 @@ export async function writeExtensionManifest(
   manifest: ExtensionManifest,
   options: WriteOptions = {},
 ): Promise<void> {
-  const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
-  const stringify = toResolvedStringify(options)
-  const resolvedPath = resolve(toPath(cwd), filename)
+  const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options,
+    stringify = toResolvedStringify(options),
+    resolvedPath = resolve(toPath(cwd), filename)
 
   await fsEnsureDir(resolvedPath)
 
@@ -271,9 +268,9 @@ export function writeExtensionManifestSync(
   manifest: ExtensionManifest,
   options: WriteOptions = {},
 ): void {
-  const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options
-  const stringify = toResolvedStringify(options)
-  const resolvedPath = resolve(toPath(cwd), filename)
+  const { filename = FILENAME_PACKAGE_JSON, cwd = process.cwd() } = options,
+    stringify = toResolvedStringify(options),
+    resolvedPath = resolve(toPath(cwd), filename)
 
   fsEnsureDirSync(resolvedPath)
 
