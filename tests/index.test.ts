@@ -10,28 +10,27 @@ import {
 } from '../src'
 
 const FIXTURE_VSCODE_DEV_HELPER = resolve('tests/fixtures/vscode-dev-helper'),
- FIXTURE_VSCODE_EXTENSION_MANIFEST = resolve(
-  'tests/fixtures/vscode-extension-manifest',
-),
-
- cacheDevHelper = new Map<string, ExtensionManifest>([
-  [
-    `${FIXTURE_VSCODE_DEV_HELPER}/package.json`,
-    readExtensionManifestSync({
-      cwd: FIXTURE_VSCODE_DEV_HELPER,
-      cache: false,
-    }),
-  ],
-]),
- cacheExtensionManifest = new Map<string, ExtensionManifest>([
-  [
-    `${FIXTURE_VSCODE_EXTENSION_MANIFEST}/package.json`,
-    readExtensionManifestSync({
-      cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST,
-      cache: false,
-    }),
-  ],
-])
+  FIXTURE_VSCODE_EXTENSION_MANIFEST = resolve(
+    'tests/fixtures/vscode-extension-manifest',
+  ),
+  cacheDevHelper = new Map<string, ExtensionManifest>([
+    [
+      `${FIXTURE_VSCODE_DEV_HELPER}/package.json`,
+      readExtensionManifestSync({
+        cwd: FIXTURE_VSCODE_DEV_HELPER,
+        cache: false,
+      }),
+    ],
+  ]),
+  cacheExtensionManifest = new Map<string, ExtensionManifest>([
+    [
+      `${FIXTURE_VSCODE_EXTENSION_MANIFEST}/package.json`,
+      readExtensionManifestSync({
+        cwd: FIXTURE_VSCODE_EXTENSION_MANIFEST,
+        cache: false,
+      }),
+    ],
+  ])
 
 describe('vscode extension', () => {
   const CACHED_DEV_HELPER_MANIFEST = cacheDevHelper.get(
