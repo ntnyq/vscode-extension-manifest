@@ -9,12 +9,12 @@ import {
   writeExtensionManifestSync,
 } from '../src'
 
-const FIXTURE_VSCODE_DEV_HELPER = resolve('tests/fixtures/vscode-dev-helper')
-const FIXTURE_VSCODE_EXTENSION_MANIFEST = resolve(
+const FIXTURE_VSCODE_DEV_HELPER = resolve('tests/fixtures/vscode-dev-helper'),
+ FIXTURE_VSCODE_EXTENSION_MANIFEST = resolve(
   'tests/fixtures/vscode-extension-manifest',
-)
+),
 
-const cacheDevHelper = new Map<string, ExtensionManifest>([
+ cacheDevHelper = new Map<string, ExtensionManifest>([
   [
     `${FIXTURE_VSCODE_DEV_HELPER}/package.json`,
     readExtensionManifestSync({
@@ -22,8 +22,8 @@ const cacheDevHelper = new Map<string, ExtensionManifest>([
       cache: false,
     }),
   ],
-])
-const cacheExtensionManifest = new Map<string, ExtensionManifest>([
+]),
+ cacheExtensionManifest = new Map<string, ExtensionManifest>([
   [
     `${FIXTURE_VSCODE_EXTENSION_MANIFEST}/package.json`,
     readExtensionManifestSync({
