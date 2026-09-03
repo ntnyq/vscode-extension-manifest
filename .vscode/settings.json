@@ -14,6 +14,8 @@
     "esbuild",
     "IJSON",
     "lcov",
+    "LLINE",
+    "Lstart",
     "oxfmt",
     "oxlint",
     "pnpm",

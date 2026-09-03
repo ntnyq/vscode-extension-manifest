@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Update VS Code Manifest Types'
+  short_description: 'Audit manifest types against VS Code source and record updates'
+  default_prompt: "Use $update-vscode-manifest-types to audit and update this project's types against VS Code source, then update the README timestamp and docs change record after verification."

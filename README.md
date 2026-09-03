@@ -12,6 +12,14 @@ Type definitions, validation, and IO utilities for VS Code extension manifests (
 > See the [source audit](./docs/vscode-source-audit.md) for the pinned revision, every change's source, proposal requirements, and compatibility notes.
 > For a generic Node.js package.json type, use type-fest's package-json.d.ts.
 
+<!-- vscode-types-update:start -->
+
+Last successful type update: **2026-09-03** (Asia/Shanghai; date precision from the original audit). Scope: **full src/types**.
+
+VS Code source: [`9a92570`](https://github.com/microsoft/vscode/commit/9a9257010666f5e886b2e2b095fe9febd5a5c13c) · [Changes](./docs/vscode-source-audit.md) · [History](./docs/type-updates/README.md).
+
+<!-- vscode-types-update:end -->
+
 ## Features
 
 - Strongly typed `ExtensionManifest` plus contributes types
@@ -129,6 +137,7 @@ Used by `writeExtensionManifest` and `writeExtensionManifestSync`.
 ## Contributing
 
 - Add new manifest fields under `src/types` and update tests.
+- Use the project skill [`update-vscode-manifest-types`](./.agents/skills/update-vscode-manifest-types/SKILL.md) for source audits and type updates. Successful updates include a timestamp and a separate record with pinned source links for every change.
 - Missing or mismatched types are welcome as issues or PRs.
 
 ## Links

@@ -20,7 +20,10 @@
     "name": "ntnyq",
     "email": "ntnyq13@gmail.com"
   },
-  "repository": "ntnyq/vscode-extension-manifest",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntnyq/vscode-extension-manifest.git"
+  },
   "files": [
     "dist"
   ],
