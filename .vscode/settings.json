@@ -12,6 +12,7 @@
     "changelogithub",
     "CODECOV",
     "esbuild",
+    "IJSON",
     "lcov",
     "oxfmt",
     "oxlint",
@@ -21,7 +22,8 @@
     "unplugin",
     "unrs",
     "vite",
-    "vitest"
+    "vitest",
+    "winx"
   ],
   "cSpell.allowCompoundWords": true
 }

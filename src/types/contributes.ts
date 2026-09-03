@@ -2,15 +2,20 @@ import type {
   ExtensionAnyValue,
   ExtensionConfigurationKey,
   ExtensionDebuggerOS,
+  ExtensionProductIcon,
   ExtensionSpecifiedLanguageKey,
   ExtensionThemeableColor,
   ExtensionThemeableIcon,
 } from './common'
-import type { ExtensionJsonSchema } from './json-schema'
+import type {
+  ExtensionJsonSchema,
+  TJsonSchemaVSCodeSnippet,
+} from './json-schema'
 import type {
   ExtensionMenuKind,
   ExtensionProblemMatcherFileLocation,
 } from './union'
+import type { LiteralUnion } from './utils'
 
 export type ExtensionStartEntry = {
   category: 'file' | 'folder' | 'notebook'
@@ -20,8 +25,11 @@ export type ExtensionStartEntry = {
   when?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/browser/statusBarExtensionPoint.ts#L175-L237}
+ */
 export type ExtensionStatusBarItem = {
-  alignment: string
+  alignment: 'left' | 'right'
   id: string
   name: string
   text: string
@@ -29,14 +37,17 @@ export type ExtensionStatusBarItem = {
   priority?: number
   tooltip?: string
   accessibilityInformation?: {
-    label?: string
+    label: string
     role?: string
   }
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/keybinding/browser/keybindingService.ts#L61-L90}
+ */
 export type ExtensionKeybinding = {
   command: string
-  key: string
+  key?: string
   args?: ExtensionAnyValue
   linux?: string
   mac?: string
@@ -44,6 +55,9 @@ export type ExtensionKeybinding = {
   win?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/language/common/languageService.ts#L330-L345}
+ */
 export type ExtensionLanguage = {
   aliases?: string[]
   configuration?: string
@@ -51,7 +65,7 @@ export type ExtensionLanguage = {
   filenamePatterns?: string[]
   filenames?: string[]
   firstLine?: string
-  id?: string
+  id: string
   mimetypes?: string[]
   icon?: {
     dark: string
@@ -59,10 +73,20 @@ export type ExtensionLanguage = {
   }
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/platform/configuration/common/configurationRegistry.ts#L335-L342}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/common/configurationExtensionPoint.ts#L338-L343}
+ */
 export type ExtensionConfiguration = {
   id?: string
+  description?: string
+  type?: string | string[]
   order?: number
   title?: string
+  /**
+   * @deprecated Contribute an array of configuration sections instead.
+   */
+  allOf?: ExtensionConfiguration[]
   properties?: Record<string, ExtensionJsonSchema>
 }
 
@@ -74,21 +98,35 @@ export type ExtensionConfigurationDefaults = {
   >
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/editSessions/browser/editSessions.contribution.ts#L889-L915}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/editSessions/browser/editSessions.contribution.ts#L1102-L1109}
+ */
 export type ExtensionContinueEditSession = {
   command: string
   description?: string
+  documentation?: string
+  category?: string
   group?: string
   qualifiedName?: string
   remoteGroup?: string
   when?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/customEditor/common/extensionPoint.ts#L25-L103}
+ */
 export type ExtensionCustomEditor = {
   displayName: string
   viewType: string
-  priority?: 'default' | 'option'
+  priority?:
+    | ExtensionCustomEditorPriority
+    | {
+        textEditor: ExtensionCustomEditorPriority
+        diffEditor?: ExtensionCustomEditorPriority
+      }
   selector: {
-    filenamePattern: string
+    filenamePattern?: string
   }[]
 }
 
@@ -96,25 +134,45 @@ export type ExtensionLanguageModel = {
   vendor: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/tools/languageModelToolsContribution.ts#L28-L40}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/tools/languageModelToolsContribution.ts#L226-L253}
+ */
 export type ExtensionLanguageModelTool = {
   name: string
-  canBeReferencedInPrompt?: boolean
-  displayName?: string
+  displayName: string
   icon?: ExtensionThemeableIcon
   inputSchema?: ExtensionJsonSchema
-  modelDescription?: string
+  modelDescription: string
   tags?: string[]
-  toolReferenceName?: string
   userDescription?: string
   when?: string
-}
+  /**
+   * Requires the chatParticipantPrivate API proposal.
+   */
+  legacyToolReferenceFullNames?: string[]
+} & (
+  | { canBeReferencedInPrompt: true; toolReferenceName: string }
+  | { canBeReferencedInPrompt?: false; toolReferenceName?: string }
+)
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/tools/languageModelToolsContribution.ts#L140-L150}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/tools/languageModelToolsContribution.ts#L332-L380}
+ */
 export type ExtensionLanguageModelToolSet = {
   description: string
   name: string
   tools: string[]
   icon?: string
+  /**
+   * @deprecated Tool sets now use name as their reference name.
+   */
   referenceName?: string
+  /**
+   * Requires the contribLanguageModelToolSets API proposal.
+   */
+  legacyFullNames?: string[]
 }
 
 export type ExtensionLocalization = {
@@ -148,72 +206,136 @@ export type ExtensionHtmlLanguageParticipant = {
   autoInsert?: boolean
 }
 
-export type ExtensionChatAgent = {
-  path: string
-}
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/promptSyntax/chatPromptFilesContribution.ts#L23-L84}
+ */
+export type ExtensionChatAgent = ExtensionChatFile
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/contextContrib/chatContext.contribution.ts#L15-L43}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/contextContrib/chatContext.contribution.ts#L60-L75}
+ */
 export type ExtensionChatContext = {
   displayName: string
   id: string
-  icon: string
-  [key: string]: any
+  icon: ExtensionProductIcon
 }
 
-export type ExtensionChatInstruction = {
-  path: string
-}
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/promptSyntax/chatPromptFilesContribution.ts#L23-L84}
+ */
+export type ExtensionChatInstruction = ExtensionChatFile
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/viewsWelcome/chatViewsWelcomeHandler.ts#L19-L41}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/viewsWelcome/chatViewsWelcomeHandler.ts#L61-L77}
+ */
 export type ExtensionChatViewWelcome = {
   content?: string
-  icon?: string
-  title?: string
-  when?: string
+  icon: ExtensionProductIcon
+  title: string
+  when: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/chatOutputItemRenderer.ts#L264-L290}
+ */
 export type ExtensionChatOutputRenderer = {
-  mimeTypes: string[]
+  mimeTypes?: string[]
+  codeBlockLanguageIdentifiers?: string[]
   viewType: string
 }
 
-export type ExtensionChatParticipant = ExtensionChatParticipantCommand & {
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/participants/chatParticipantContribTypes.ts#L17-L32}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/chatParticipant.contribution.ts#L247-L255}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/constants.ts#L143-L150}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/constants.ts#L243-L268}
+ */
+export type ExtensionChatParticipant = Omit<
+  ExtensionChatParticipantCommand,
+  'disambiguation'
+> & {
   id: string
   commands?: ExtensionChatParticipantCommand[]
   fullName?: string
+  disambiguation?: ExtensionChatParticipantDisambiguation[]
+  /**
+   * Requires the defaultChatParticipant API proposal.
+   */
+  isDefault?: boolean
+  /**
+   * Requires the defaultChatParticipant API proposal; applies to default participants.
+   */
+  modes?: ('ask' | 'edit' | 'agent')[]
+  /**
+   * Requires the chatParticipantAdditions API proposal.
+   */
+  locations?: (
+    | 'panel'
+    | 'terminal'
+    | 'notebook'
+    | 'editor'
+    | 'editing-session'
+  )[]
 }
 
-export type ExtensionChatSkill = {
-  path: string
-}
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/promptSyntax/chatPromptFilesContribution.ts#L23-L84}
+ */
+export type ExtensionChatSkill = ExtensionChatFile
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/participants/chatParticipantContribTypes.ts#L8-L14}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/chatParticipant.contribution.ts#L294-L299}
+ */
 export type ExtensionChatParticipantCommand = {
   name: string
   description?: string
-  disambiguation?: ExtensionChatParticipantDisambiguation[]
+  disambiguation?: (ExtensionChatParticipantDisambiguation & {
+    category: string
+  })[]
   isSticky?: boolean
   sampleRequest?: string
   when?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/participants/chatParticipantContribTypes.ts#L8-L32}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/chatParticipant.contribution.ts#L262-L271}
+ */
 export type ExtensionChatParticipantDisambiguation = {
-  category: string
   description: string
-  examples: ExtensionAnyValue[]
-}
+  examples: string[]
+  /**
+   * @deprecated Use category instead.
+   */
+  categoryName?: string
+} & ({ category: string } | { category?: never; categoryName: string })
 
-export type ExtensionChatPromptFile = {
-  path: string
-}
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/promptSyntax/chatPromptFilesContribution.ts#L23-L84}
+ */
+export type ExtensionChatPromptFile = ExtensionChatFile
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/chatSessions/chatSessions.contribution.ts#L63-L256}
+ */
 export type ExtensionChatSession = {
   type: string
   name: string
   displayName: string
   description: string
-  icon?: string
+  icon?: ExtensionThemeableIcon
   when?: string
   order?: number
   alternativeIds?: string[]
   canDelegate?: boolean
+  requiresCustomModels?: boolean
+  supportsAutoModel?: boolean
+  requiresCopilotSignIn?: boolean
+  autoAttachReferences?: boolean
+  useRequestToPopulateBuiltInPickers?: boolean
   customAgentTarget?: string
   inputPlaceholder?: string
   welcomeMessage?: string
@@ -229,21 +351,26 @@ export type ExtensionChatSession = {
     supportsSourceControlAttachments?: boolean
     supportsSymbolAttachments?: boolean
     supportsToolAttachments?: boolean
+    supportsPromptAttachments?: boolean
+    supportsHandOffs?: boolean
   }
   commands?: {
     name: string
-    description: string
+    description?: string
     when?: string
   }[]
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/platform/extensions/common/extensions.ts#L96-L105}
+ */
 export type ExtensionCodeAction = {
   languages: string[]
   actions: {
     kind: string
     title: string
     description?: string
-  }
+  }[]
 }
 
 export type ExtensionColor = {
@@ -257,9 +384,14 @@ export type ExtensionColor = {
   }
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/debug/common/debug.ts#L938-L970}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/debug/node/debugAdapter.ts#L391-L446}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/debug/common/debugger.ts#L171-L173}
+ */
 export type ExtensionDebugger = {
-  args?: ExtensionAnyValue[]
-  configurationSnippets?: ExtensionAnyValue[]
+  args?: string[]
+  configurationSnippets?: TJsonSchemaVSCodeSnippet[]
   deprecated?: string
   hiddenWhen?: string
   initialConfigurations?: string | ExtensionAnyValue[]
@@ -269,8 +401,10 @@ export type ExtensionDebugger = {
   osx?: ExtensionDebuggerOS
   program?: string
   runtime?: string
-  runtimeArgs?: ExtensionAnyValue[]
-  type?: string
+  runtimeArgs?: string[]
+  type: string
+  win?: ExtensionDebuggerOS
+  winx86?: ExtensionDebuggerOS
   when?: string
   windows?: ExtensionDebuggerOS
   configurationAttributes?: Record<string, ExtensionJsonSchema>
@@ -278,11 +412,18 @@ export type ExtensionDebugger = {
     unverifiedBreakpoints?: string
   }
   variables?: Record<string, string>
+  /**
+   * @deprecated Use strings instead.
+   */
+  uiMessages?: { unverifiedBreakpoints?: string }
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/common/jsonValidationExtensionPoint.ts#L86-L107}
+ */
 export type ExtensionJsonValidation = {
-  fileMatch?: string | string[]
-  url?: string
+  fileMatch: string | string[]
+  url: string
 }
 
 export type ExtensionDebugVisualizer = {
@@ -290,9 +431,12 @@ export type ExtensionDebugVisualizer = {
   when: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/themes/common/tokenClassificationExtensionPoint.ts#L110-L128}
+ */
 export type ExtensionSemanticTokenModifier = {
-  description?: string
-  id?: string
+  description: string
+  id: string
 }
 
 export type ExtensionCommand = {
@@ -304,19 +448,29 @@ export type ExtensionCommand = {
   shortTitle?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/themes/common/tokenClassificationExtensionPoint.ts#L10-L19}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/themes/common/tokenClassificationExtensionPoint.ts#L119-L127}
+ */
 export type ExtensionSemanticTokenType = {
   description: string
   id: string
-  superType: string
+  superType?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/themes/common/tokenClassificationExtensionPoint.ts#L21-L24}
+ */
 export type ExtensionSemanticTokenScope = {
   language?: string
-  scopes?: Record<string, string[]>
+  scopes: Record<string, string[]>
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/snippets/browser/snippetsService.ts#L47-L74}
+ */
 export type ExtensionSnippet = {
-  language: string
+  language?: string
   path: string
 }
 
@@ -349,37 +503,78 @@ export type ExtensionBreakpoint = {
   when?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedService.ts#L297-L389}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedExtensionPoint.ts#L198-L210}
+ */
 export type ExtensionWalkThroughStep = {
   id: string
   title: string
   completionEvents?: string[]
   description?: string
   when?: string
-  media: {
-    altText: string
-    image: string
-    markdown?: string
-    svg?: string
-  }
+  /**
+   * @deprecated Use completionEvents instead.
+   */
+  doneOn?: { command: string }
+  media:
+    | {
+        image: ExtensionWalkThroughMediaPath
+        altText: string
+        markdown?: never
+        svg?: never
+        video?: never
+      }
+    | { markdown: string; image?: never; svg?: never; video?: never }
+    | {
+        svg: string
+        altText: string
+        image?: never
+        markdown?: never
+        video?: never
+      }
+    | {
+        video: ExtensionWalkThroughMediaPath
+        poster?: ExtensionWalkThroughMediaPath
+        altText: string
+        image?: never
+        markdown?: never
+        svg?: never
+      }
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/speech/browser/speechService.ts#L20-L45}
+ */
 export type ExtensionSpeechProvider = {
   description?: string
-  name?: string
+  name: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/platform/terminal/common/terminal.ts#L983-L989}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/terminal/common/terminalExtensionPoints.ts#L46-L49}
+ */
 export type ExtensionTerminalProfile = {
   id: string
   title: string
+  color?: string
+  titleTemplate?: string
   icon?: ExtensionThemeableIcon
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/themes/common/iconExtensionPoint.ts#L15-L19}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/themes/common/iconExtensionPoint.ts#L96-L99}
+ */
 export type ExtensionIcon = {
   description: string
-  default: {
-    fontCharacter: string
-    fontPath: string
-  }
+  default:
+    | string
+    | {
+        fontCharacter: string
+        fontPath: string
+      }
 }
 
 export type ExtensionTerminalQuickFix = {
@@ -395,18 +590,25 @@ export type ExtensionTerminalQuickFix = {
   }
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/authentication/browser/authenticationService.ts#L54-L74}
+ */
 export type ExtensionAuthentication = {
   id: string
   label: string
+  authorizationServerGlobs?: string[]
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/actions/common/menusExtensionPoint.ts#L585-L605}
+ */
 export type ExtensionMenu = {
-  command: string
-  alt?: string
   group?: string
-  submenu?: string
   when?: string
-}
+} & (
+  | { command: string; alt?: string; submenu?: never }
+  | { submenu: string; command?: never; alt?: never }
+)
 
 export type ExtensionRemoteCodingAgent = {
   command: string
@@ -423,9 +625,12 @@ export type ExtensionSubmenu = {
   icon?: ExtensionThemeableIcon
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/taskDefinitionRegistry.ts#L58-L65}
+ */
 export type ExtensionTaskDefinition = {
   required?: string[]
-  type?: string
+  type: string
   when?: string
   properties?: Record<string, ExtensionJsonSchema>
 }
@@ -437,9 +642,14 @@ export type ExtensionTheme = {
   label?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/typescript-language-features/src/tsServer/plugins.ts#L69-L83}
+ */
 export type ExtensionTypescriptServerPlugin = {
   enableForWorkspaceTypeScriptVersions?: boolean
-  name?: string
+  name: string
+  languages?: string[]
+  configNamespace?: string
 }
 
 export type ExtensionViewCommon = {
@@ -453,12 +663,13 @@ export type ExtensionViewCommon = {
   visibility?: 'collapsed' | 'hidden' | 'visible'
   when?: string
 }
-export type ExtensionViewRemote = Pick<
-  ExtensionViewCommon,
-  'id' | 'name' | 'when'
-> & {
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/browser/viewsExtensionPoint.ts#L89-L108}
+ */
+export type ExtensionViewRemote = ExtensionViewCommon & {
   group?: string
-  remoteName?: string
+  remoteName?: string | string[]
+  virtualWorkspace?: string
 }
 export type ExtensionViewsContainer = {
   icon: string
@@ -472,23 +683,40 @@ export type ExtensionProductIconTheme = {
   label?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/remote/common/remoteExplorerService.ts#L65-L116}
+ */
 export type ExtensionRemoteHelp = {
   documentation?: string
   feedback?: string
-  getStarted?: string
+  getStarted?: string | { id: string }
   issues?: string
   reportIssue?: string
+  remoteName?: string | string[]
+  virtualWorkspace?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/platform/label/common/label.ts#L55-L94}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/label/common/labelService.ts#L92-L112}
+ */
 export type ExtensionResourceLabelFormatter = {
   scheme: string
   authority?: string
+  priority?: boolean
   formatting: {
     label?: string
     separator?: string
     stripPathStartingSeparator?: boolean
     tildify?: boolean
     workspaceSuffix?: string
+    normalizeDriveLetter?: boolean
+    authorityPrefix?: string
+    stripPathSegments?: number
+    /**
+     * Requires the contribLabelFormatterWorkspaceTooltip API proposal.
+     */
+    workspaceTooltip?: string
   }
 }
 
@@ -498,11 +726,19 @@ export type ExtensionNotebookPreload = {
   localResourceRoots?: string[]
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/languageModels.ts#L772-L839}
+ */
 export type ExtensionLanguageModelChatProvider = {
   vendor: string
   displayName: string
   configuration?: ExtensionJsonSchema
   when?: string
+  deprecation?: { link?: string }
+  /**
+   * @deprecated Use configuration instead.
+   */
+  managementCommand?: string
 }
 
 export type ExtensionMcpServerDefinitionProvider = {
@@ -511,53 +747,73 @@ export type ExtensionMcpServerDefinitionProvider = {
   when?: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/notebook/browser/notebookExtensionPoint.ts#L118-L215}
+ */
 export type ExtensionNotebookRenderer = {
   displayName: string
-  entrypoint: string
   id: string
-  mimeTypes: string[]
   dependencies?: string[]
   optionalDependencies?: string[]
   requiresMessaging?: 'always' | 'never' | 'optional'
-}
+} & (
+  | { entrypoint: string; mimeTypes: string[] }
+  | { entrypoint: { extends: string; path: string }; mimeTypes?: string[] }
+)
 
 export type ExtensionModelContextServerCollection = {
   id: string
   label: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L591-L716}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L947-L964}
+ */
 export type ExtensionProblemPattern = {
   code?: number
   column?: number
   endColumn?: number
   endLine?: number
   file?: number
-  kind?: number
+  kind?: 'file' | 'location'
   line?: number
   location?: number
-  loop?: number
+  loop?: boolean
   message?: number
-  name?: number
-  patterns?: number
-  regexp?: number
+  name?: string
+  label?: string
+  regexp: string
   severity?: number
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L1271-L1276}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L889-L934}
+ */
 export type ExtensionProblemMatcher = {
-  applyTo?: 'allDocuments' | 'closeDocuments' | 'openDocuments'
+  applyTo?: 'allDocuments' | 'closedDocuments' | 'openDocuments'
   base?: string
   fileLocation?: ExtensionProblemMatcherFileLocation
   label?: string
   name?: string
   owner?: string
-  pattern?: ExtensionProblemPattern
+  pattern?: string | ExtensionProblemPattern | ExtensionProblemPattern[]
   severity?: 'error' | 'info' | 'warning'
   source?: string
-  background?: {
-    activeOnStart?: boolean
-    beginsPattern?: string
-    endsPattern?: string
-  }
+  background?: ExtensionProblemMatcherBackground
+  /**
+   * @deprecated Use background instead.
+   */
+  watching?: ExtensionProblemMatcherBackground
+  /**
+   * @deprecated Use background.beginsPattern instead.
+   */
+  watchedTaskBeginsRegExp?: string
+  /**
+   * @deprecated Use background.endsPattern instead.
+   */
+  watchedTaskEndsRegExp?: string
 }
 
 export type ExtensionLocalizationTranslation = {
@@ -565,11 +821,14 @@ export type ExtensionLocalizationTranslation = {
   path: string
 }
 
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/notebook/browser/services/notebookServiceImpl.ts#L120-L147}
+ */
 export type ExtensionNotebook = {
   displayName: string
   type: string
   priority?: 'default' | 'option'
-  selector: {
+  selector?: {
     excludeFileNamePattern?: string
     filenamePattern?: string
   }[]
@@ -621,12 +880,17 @@ export type ExtensionContributes = {
   chatParticipants?: ExtensionChatParticipant[]
 
   /**
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/plugins/agentPluginServiceImpl.ts#L1025-L1055}
+   */
+  chatPlugins?: ExtensionChatPlugin[]
+
+  /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatPromptFiles}
    */
   chatPromptFiles?: ExtensionChatPromptFile[]
 
   /**
-   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatSessions
+   * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatSessions}
    */
   chatSessions?: ExtensionChatSession[]
 
@@ -656,8 +920,9 @@ export type ExtensionContributes = {
    * Contribute the UI for a command consisting of a title and (optionally) an icon, category, and enabled state. Enablement is expressed with [when clauses](https://code.visualstudio.com/api/references/when-clause-contexts). By default, commands show in the Command Palette (⇧⌘P) but they can also show in other [menus](https://code.visualstudio.com/api/references/contribution-points#contributes.menus).
    *
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.commands}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/actions/common/menusExtensionPoint.ts#L897-L913}
    */
-  commands?: ExtensionCommand[]
+  commands?: ExtensionCommand | ExtensionCommand[]
 
   /**
    * Contribute settings that will be exposed to the user. The user will be able to set these configuration options in the Settings editor or by editing a settings.json file directly.
@@ -683,7 +948,18 @@ export type ExtensionContributes = {
   continueEditSession?: ExtensionContinueEditSession[]
 
   /**
+   * The stylesheet array requires the css API proposal.
+   * The customData object is read by the built-in CSS language extension.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/themes/browser/cssExtensionPoint.ts#L20-L47}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/css-language-features/client/src/customData.ts#L77-L87}
+   */
+  css?: ExtensionCss[] | { customData?: string[] }
+
+  /**
+   * @deprecated Use the nested css.customData property instead.
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.css.customData}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/css-language-features/client/src/customData.ts#L77-L87}
    */
   'css.customData'?: string[]
 
@@ -717,7 +993,14 @@ export type ExtensionContributes = {
   grammars?: ExtensionGrammer[]
 
   /**
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/html-language-features/client/src/customData.ts#L127-L141}
+   */
+  html?: { customData?: string[] }
+
+  /**
+   * @deprecated Use the nested html.customData property instead.
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.html.customData}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/html-language-features/client/src/customData.ts#L127-L141}
    */
   'html.customData'?: string[]
 
@@ -736,6 +1019,11 @@ export type ExtensionContributes = {
   iconThemes?: ExtensionIconTheme[]
 
   /**
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/json-language-features/client/src/languageParticipants.ts#L11-L60}
+   */
+  jsonLanguageParticipants?: ExtensionJsonLanguageParticipant[]
+
+  /**
    * Contribute a validation schema for a specific type of json file. The url value can be either a local path to a schema file included in the extension or a remote server URL such as a [json schema store](https://www.schemastore.org/json).
    *
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.jsonValidation}
@@ -743,12 +1031,18 @@ export type ExtensionContributes = {
   jsonValidation?: ExtensionJsonValidation[]
 
   /**
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/common/jsonValidationExtensionPoint.ts#L53-L71}
+   */
+  jsonValidationRegistry?: ExtensionJsonValidationRegistry[]
+
+  /**
    * Contribute a key binding rule defining what command should be invoked when the user presses a key combination. See the [Key Bindings](https://code.visualstudio.com/docs/getstarted/keybindings) topic where key bindings are explained in detail.
    *
    * Contributing a key binding will cause the Default Keyboard Shortcuts to display your rule, and every UI representation of the command will now show the key binding you have added. And, of course, when the user presses the key combination the command will be invoked.
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.keybindings}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/keybinding/browser/keybindingService.ts#L130-L142}
    */
-  keybindings?: ExtensionKeybinding[]
+  keybindings?: ExtensionKeybinding | ExtensionKeybinding[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.languageModels}
@@ -788,9 +1082,26 @@ export type ExtensionContributes = {
     | ExtensionLanguageModelChatProvider[]
 
   /**
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/dataChannel/browser/dataChannelService.ts#L63-L112}
+   */
+  linkPresentationProviders?: ExtensionLinkPresentationProvider[]
+
+  /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.localizations}
    */
   localizations?: ExtensionLocalization[]
+
+  /**
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/markdown-language-features/src/markdownExtensions.ts#L163-L281}
+   */
+  'markdown.codeBlockEditorProviders'?: ExtensionMarkdownCodeBlockEditorProvider[]
+
+  /**
+   * @deprecated Use markdown.codeBlockEditorProviders instead.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/markdown-language-features/src/markdownExtensions.ts#L205-L238}
+   */
+  'markdown.codeBlockEditors'?: ExtensionMarkdownCodeBlockEditor[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.markdown.markdownItPlugins}
@@ -799,8 +1110,9 @@ export type ExtensionContributes = {
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.markdown.previewScripts}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/markdown-language-features/src/markdownExtensions.ts#L311-L355}
    */
-  'markdown.previewScripts'?: string[]
+  'markdown.previewScripts'?: ExtensionMarkdownPreviewScript[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.markdown.previewStyles}
@@ -834,13 +1146,15 @@ export type ExtensionContributes = {
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.problemMatchers}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L923-L937}
    */
-  problemMatchers?: ExtensionProblemMatcher[]
+  problemMatchers?: (ExtensionProblemMatcher & { name: string })[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.problemPatterns}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L1430-L1441}
    */
-  problemPatterns?: ExtensionProblemPattern[]
+  problemPatterns?: ExtensionProblemPatternContribution[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.productIconThemes}
@@ -896,8 +1210,9 @@ export type ExtensionContributes = {
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.statusBarItems}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/browser/statusBarExtensionPoint.ts#L239-L252}
    */
-  statusBarItems?: ExtensionStatusBarItem[]
+  statusBarItems?: ExtensionStatusBarItem | ExtensionStatusBarItem[]
 
   /**
    * Contribute a submenu as a placeholder onto which menu items can be contributed. A submenu requires a label to be shown in the parent menu.
@@ -953,17 +1268,19 @@ export type ExtensionContributes = {
    * Contribute a menu item for a command to the editor or Explorer. The menu item definition contains the command that should be invoked when selected and the condition under which the item should show. The latter is defined with the when clause, which uses the key bindings [when clause contexts](https://code.visualstudio.com/api/references/when-clause-contexts).
    *
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.menus}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/actions/common/menusExtensionPoint.ts#L762-L779}
    */
-  menus?: Record<string, ExtensionMenu[]> &
-    Record<ExtensionMenuKind, ExtensionMenu[]>
+  menus?: Partial<Record<LiteralUnion<ExtensionMenuKind>, ExtensionMenu[]>>
 
   /**
    * Contribute a terminal profile to VS Code, allowing extensions to handle the creation of the profiles. When defined, the profile should appear when creating the terminal profile
    *
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.terminal}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/terminal/common/terminalExtensionPoints.ts#L52-L59}
    */
   terminal?: {
     profiles?: ExtensionTerminalProfile[]
+    completionProviders?: ExtensionTerminalCompletionProvider[]
   }
 
   /**
@@ -976,8 +1293,12 @@ export type ExtensionContributes = {
    * - Custom view containers contributed by Extensions.
    *
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.views}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/browser/viewsExtensionPoint.ts#L208-L259}
    */
-  views?: Record<string, ExtensionViewCommon> & {
+  views?: Record<
+    string,
+    (ExtensionViewCommon | ExtensionViewRemote)[] | undefined
+  > & {
     debug?: ExtensionViewCommon[]
     explorer?: ExtensionViewCommon[]
     remote?: ExtensionViewRemote[]
@@ -987,9 +1308,165 @@ export type ExtensionContributes = {
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.viewsContainers}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/browser/viewsExtensionPoint.ts#L60-L80}
    */
   viewsContainers?: {
     activitybar?: ExtensionViewsContainer[]
     panel?: ExtensionViewsContainer[]
+    secondarySidebar?: ExtensionViewsContainer[]
   }
+}
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedService.ts#L297-L389}
+ */
+export type ExtensionWalkThroughMediaPath =
+  | string
+  | { dark: string; light: string; hc: string; hcLight?: string }
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L750-L774}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L1430-L1441}
+ */
+export type ExtensionProblemPatternContribution = {
+  name: string
+  label?: string
+} & (ExtensionProblemPattern | { patterns: ExtensionProblemPattern[] })
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L779-L813}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/tasks/common/problemMatcher.ts#L1343-L1370}
+ */
+export type ExtensionProblemMatcherBackground = {
+  activeOnStart?: boolean
+  beginsPattern?: string | { regexp: string; file?: number }
+  endsPattern?: string | { regexp: string; file?: number }
+}
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/promptSyntax/chatPromptFilesContribution.ts#L23-L84}
+ */
+export type ExtensionChatFile = {
+  path: string
+  when?: string
+  sessionTypes?: string[]
+  /**
+   * @deprecated Specify name in the file itself instead.
+   */
+  name?: string
+  /**
+   * @deprecated Specify description in the file itself instead.
+   */
+  description?: string
+}
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/common/jsonValidationExtensionPoint.ts#L53-L71}
+ */
+export type ExtensionJsonValidationRegistry = { url: string }
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/common/plugins/agentPluginServiceImpl.ts#L1025-L1055}
+ */
+export type ExtensionChatPlugin = { path: string; when?: string }
+
+/**
+ * Requires the css API proposal.
+ *
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/themes/browser/cssExtensionPoint.ts#L20-L47}
+ */
+export type ExtensionCss = { path: string }
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/dataChannel/browser/dataChannelService.ts#L63-L112}
+ */
+export type ExtensionLinkPresentationProvider = {
+  id: string
+  uriPattern: string
+  kind:
+    | 'resource'
+    | 'issue'
+    | 'pullRequest'
+    | 'commit'
+    | 'file'
+    | 'folder'
+    | 'session'
+    | 'chat'
+    | 'repository'
+    | 'branch'
+  enablement?: string
+}
+
+/**
+ * @deprecated Use markdown.codeBlockEditorProviders instead.
+ *
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/markdown-language-features/src/markdownExtensions.ts#L205-L238}
+ */
+export type ExtensionMarkdownCodeBlockEditor = {
+  id: string
+  language: string
+  entrypoint: string
+  contentType?: 'text' | 'json'
+}
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/markdown-language-features/src/markdownExtensions.ts#L163-L281}
+ */
+export type ExtensionMarkdownCodeBlockEditorProvider = {
+  id: string
+  selector:
+    | { language: string; languagePrefix?: never }
+    | { languagePrefix: string; language?: never }
+  source:
+    | { kind: 'static'; entrypoint: string }
+    | { kind: 'exportApi'; apiVersion: number }
+  runtimeKey?: string
+  contentType?: 'text' | 'json'
+  initialHeight?: number
+  sandbox?: {
+    forms?: boolean
+    downloads?: boolean
+    pointerLock?: boolean
+    clipboardWrite?: boolean
+  }
+}
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/markdown-language-features/src/markdownExtensions.ts#L311-L355}
+ */
+export type ExtensionMarkdownPreviewScript =
+  | string
+  | { path: string; type?: 'module' }
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/customEditor/common/extensionPoint.ts#L25-L103}
+ */
+export type ExtensionCustomEditorPriority =
+  | 'default'
+  | 'option'
+  | 'explicit'
+  /**
+   * Only honored for built-in extensions; other extensions fall back to default.
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/customEditor/common/contributedCustomEditors.ts#L128-L145}
+   */
+  | 'builtin'
+
+/**
+ * Requires the terminalCompletionProvider API proposal.
+ *
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/platform/terminal/common/terminal.ts#L1014-L1020}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/terminal/common/terminal.ts#L726-L743}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/terminal/common/terminalExtensionPoints.ts#L52-L59}
+ */
+export type ExtensionTerminalCompletionProvider = {
+  id?: string
+  description?: string
+}
+
+/**
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/extensions/json-language-features/client/src/languageParticipants.ts#L11-L60}
+ */
+export type ExtensionJsonLanguageParticipant = {
+  languageId: string
+  comments?: boolean
 }

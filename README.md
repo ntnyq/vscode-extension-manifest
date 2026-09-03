@@ -8,7 +8,8 @@
 Type definitions, validation, and IO utilities for VS Code extension manifests (package.json).
 
 > [!NOTE]
-> This package only covers fields listed in the VS Code Extension Manifest docs.
+> Types are checked against VS Code source: contribution schemas, interfaces, and runtime consumers.
+> See the [source audit](./docs/vscode-source-audit.md) for the pinned revision, every change's source, proposal requirements, and compatibility notes.
 > For a generic Node.js package.json type, use type-fest's package-json.d.ts.
 
 ## Features

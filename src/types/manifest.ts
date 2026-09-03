@@ -37,6 +37,28 @@ export type ExtensionManifest = {
   version: string
 
   /**
+   * @deprecated Use enabledApiProposals instead.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/extensions/common/extensionsRegistry.ts#L238-L241}
+   */
+  enableProposedApi?: boolean
+
+  /**
+   * API proposals enabled during extension development.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/extensions/common/extensionsRegistry.ts#L242-L251}
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/platform/extensions/common/extensions.ts#L563-L565}
+   */
+  enabledApiProposals?: string[]
+
+  /**
+   * Declares that this extension does not export an API.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/extensions/common/extensionsRegistry.ts#L253-L260}
+   */
+  api?: 'none'
+
+  /**
    * An array of the [activation events](https://code.visualstudio.com/api/references/activation-events) for this extension.
    *
    * @see {@link https://code.visualstudio.com/api/references/activation-events}
@@ -100,6 +122,13 @@ export type ExtensionManifest = {
   displayName?: string
 
   /**
+   * Extensions to colocate in the same extension host process when possible.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/extensions/common/extensionsRegistry.ts#L484-L493}
+   */
+  extensionAffinity?: ExtensionIdentifier[]
+
+  /**
    * An array with the ids of extensions that this extension depends on. The id of an extension is always ${publisher}.${name}. For example: vscode.csharp.
    *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
@@ -107,11 +136,13 @@ export type ExtensionManifest = {
   extensionDependencies?: ExtensionIdentifier[]
 
   /**
-   * An array that indicates where the extension should run in remote configurations. Values are ui (run locally), workspace (run on remote machine) or both, with the order setting the preference. For example: [ui, workspace] indicates the extension can run in either location but prefers to run on the local machine. See [here](https://code.visualstudio.com/api/advanced-topics/extension-host#preferred-extension-location) for more details.
+   * Indicates where the extension should run in remote configurations. A single string is also accepted for compatibility. Values are ui (run locally), workspace (run on remote machine) or both, with the order setting the preference. For example: [ui, workspace] indicates the extension can run in either location but prefers to run on the local machine. See [here](https://code.visualstudio.com/api/advanced-topics/extension-host#preferred-extension-location) for more details.
    *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/extensions/common/extensionManifestPropertiesService.ts#L334-L338}
    */
-  extensionKind?: ('ui' | 'workspace')[]
+  extensionKind?: 'ui' | 'workspace' | ('ui' | 'workspace')[]
 
   /**
    * An array with the ids of extensions that can be installed together. The id of an extension is always ${publisher}.${name}. For example: vscode.csharp.
@@ -261,30 +292,36 @@ export type ExtensionManifest = {
    * An object describing the extension's capabilities in limited workspaces: [untrustedWorkspaces](https://code.visualstudio.com/api/extension-guides/workspace-trust#static-declarations), [virtualWorkspaces](https://code.visualstudio.com/api/extension-guides/virtual-workspaces#signal-whether-your-extension-can-handle-virtual-workspaces).
    *
    * @see {@link https://code.visualstudio.com/api/references/extension-manifest#fields}
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/platform/extensions/common/extensions.ts#L252-L266}
    */
   capabilities?: {
-    untrustedWorkspaces:
+    /**
+     * Requires the agentsWindowActivation API proposal.
+     */
+    agentsWindow?: { supported: boolean }
+    untrustedWorkspaces?:
       | {
           supported: 'limited'
-          description?: string
+          description: string
           restrictedConfigurations?: string[]
         }
       | {
           supported: false
-          description?: string
+          description: string
         }
       | {
           supported: true
         }
     virtualWorkspaces?:
-      | true
+      | boolean
       | {
           supported: 'limited'
-          description?: string
+          description: string
         }
       | {
           supported: false
-          description?: string
+          description: string
         }
       | {
           supported: true

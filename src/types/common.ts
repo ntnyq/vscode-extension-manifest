@@ -5,14 +5,22 @@ export type ExtensionAnyValue = any
 
 /**
  * Extension configuration key
+ *
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/common/configurationExtensionPoint.ts#L39-L46}
  */
-export type ExtensionConfigurationKey = `${string}.${string}`
+export type ExtensionConfigurationKey = string
 
 /**
  * Extension debugger OS options
+ *
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/debug/common/debug.ts#L938-L943}
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/debug/node/debugAdapter.ts#L364-L389}
  */
 export type ExtensionDebuggerOS = {
+  program?: string
+  args?: string[]
   runtime?: string
+  runtimeArgs?: string[]
 }
 
 /**
@@ -33,11 +41,15 @@ export type ExtensionSpecifiedLanguageKey = `[${string}]`
 
 /**
  * HexColor or themeable color identifier
+ *
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/themes/common/colorExtensionPoint.ts#L29-L110}
  */
-export type ExtensionThemeableColor = `#${string}` | `${string}.${string}`
+export type ExtensionThemeableColor = string
 
 /**
  * Built-in icon or icon path or icon object with dark and light properties
+ *
+ * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/services/actions/common/menusExtensionPoint.ts#L793-L833}
  */
 export type ExtensionThemeableIcon =
   // relative path icon and extension product icon
@@ -45,6 +57,6 @@ export type ExtensionThemeableIcon =
   | string
   // | ExtensionProductIcon
   | {
-      dark?: string
-      light?: string
+      dark: string
+      light: string
     }
