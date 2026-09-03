@@ -29,7 +29,7 @@ import type {
 } from '../src'
 import { defineExtensionManifest } from '../src'
 
-// These regressions follow the pinned runtime/schema sources in docs/vscode-source-audit.md.
+// These regressions follow the pinned source audit and records in docs/type-updates/.
 describe('vscode source contracts', () => {
   it('accepts manifest capabilities independently and legacy extension kind strings', () => {
     defineExtensionManifest({
@@ -561,6 +561,20 @@ describe('vscode source contracts', () => {
         },
       ],
     })
+  })
+
+  it('accepts generic and type-specific debugger activation events', () => {
+    assertType<ExtensionActivationEvent[]>([
+      'onDebugAdapterProtocolTracker',
+      'onDebugAdapterProtocolTracker:audit',
+      'onDebugDynamicConfigurations',
+      'onDebugDynamicConfigurations:audit',
+      'onDebugInitialConfigurations',
+      'onDebugResolve',
+      'onDebugResolve:audit',
+    ])
+    expectTypeOf<'onDebugDynamicConfiguration:audit'>().not.toExtend<ExtensionActivationEvent>()
+    expectTypeOf<'onDebugInitialConfigurations:audit'>().not.toExtend<ExtensionActivationEvent>()
   })
 
   it('accepts events emitted by source-only consumers', () => {

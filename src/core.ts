@@ -39,6 +39,10 @@ export type ReadOptions = SharedOptions & {
   /**
    * Specifies whether the read results should be cached.
    * Can be a boolean or a map to hold the cached data.
+   * Disabled reads bypass the cache without populating or updating it.
+   * Successful writes invalidate the built-in cache; callers manage custom maps.
+   *
+   * @default false
    */
   cache?: boolean | Map<string, Record<string, any>>
 }
@@ -57,9 +61,9 @@ const toPath = (urlOrPath: string | URL): string =>
   urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath
 
 /**
- * Validates if given manifest is an VSCode extension.
- * @param manifest - The extension manifest.
- * @returns `true` if given manifest is a VSCode extension.
+ * Checks whether an object has a non-empty string publisher.
+ * @param manifest - The value to check.
+ * @returns `false` for non-object inputs or an absent, empty, or non-string publisher.
  *
  * @example
  *
@@ -69,13 +73,18 @@ const toPath = (urlOrPath: string | URL): string =>
  *   readExtensionManifestSync
  * } from 'vscode-extension-manifest'
  *
- * console.log(validateExtensionManifest(readExtensionManifestSync())
+ * console.log(validateExtensionManifest(readExtensionManifestSync()))
  *```
  */
-export function validateExtensionManifest(
-  manifest: ExtensionManifest,
-): boolean {
-  return typeof manifest.publisher === 'string' && manifest.publisher.length > 0
+export function validateExtensionManifest(manifest: unknown): boolean {
+  return (
+    typeof manifest === 'object' &&
+    manifest !== null &&
+    !Array.isArray(manifest) &&
+    'publisher' in manifest &&
+    typeof manifest.publisher === 'string' &&
+    manifest.publisher.length > 0
+  )
 }
 
 /**
@@ -116,14 +125,15 @@ export async function readExtensionManifest(
   const resolvedPath = resolve(toPath(cwd), filename)
 
   if (options.cache && cache.has(resolvedPath)) {
-    /* v8 ignore next */
     return cache.get(resolvedPath)! as ExtensionManifest
   }
 
   const manifest = await readFile(resolvedPath, 'utf8')
   const parsed = JSON.parse(manifest) as ExtensionManifest
 
-  cache.set(resolvedPath, parsed)
+  if (options.cache) {
+    cache.set(resolvedPath, parsed)
+  }
 
   return parsed
 }
@@ -154,14 +164,15 @@ export function readExtensionManifestSync(
   const resolvedPath = resolve(toPath(cwd), filename)
 
   if (options.cache && cache.has(resolvedPath)) {
-    /* v8 ignore next */
     return cache.get(resolvedPath)! as ExtensionManifest
   }
 
   const manifest = readFileSync(resolvedPath, 'utf8')
   const parsed = JSON.parse(manifest) as ExtensionManifest
 
-  cache.set(resolvedPath, parsed)
+  if (options.cache) {
+    cache.set(resolvedPath, parsed)
+  }
 
   return parsed
 }
@@ -245,6 +256,7 @@ export async function writeExtensionManifest(
   await fsEnsureDir(resolvedPath)
 
   await writeFile(resolvedPath, stringify(manifest))
+  FILE_CACHE.delete(resolvedPath)
 }
 
 /**
@@ -278,4 +290,5 @@ export function writeExtensionManifestSync(
   fsEnsureDirSync(resolvedPath)
 
   writeFileSync(resolvedPath, stringify(manifest))
+  FILE_CACHE.delete(resolvedPath)
 }

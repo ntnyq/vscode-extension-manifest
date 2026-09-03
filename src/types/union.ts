@@ -29,10 +29,25 @@ export type ExtensionActivationEvent =
   | 'onCustomAgentProvider'
   | ExtendUnion<'onCustomEditor'>
   | 'onDebug'
-  | ExtendUnion<'onDebugAdapterProtocolTracker'>
-  | 'onDebugDynamicConfigurations'
+  /**
+   * Activates trackers for all debugger types or one specific type.
+   * @see {@link https://github.com/microsoft/vscode/blob/dc85eaf99d21fb62cc4d8b43a21625a93863cf1e/src/vs/workbench/contrib/debug/common/debugger.ts#L114-L120}
+   * @see {@link https://github.com/microsoft/vscode/blob/dc85eaf99d21fb62cc4d8b43a21625a93863cf1e/src/vs/workbench/contrib/debug/browser/debugAdapterManager.ts#L488-L498}
+   */
+  | ExtendUnion<'onDebugAdapterProtocolTracker', true>
+  /**
+   * Activates dynamic configuration providers for all debugger types or one specific type.
+   * @see {@link https://github.com/microsoft/vscode/blob/dc85eaf99d21fb62cc4d8b43a21625a93863cf1e/src/vs/workbench/contrib/debug/browser/debugConfigurationManager.ts#L200-L243}
+   * @see {@link https://github.com/microsoft/vscode/blob/dc85eaf99d21fb62cc4d8b43a21625a93863cf1e/src/vs/workbench/contrib/debug/browser/debugAdapterManager.ts#L488-L498}
+   */
+  | ExtendUnion<'onDebugDynamicConfigurations', true>
   | 'onDebugInitialConfigurations'
-  | ExtendUnion<'onDebugResolve'>
+  /**
+   * Activates configuration resolvers for all debugger types or one specific type.
+   * @see {@link https://github.com/microsoft/vscode/blob/dc85eaf99d21fb62cc4d8b43a21625a93863cf1e/src/vs/workbench/contrib/debug/browser/debugConfigurationManager.ts#L148-L156}
+   * @see {@link https://github.com/microsoft/vscode/blob/dc85eaf99d21fb62cc4d8b43a21625a93863cf1e/src/vs/workbench/contrib/debug/browser/debugAdapterManager.ts#L488-L498}
+   */
+  | ExtendUnion<'onDebugResolve', true>
   /**
    * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/debug/common/debugVisualizers.ts#L292-L299}
    */

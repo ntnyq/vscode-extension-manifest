@@ -14,7 +14,6 @@ export async function checkPackageJson() {
       manifest.activationEvents ||
       manifest.capabilities ||
       manifest.categories ||
-      manifest.extensionPack ||
       manifest.extensionPack
     ) {
       console.log('\n❗️ Unexpected properties in package.json')

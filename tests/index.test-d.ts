@@ -11,9 +11,7 @@ import {
 
 describe('typecheck', () => {
   it('should types match', () => {
-    assertType<(manifest: ExtensionManifest) => boolean>(
-      validateExtensionManifest,
-    )
+    assertType<(manifest: unknown) => boolean>(validateExtensionManifest)
     assertType<(manifest: ExtensionManifest) => ExtensionManifest>(
       defineExtensionManifest,
     )
@@ -50,7 +48,7 @@ describe('typecheck', () => {
 
   it('should params type match', () => {
     expectTypeOf(validateExtensionManifest).parameters.toEqualTypeOf<
-      [ExtensionManifest]
+      [unknown]
     >()
     expectTypeOf(defineExtensionManifest).parameters.toEqualTypeOf<
       [ExtensionManifest]

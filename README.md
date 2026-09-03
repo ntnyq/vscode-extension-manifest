@@ -9,14 +9,14 @@ Type definitions, validation, and IO utilities for VS Code extension manifests (
 
 > [!NOTE]
 > Types are checked against VS Code source: contribution schemas, interfaces, and runtime consumers.
-> See the [source audit](./docs/vscode-source-audit.md) for the pinned revision, every change's source, proposal requirements, and compatibility notes.
+> See the [type update history](./docs/type-updates/README.md) for pinned revisions, source evidence, proposal requirements, and compatibility notes.
 > For a generic Node.js package.json type, use type-fest's package-json.d.ts.
 
 <!-- vscode-types-update:start -->
 
-Last successful type update: **2026-09-03** (Asia/Shanghai; date precision from the original audit). Scope: **full src/types**.
+Last successful type update: **2026-09-03T11:47:00+08:00** (Asia/Shanghai). Scope: **partial — debugger activation event forms**.
 
-VS Code source: [`9a92570`](https://github.com/microsoft/vscode/commit/9a9257010666f5e886b2e2b095fe9febd5a5c13c) · [Changes](./docs/vscode-source-audit.md) · [History](./docs/type-updates/README.md).
+VS Code source: [`dc85eaf`](https://github.com/microsoft/vscode/commit/dc85eaf99d21fb62cc4d8b43a21625a93863cf1e) · [Changes](./docs/type-updates/2026-09-03-114700-dc85eaf.md) · [History](./docs/type-updates/README.md).
 
 <!-- vscode-types-update:end -->
 
@@ -94,7 +94,7 @@ Used by `readExtensionManifest` and `readExtensionManifestSync`.
 
 - `filename?: string` default `package.json`
 - `cwd?: string | URL` default `process.cwd()`
-- `cache?: boolean | Map<string, Record<string, any>>`
+- `cache?: boolean | Map<string, Record<string, any>>` default `false`
 
 ### readExtensionManifestSync
 
@@ -125,13 +125,15 @@ Used by `writeExtensionManifest` and `writeExtensionManifestSync`.
 
 ### validateExtensionManifest
 
-- Type: `(manifest: ExtensionManifest) => boolean`
-- Description: currently only checks that `publisher` is a non-empty string.
+- Type: `(manifest: unknown) => boolean`
+- Description: checks that the input is an object with a non-empty string `publisher`; returns `false` for null, arrays, and non-object inputs.
 
 ## Usage Notes
 
 - Customize JSON output with `stringify` or `space`.
 - Use `cache: true` or provide a custom `Map` for frequent reads.
+- Omitting `cache` or setting it to `false` reads from disk without populating or updating a cache.
+- Successful writes invalidate the built-in cache for the written path. Callers manage invalidation of custom maps using the resolved absolute file path as the key.
 - `cwd` supports `URL`, useful in ESM/URL-based environments.
 
 ## Contributing
