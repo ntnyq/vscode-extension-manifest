@@ -141,7 +141,12 @@ describe('vscode source contracts', () => {
           name: 'audit-multi',
           patterns: [
             { regexp: '^(.*)$', file: 1 },
-            { regexp: String.raw`^(\d+): (.*)$`, line: 1, message: 2, loop: true },
+            {
+              regexp: String.raw`^(\d+): (.*)$`,
+              line: 1,
+              message: 2,
+              loop: true,
+            },
           ],
         },
       ],
