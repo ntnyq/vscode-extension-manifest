@@ -14,9 +14,9 @@ Type definitions, validation, and IO utilities for VS Code extension manifests (
 
 <!-- vscode-types-update:start -->
 
-Last successful type update: **2026-09-03T11:47:00+08:00** (Asia/Shanghai). Scope: **partial — debugger activation event forms**.
+Last successful type update: **2026-11-19T11:14:07+08:00** (Asia/Shanghai). Scope: **full `src/types`**.
 
-VS Code source: [`dc85eaf`](https://github.com/microsoft/vscode/commit/dc85eaf99d21fb62cc4d8b43a21625a93863cf1e) · [Changes](./docs/type-updates/2026-09-03-114700-dc85eaf.md) · [History](./docs/type-updates/README.md).
+VS Code source: [`e82e774`](https://github.com/microsoft/vscode/commit/e82e774f0735d47ee7021d34a6055234229cc9b3) · [Changes](./docs/type-updates/2026-11-19-111407-e82e774.md) · [History](./docs/type-updates/README.md).
 
 <!-- vscode-types-update:end -->
 

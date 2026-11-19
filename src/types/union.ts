@@ -7,6 +7,13 @@ export type ExtensionActivationEvent =
   | '*'
   | ExtendUnion<'onAuthenticationRequest'>
   /**
+   * Activates lazy artifact integrations. The provider API requires chatArtifactIntegrations.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/services/extensions/common/extensionsRegistry.ts#L397-L400}
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/sessions/providers/agentHost/browser/agentHostArtifactIntegrations.ts#L305-L312}
+   */
+  | 'onChatArtifactIntegration'
+  /**
    * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/contextContrib/chatContext.contribution.ts#L45-L48}
    */
   | ExtendUnion<'onChatContextProvider'>
@@ -123,6 +130,13 @@ export type ExtensionActivationEvent =
    * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/api/browser/mainThreadTerminalShellIntegration.ts#L113-L121}
    */
   | ExtendUnion<'onTerminalShellIntegration'>
+  /**
+   * Fires when a port is forwarded. Registering a tunnel provider requires tunnelFactory.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/services/remote/common/tunnelModel.ts#L31}
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/services/remote/common/tunnelModel.ts#L705-L706}
+   */
+  | 'onTunnel'
   | 'onUri'
   | ExtendUnion<'onView'>
   | ExtendUnion<'onWalkthrough'>
@@ -171,6 +185,12 @@ export type ExtensionMenuKind =
   | 'agents/change/inline'
   | 'agents/changes/actions'
   | 'agents/changes/actions/primary'
+  /**
+   * Requires the contribTitleBar API proposal.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/services/actions/common/menusExtensionPoint.ts#L585-L590}
+   */
+  | 'agents/titleBar'
   | 'chat/chatSessions'
   | 'chat/contextUsage/actions'
   | 'chat/customizations/create'
@@ -259,6 +279,12 @@ export type ExtensionMenuKind =
   | 'testing/profiles/context'
   | 'timeline/item/context'
   | 'timeline/title'
+  /**
+   * Requires the contribTitleBar API proposal.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/services/actions/common/menusExtensionPoint.ts#L579-L584}
+   */
+  | 'titleBar'
   | 'touchBar'
   | 'view/item/context'
   | 'view/title'

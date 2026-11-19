@@ -123,6 +123,20 @@ export type TJsonSchemaVSCode = {
   allowTrailingCommas?: boolean
   defaultSnippets?: TJsonSchemaVSCodeSnippet[]
   deprecationMessage?: string
+  /**
+   * Controls how the Settings editor displays a deprecation message.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/api/common/configurationExtensionPoint.ts#L102-L111}
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/preferences/browser/settingsTree.ts#L1061-L1072}
+   */
+  deprecationMessageSeverity?: 'warning' | 'info'
+  /**
+   * Keeps a deprecated setting visible in the Settings editor before it is configured.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/platform/configuration/common/configurationRegistry.ts#L240-L244}
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/preferences/browser/settingsTreeModels.ts#L686-L699}
+   */
+  deprecationMessageShowInSettings?: boolean
   doNotSuggest?: boolean
   enumDescriptions?: string[]
   errorMessage?: string
@@ -136,7 +150,17 @@ export type TJsonSchemaVSCode = {
   disallowSyncIgnore?: boolean
   disallowConfigurationDefault?: boolean
   keywords?: string[]
-  experiment?: { mode: 'startup' | 'auto'; name?: string }
+  experiment?: {
+    mode: 'startup' | 'auto'
+    name?: string
+    /**
+     * Applies a separate experiment treatment to each key of an object setting.
+     *
+     * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/platform/configuration/common/configurationRegistry.ts#L336-L344}
+     * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/services/configuration/browser/configurationService.ts#L1526-L1537}
+     */
+    keyed?: boolean
+  }
   /**
    * Requires the agentsWindowConfiguration API proposal.
    */

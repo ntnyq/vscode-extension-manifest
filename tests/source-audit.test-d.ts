@@ -38,7 +38,6 @@ describe('vscode source contracts', () => {
       version: '1.0.0',
       engines: { vscode: '^1.100.0' },
       api: 'none',
-      enabledApiProposals: ['agentsWindowActivation'],
       extensionAffinity: ['vscode.git'],
       extensionKind: 'ui',
       capabilities: {
@@ -141,7 +140,12 @@ describe('vscode source contracts', () => {
           name: 'audit-multi',
           patterns: [
             { regexp: '^(.*)$', file: 1 },
-            { regexp: '^(\\d+): (.*)$', line: 1, message: 2, loop: true },
+            {
+              regexp: String.raw`^(\d+): (.*)$`,
+              line: 1,
+              message: 2,
+              loop: true,
+            },
           ],
         },
       ],

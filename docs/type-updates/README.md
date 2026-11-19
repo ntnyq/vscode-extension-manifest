@@ -2,6 +2,8 @@
 
 This history records type updates completed against pinned VS Code source, newest first. Each successful update keeps a separate record with source files and line ranges for every change, and explicitly identifies full or partial scope. Inspections with no changes, incomplete investigations, and skill maintenance do not refresh the last type update timestamp.
 
+- **2026-11-19T11:14:07+08:00 (Asia/Shanghai)** · `success` · Full `src/types` · VS Code [`e82e774`](https://github.com/microsoft/vscode/commit/e82e774f0735d47ee7021d34a6055234229cc9b3) · [Type changes and verification](./2026-11-19-111407-e82e774.md).
+
 - **2026-09-03T11:47:00+08:00 (Asia/Shanghai)** · `success` · Partial: debugger activation event forms · VS Code [`dc85eaf`](https://github.com/microsoft/vscode/commit/dc85eaf99d21fb62cc4d8b43a21625a93863cf1e) · [Review corrections and verification](./2026-09-03-114700-dc85eaf.md).
 
 - **2026-09-03 (Asia/Shanghai, preserving the original date precision)** · `success` · Full `src/types` · VS Code [`9a92570`](https://github.com/microsoft/vscode/commit/9a9257010666f5e886b2e2b095fe9febd5a5c13c) · [Initial source audit and individual changes](../vscode-source-audit.md). This entry registers the completed audit; creating the skill did not perform another upstream type synchronization.

@@ -319,6 +319,26 @@ export type ExtensionChatParticipantDisambiguation = {
 export type ExtensionChatPromptFile = ExtensionChatFile
 
 /**
+ * A resource listed in a chat's Artifacts pill while it exists.
+ * Requires the contribChatResources API proposal.
+ *
+ * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/chat/browser/chatResources/chatResourceContributions.ts#L65-L107}
+ * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/chat/browser/chatResources/chatResourceContributions.ts#L109-L144}
+ */
+export type ExtensionChatResource = {
+  id: string
+  label: string
+  /**
+   * A URI template that can use `${chatSessionId}` and `${agentSessionId}`.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/chat/browser/chatResources/chatResourceContributions.ts#L48-L62}
+   */
+  resource: string
+  icon?: string
+  mode?: 'pinned' | 'aboveInput'
+}
+
+/**
  * @see {@link https://github.com/microsoft/vscode/blob/9a9257010666f5e886b2e2b095fe9febd5a5c13c/src/vs/workbench/contrib/chat/browser/chatSessions/chatSessions.contribution.ts#L63-L256}
  */
 export type ExtensionChatSession = {
@@ -733,6 +753,13 @@ export type ExtensionLanguageModelChatProvider = {
   vendor: string
   displayName: string
   configuration?: ExtensionJsonSchema
+  /**
+   * A theme icon, a relative icon path, or separate light and dark icon paths.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/chat/common/languageModels.ts#L948-L970}
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/chat/common/languageModels.ts#L1005-L1035}
+   */
+  icon?: ExtensionThemeableIcon
   when?: string
   deprecation?: { link?: string }
   /**
@@ -888,6 +915,14 @@ export type ExtensionContributes = {
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatPromptFiles}
    */
   chatPromptFiles?: ExtensionChatPromptFile[]
+
+  /**
+   * Requires the contribChatResources API proposal.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/chat/browser/chatResources/chatResourceContributions.ts#L98-L107}
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/contrib/chat/browser/chatResources/chatResourceContributions.ts#L121-L144}
+   */
+  chatResources?: ExtensionChatResource[]
 
   /**
    * @see {@link https://code.visualstudio.com/api/references/contribution-points#contributes.chatSessions}
@@ -1423,6 +1458,20 @@ export type ExtensionMarkdownCodeBlockEditorProvider = {
   runtimeKey?: string
   contentType?: 'text' | 'json'
   initialHeight?: number
+  /**
+   * Default presentation preferences for the code block editor.
+   * Both heights must be greater than zero and at most 10,000.
+   *
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/extensions/markdown-language-features/src/markdownExtensions.ts#L187-L212}
+   * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/extensions/markdown-language-features/src/preview/markdownEditorProtocol.ts#L40-L46}
+   */
+  presentation?: {
+    resizable?: boolean
+    fullWidth?: boolean
+    fullView?: boolean
+    minHeight?: number
+    maxAutomaticHeight?: number
+  }
   sandbox?: {
     forms?: boolean
     downloads?: boolean

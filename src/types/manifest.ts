@@ -297,7 +297,10 @@ export type ExtensionManifest = {
    */
   capabilities?: {
     /**
-     * Requires the agentsWindowActivation API proposal.
+     * Declares whether this extension supports running in the Agents window.
+     *
+     * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/services/extensions/common/extensionsRegistry.ts#L596-L609}
+     * @see {@link https://github.com/microsoft/vscode/blob/e82e774f0735d47ee7021d34a6055234229cc9b3/src/vs/workbench/services/extensions/common/extensionManifestPropertiesService.ts#L240-L253}
      */
     agentsWindow?: { supported: boolean }
     untrustedWorkspaces?:
